@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    h1= title
+    p Kameraer 
+    ul
+        each val, key in cameras
+            li
+                a(href="cameras/#{val.name.toLowerCase()}")= val.title
