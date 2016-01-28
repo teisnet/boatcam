@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+var CameraManager = require("./modules/CameraManager");
+
 var app = express();
 
 // view engine setup
