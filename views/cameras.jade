@@ -4,6 +4,6 @@ block content
     h1= title
     p Kameraer 
     ul
-        each val, key in cameras
+        each camera, key in cameras
             li
-                a(href="cameras/#{val.name.toLowerCase()}")= val.title
+                a(href="cameras/#{camera.name.toLowerCase()}")= camera.title
