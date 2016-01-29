@@ -14,6 +14,10 @@ var CameraManager = require("./modules/CameraManager");
 
 var app = express();
 
+// CONFIG
+var config = require("./config");
+app.locals.title   = config.title;
+app.locals.cameras = config.cameras;
 
 // SOCKETIO
 var io = socket_io();
