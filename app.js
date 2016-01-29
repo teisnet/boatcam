@@ -10,8 +10,6 @@ var socket_io    = require( "socket.io" );
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-var CameraManager = require("./modules/CameraManager");
-
 var app = express();
 
 // CONFIG
@@ -22,6 +20,8 @@ app.locals.cameras = config.cameras;
 // SOCKETIO
 var io = socket_io();
 app.io = io;
+
+var CameraManager = require("./modules/CameraManager")(io);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

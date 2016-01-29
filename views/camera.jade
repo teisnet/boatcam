@@ -3,10 +3,29 @@ extends layout
 block content
     h1= title
     p Welcome to havnekamera 
-    object(style="" width="100%" height="100%" id="wowza_api" name="wowza_api" data="http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf" type="application/x-shockwave-flash")
+    object(style="" width="512" height="288" id="wowza_api" name="wowza_api" data="http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf" type="application/x-shockwave-flash")
         param(name="allowfullscreen", value="true")
         param(name="allowscriptaccess", value="always")
         param(name="quality", value="high")
         param(name="bgcolor", value="#ffffff")
-        param(name="flashvars",value="config={'clip':{'url':'#{url}','scaling':'fit','provider':'hddn'},'plugins':{'hddn':{'url':'flowplayer.rtmp-3.2.13.swf','netConnectionUrl':'rtmp://r.demo.flowplayer.netdna-cdn.com/play'}},'canvas':{'backgroundGradient':'none'},'playerId':'wowza','playlist':[{'url':'#{url}','scaling':'fit','provider':'hddn'}]}")
+        param(name="flashvars",value="config={'clip':{'autoplay':'true','url':'#{url}','scaling':'fit','provider':'hddn'},'plugins':{'hddn':{'url':'flowplayer.rtmp-3.2.13.swf','netConnectionUrl':'rtmp://r.demo.flowplayer.netdna-cdn.com/play'}},'canvas':{'backgroundGradient':'none'},'playerId':'wowza','playlist':[{'autoplay':'true','url':'#{url}','scaling':'fit','provider':'hddn'}]}")
+    div(style="clear: both;")
+        p.status
+    div(style="clear: both;")
+    div(style="float: left" width="100px" height="300px")
+        div(style="clear: both;")
+        center
+            button(style="width: 50px;", onmousedown="beginMoveCamera('up')", onmouseup="stopCamera()") Op
+        div(style="clear: both;")
+        button(style="", onmousedown="beginMoveCamera('left')", onmouseup="stopCamera()") Venstre
+        button(onmousedown="beginMoveCamera('right')", onmouseup="stopCamera()") Højre
+        div(style="clear: both;")
+        center
+            button(onmousedown="beginMoveCamera('down')", onmouseup="stopCamera()") Ned
+        center
+            button(onmousedown="stopCamera()") Stop
+        center
+            button(onmousedown="beginMoveCamera('zoomIn')", onmouseup="stopCamera()") Zoom in
+        center
+            button(onmousedown="beginMoveCamera('zoomOut')", onmouseup="stopCamera()") Zoom ud
         
