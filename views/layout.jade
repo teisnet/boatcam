@@ -1,10 +1,13 @@
 doctype html
 html
   head
+    base(href="http://localhost:3000")
     title= title
     script(type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js")
-    link(rel='stylesheet', href='../stylesheets/style.css')
-    link(rel="stylesheet" type="text/css" href="../javascripts/flowplayer/skin/minimalist.css")
-    script(type="text/javascript" src="../javascripts/flowplayer/flowplayer.min.js")
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet" type="text/css" href="/javascripts/flowplayer/skin/minimalist.css")
+    script(type="text/javascript" src="/javascripts/flowplayer/flowplayer.min.js")
+    script(src="/socket.io/socket.io.js")
+    script(src="/javascripts/camera.js")
   body
     block content
