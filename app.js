@@ -21,6 +21,7 @@ app.locals.cameras = config.cameras;
 var io = socket_io();
 app.io = io;
 
+var loadDataIntoDatabase = require("./modules/loadDataIntoDatabase");
 var CameraManager = require("./modules/CameraManager")(io);
 
 // view engine setup
