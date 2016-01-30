@@ -2,8 +2,7 @@ extends layout
 
 block content
     h1= title
-    p Welcome to havnekamera 
-    object(style="" width="512" height="288" id="wowza_api" name="wowza_api" data="http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf" type="application/x-shockwave-flash")
+    object.camera(id="wowza_api" name="wowza_api" data="http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf" type="application/x-shockwave-flash")
         param(name="allowfullscreen", value="true")
         param(name="allowscriptaccess", value="always")
         param(name="quality", value="high")
@@ -12,20 +11,16 @@ block content
     div(style="clear: both;")
         p.status
     div(style="clear: both;")
-    div(style="float: left" width="100px" height="300px")
-        div(style="clear: both;")
+    .camera-control
+        i.fa.fa-chevron-up.fa-3x.up(onmousedown="beginMoveCamera('up')")
+        i.fa.fa-chevron-left.fa-3x.left(onmousedown="beginMoveCamera('left')")
+        i.fa.fa-chevron-right.fa-3x.right(onmousedown="beginMoveCamera('right')")
+        i.fa.fa-chevron-down.fa-3x.down(onmousedown="beginMoveCamera('down')")
+    div
         center
-            button(style="width: 50px;", onmousedown="beginMoveCamera('up')", onmouseup="stopCamera()") Op
-        div(style="clear: both;")
-        button(style="", onmousedown="beginMoveCamera('left')", onmouseup="stopCamera()") Venstre
-        button(onmousedown="beginMoveCamera('right')", onmouseup="stopCamera()") Højre
-        div(style="clear: both;")
+            button.btn.btn-primary(onmousedown="stopCamera()") Stop
         center
-            button(onmousedown="beginMoveCamera('down')", onmouseup="stopCamera()") Ned
+            button.btn.btn-primary(onmousedown="beginMoveCamera('zoomIn')") Zoom ind
         center
-            button(onmousedown="stopCamera()") Stop
-        center
-            button(onmousedown="beginMoveCamera('zoomIn')", onmouseup="stopCamera()") Zoom in
-        center
-            button(onmousedown="beginMoveCamera('zoomOut')", onmouseup="stopCamera()") Zoom ud
+            button.btn.btn-primary(onmousedown="beginMoveCamera('zoomOut')") Zoom ud
         

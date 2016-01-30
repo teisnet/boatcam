@@ -1,8 +1,66 @@
+@import "mixins";
+@import "base";
+@import "buttons";
+
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+i:hover { 
+    color: red;
+}
+
+.camera {
+    width: 512px;
+    height: 288px;
+    margin:0 auto;
+    background-color: gray;
+}
+
+.camera-control {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    
+    .up, .left, .right, .down {
+        height: 39px;
+        width: 39px;
+        position: absolute;
+        text-align: center;
+        line-height: 40px;
+    }
+    
+    .up, .down {
+        margin-left:auto;
+        margin-right:auto;
+        left:0px;
+        right:0px;
+    }
+    
+    .left, .right {
+        margin-top:auto;
+        margin-bottom:auto;
+        top: 0px;
+        bottom:0px;
+    }
+    
+    .up {
+        top: 0px;
+    }
+    
+    .down {
+        bottom: 0px;
+    }
+    
+    .left {
+        left: 0px;
+    }
+    
+    .right {
+        right:0px;
+    }
 }
