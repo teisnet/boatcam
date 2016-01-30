@@ -55,7 +55,7 @@ function updateStatus() {
         status = currentStatus.position;
 
         if ((previousStatus.x != status.x) || (previousStatus.y != status.y) || (previousStatus.zoom != status.zoom)) {
-            setTimeout(updateStatus, 100);
+            setTimeout(updateStatus, 50);
         }
 
         io.emit("status", status);
