@@ -1,6 +1,5 @@
 var Camera = require("../models/Camera");
 
-
 var camerasData = require("../config.json").cameras;
 
 for (var cameraField in camerasData) {
@@ -25,4 +24,5 @@ function createCamera(cameraData) {
     });
     */
 }
+
 

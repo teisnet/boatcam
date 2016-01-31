@@ -15,13 +15,14 @@ var app = express();
 // CONFIG
 var config = require("./config");
 app.locals.title   = config.title;
-app.locals.cameras = config.cameras;
+//app.locals.cameras = config.cameras;
 
 // SOCKETIO
 var io = socket_io();
 app.io = io;
 
-var loadDataIntoDatabase = require("./modules/loadDataIntoDatabase");
+//var loadDataIntoDatabase = require("./modules/loadCameraDataIntoDatabase");
+//var loadDataIntoDatabase = require("./modules/loadBerthDataIntoDatabase");
 var CameraManager = require("./modules/CameraManager")(io);
 
 // view engine setup
