@@ -50,7 +50,7 @@ function move(direction) {
 function updateStatus() {
 
     Camera.getStatus(function(err, currentStatus){
-        console.log(status, null, 2);
+        //console.log(status, null, 2);
         previousStatus = status;
         status = currentStatus.position;
 
