@@ -18,7 +18,7 @@ var Camera = new Cam({
 
 
 function move(direction) {
-    console.log(direction);
+    //console.log(direction);
     switch(direction) {
         case "stop":
             Camera.continuousMove({x: 0, y: 0}, function(){});
