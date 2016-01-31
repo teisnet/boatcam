@@ -10,6 +10,8 @@ block content
         param(name="flashvars",value="config={'clip':{'autoplay':'true','url':'#{url}','scaling':'fit','provider':'hddn'},'plugins':{'hddn':{'url':'flowplayer.rtmp-3.2.13.swf','netConnectionUrl':'rtmp://r.demo.flowplayer.netdna-cdn.com/play'}},'canvas':{'backgroundGradient':'none'},'playerId':'wowza','playlist':[{'autoplay':'true','url':'#{url}','scaling':'fit','provider':'hddn'}]}")
     div(style="clear: both;")
         p.status
+        select#berths
+        .btn.btn-success.savecamerapos Gem position
     div(style="clear: both;")
     .camera-control
         i.fa.fa-chevron-up.fa-3x.up(onmousedown="beginMoveCamera('up')")
