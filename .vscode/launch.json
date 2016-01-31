@@ -2,7 +2,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Launch",
+			"name": "App Debug",
 			"type": "node",
 			"request": "launch",
 			"program": "./bin/www",
@@ -25,6 +25,25 @@
 			"type": "node",
 			"request": "attach",
 			"port": 5858
+		},
+		{
+			"name": "App Release",
+			"type": "node",
+			"request": "launch",
+			"program": "./bin/www",
+			"stopOnEntry": false,
+			"args": [],
+			"cwd": ".",
+			"runtimeExecutable": null,
+			"runtimeArgs": [
+				"--nolazy"
+			],
+			"env": {
+				"NODE_ENV": "production"
+			},
+			"externalConsole": false,
+			"sourceMaps": false,
+			"outDir": null
 		}
 	]
 }
