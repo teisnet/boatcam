@@ -1,4 +1,6 @@
-var CameraManager = {};
+const EventEmitter = require('events').EventEmitter;
+
+var CameraManager = new EventEmitter();
 
 var  Cam = require('onvif').Cam;
 
@@ -17,11 +19,15 @@ var Camera = new Cam({
 }, function(err, result) {
     if (err) { console.error("Could not initialize camera. (" + err.message + ")"); return; }
     console.log("Camera initialized.");
+    /*setInterval(function(){
+        Camera.absoluteMove({x:9200.0, y:2500.0, zoom:1000.0});
+    }, 1000);*/
 });
 
 
-function set(position) {
+CameraManager.set = function(position) {
     absoluteTarget = {x: parseFloat(position.x), y: parseFloat(position.y), zoom: parseFloat(position.zoom) };
+    //absoluteTarget = {x:9200.0, y:2500.0, zoom:1000.0};
     Camera.absoluteMove(absoluteTarget, function(){});
     absoluteInProgress = true;
     // Order: x, zoom, y
@@ -30,7 +36,7 @@ function set(position) {
 }
 
 
-function move(direction) {
+CameraManager.move = function(direction) {
     //console.log(direction);
     switch(direction) {
         case "stop":
@@ -56,6 +62,7 @@ function move(direction) {
             break;
     }
 
+    //setTimeout(updateStatus, 100);
     updateStatus();
 
 }
@@ -75,18 +82,8 @@ function updateStatus() {
             checkAbsoluteStatus();
         }
 
-        io.emit("status", status);
+        CameraManager.emit("status", status);
     });
-}
-
-module.exports = function(_io)
-{
-    io = _io;
-    io.on('connection', function(socket){
-        console.log("A user connected");
-        socket.on("move", move);
-    });
-    //return CameraManager;
 }
 
 function checkAbsoluteStatus() {
@@ -101,3 +98,5 @@ function checkAbsoluteStatus() {
     }
 }
 
+
+module.exports = CameraManager;

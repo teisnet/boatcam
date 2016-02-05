@@ -24,7 +24,6 @@ app.io = io;
 
 //var loadDataIntoDatabase = require("./modules/loadCameraDataIntoDatabase");
 //var loadDataIntoDatabase = require("./modules/loadBerthDataIntoDatabase");
-var CameraManager = require("./modules/CameraManager")(io);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -42,6 +41,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/api', api);
 app.use('/users', users);
+
+// SOCKET.IO
+var camera = require('./sockets/camera')(io);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
