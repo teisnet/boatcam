@@ -5,7 +5,7 @@ $(document).ready(function(){
     $(".camera-control .right").mousedown("right",onMoveCamera);
     $(".camera-control .down").mousedown("down",onMoveCamera);
 
-    $(".camera-control .stop").mousedown(stopCamera);
+    $(".camera-control .stop").mousedown(onStopCamera);
     $(".camera-control .zoom-in").mousedown("zoomIn",onMoveCamera);
     $(".camera-control .zoom-out").mousedown("zoomOut",onMoveCamera);
 
@@ -27,9 +27,6 @@ $.getJSON('api/berths', function(berthData) {
         var $option = $("<option/>").attr("value", berth._id).text(berth.number + " - " + berth.owner);
         $('#berths').append($option);
     });
-    /*$.each(data, function(index, berth)
-        var $select = $('#mySelectID');
-    });*/
 });
 
 $(Camera).on('move', function (event, pos) {
@@ -39,10 +36,10 @@ $(Camera).on('move', function (event, pos) {
 
 function onMoveCamera(event) {
     Camera.move(event.data);
-    $(document).bind("mouseup", stopCamera);
+    $(document).bind("mouseup", onStopCamera);
 };
 
-function stopCamera() {
+function onStopCamera() {
     Camera.stop();
-    $(document).unbind("mouseup", stopCamera);
+    $(document).unbind("mouseup", onStopCamera);
 }
