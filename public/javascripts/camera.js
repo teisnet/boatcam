@@ -41,7 +41,16 @@ $.getJSON('api/berths', function(data) {
     })*/;
 });
 
+function onMoveCamera(event) {
+    beginMoveCamera(event.data);
+};
+
 $(document).ready(function(){
+    $(".camera-control .up").mousedown("up",onMoveCamera);
+    $(".camera-control .left").mousedown("left",onMoveCamera);
+    $(".camera-control .right").mousedown("right",onMoveCamera);
+    $(".camera-control .down").mousedown("down",onMoveCamera);
+
     $(".savecamerapos").bind("click", function(){
         
         var berthId = $('#berths').val();
