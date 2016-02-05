@@ -52,24 +52,7 @@ $(document).ready(function(){
     $(".camera-control .down").mousedown("down",onMoveCamera);
 
     $(".savecamerapos").bind("click", function(){
-        
         var berthId = $('#berths').val();
-        
-        $.post('api/berths/' + berthId + '/positions', cameraStatus, function(res){
-            console.log("OK: " + res.message);
-        });
-        
-        /*
-        $.ajax({
-            type: 'post',
-            url: 'api/berths/' + berthId + '/positions',
-            data: JSON.stringify(cameraStatus),
-            dataType: 'json',
-            contentType: "application/json; charset=utf-8",
-            traditional: true,
-            success: function (data) {
-                console.log("OK");
-            }
-        });*/
+        $.post('api/berths/' + berthId + '/positions', cameraStatus, function(res){ });
     });
 });
