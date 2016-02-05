@@ -5,7 +5,7 @@ var Camera = (function(){
 
     var socket = io();
 
-    socket.on("status", function(_sta){
+    socket.on("move", function(_sta){
         _camera.position = _sta;
         var sta = {};
             sta.x = parseFloat(_sta.x / 100.0).toFixed(1);
@@ -24,7 +24,7 @@ var Camera = (function(){
 
     _camera.moveTo = function(pos) {
         console.log("Camera.moveTo: " + pos);
-        socket.emit('set', pos);
+        socket.emit('moveto', pos);
     }
 
     _camera.stop = function() {
