@@ -1,17 +1,16 @@
 const EventEmitter = require('events').EventEmitter;
+var OnvifCam = require('onvif').Cam;
+var Camera = new EventEmitter();
 
-var CameraManager = new EventEmitter();
 
-var  Cam = require('onvif').Cam;
-
-var status = {x: 0, y: 0, zoom: 0};
-var previousStatus = {x: 0, y: 0, zoom: 0};
-
-var absoluteTarget = {x: 0, y: 0, zoom: 0};
-var absoluteInProgress = false;
 var isMoving = false;
+var isMovingTo = false;
+var moveTarget = {x: 0, y: 0, zoom: 0};
+Camera.position = {x: 0, y: 0, zoom: 0};
+var previousPosition = {x: 0, y: 0, zoom: 0};
 
-var Camera = new Cam({
+
+var OnvifCamera = new OnvifCam({
   hostname: "85.27.160.128",
   username: "admin",
   password: "admin",
@@ -25,78 +24,84 @@ var Camera = new Cam({
 });
 
 
-CameraManager.set = function(position) {
-    absoluteTarget = {x: parseFloat(position.x), y: parseFloat(position.y), zoom: parseFloat(position.zoom) };
+Camera.moveTo = function(position) {
+    moveTarget = {x: parseFloat(position.x), y: parseFloat(position.y), zoom: parseFloat(position.zoom) };
     //absoluteTarget = {x:9200.0, y:2500.0, zoom:1000.0};
-    Camera.absoluteMove(absoluteTarget, function(){});
-    absoluteInProgress = true;
+    OnvifCamera.absoluteMove(moveTarget, function(){});
+    isMovingTo = true;
     // Order: x, zoom, y
-    // 
-    updateStatus();
+    //
+    setTimeout(updateStatus, 100);
 }
 
 
-CameraManager.move = function(direction) {
+Camera.move = function(command) {
     //console.log(direction);
-    switch(direction) {
+    var direction = {x: 0, y: 0};
+    switch(command) {
         case "stop":
-            Camera.continuousMove({x: 0, y: 0}, function(){});
             break;
        case "left":
-            Camera.continuousMove({x: -1.0, y: 0}, function(){});
+            direction.x = -1.0;
             break;
        case "right":
-            Camera.continuousMove({x: 1.0, y: 0}, function(){});
+            direction.x = 1.0;
             break;
        case "up":
-            Camera.continuousMove({x: 0, y: 1.0}, function(){});
+            direction.y = 1.0;
             break;
        case "down":
-            Camera.continuousMove({x: 0, y: -1.0}, function(){});
+            direction.y = -1.0;
             break;
        case "zoomOut":
-            Camera.continuousMove({x: 0, y: 0, zoom: -1}, function(){});
+            direction.zoom = -1.0;
             break;
        case "zoomIn":
-            Camera.continuousMove({x: 0, y: 0, zoom: 1}, function(){});
+            direction.zoom = 1.0;
             break;
     }
-
+    OnvifCamera.continuousMove(direction, function(){});
+    isMovingTo = false;
     //setTimeout(updateStatus, 100);
     updateStatus();
 
 }
 
+function isEqual(a, b) {
+    var margin = 5;
+    return a > (b - margin) && a < (b + margin) ? true : false;
+}
+
+function posIsEqual(a, b) {
+    return isEqual(a.x, b.x) && isEqual(a.y, b.y) && isEqual(a.zoom, b.zoom);
+}
+
 function updateStatus() {
 
-    Camera.getStatus(function(err, currentStatus){
+    OnvifCamera.getStatus(function(err, status){
         //console.log(status, null, 2);
-        previousStatus = status;
-        status = currentStatus.position;
+        previousPosition = Camera.position;
+        var pos = Camera.position = status.position;
 
-        if ((previousStatus.x != status.x) || (previousStatus.y != status.y) || (previousStatus.zoom != status.zoom)) {
+        if (!posIsEqual(previousPosition, pos)) {
             isMoving = true;
             setTimeout(updateStatus, 50);
+            Camera.emit("move", pos);
         } else {
             isMoving = false;
-            checkAbsoluteStatus();
-        }
 
-        CameraManager.emit("status", status);
+            if (isMovingTo) {
+                if(posIsEqual(moveTarget, pos)) {
+                    isMovingTo = false;
+                    console.log("MovingTo finished: x=" + pos.x + ", y=" + pos.y + ", zoom=" + pos.zoom);
+                } else {
+                    Camera.moveTo(moveTarget);
+                    console.log("MovingTo repeat: x=" + pos.x + ", y=" + pos.y + ", zoom=" + pos.zoom);
+                }
+            }
+        }
     });
 }
 
-function checkAbsoluteStatus() {
-    if (absoluteInProgress) {
-        if((absoluteTarget.x != status.x) || (absoluteTarget.y != status.y) || (absoluteTarget.zoom != status.zoom)) {
-            CameraManager.set(absoluteTarget);
-            console.log("Absolute repeat");
-        } else {
-            absoluteInProgress = false;
-            console.log("Absolute finished");
-        }
-    }
-}
 
-
-module.exports = CameraManager;
+module.exports = Camera;
