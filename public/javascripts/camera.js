@@ -20,6 +20,11 @@ function beginMoveCamera(direction){
     $(document).bind("mouseup", stopCamera);
 }
 
+function moveCamera(pos) {
+    console.log("moveCamera: " + pos);
+    socket.emit('set', pos);
+}
+
 
 function stopCamera() {
     socket.emit('move', "stop");
@@ -54,5 +59,10 @@ $(document).ready(function(){
     $(".savecamerapos").bind("click", function(){
         var berthId = $('#berths').val();
         $.post('api/berths/' + berthId + '/positions', cameraStatus, function(res){ });
+    });
+
+    $(".loadcamerapos").bind("click", function(){
+        var berthId = $('#berths').val();
+        $.getJSON('api/berths/' + berthId + '/positions', function(res){ moveCamera(res); });
     });
 });

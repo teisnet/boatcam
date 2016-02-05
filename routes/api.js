@@ -25,7 +25,13 @@ router.get('/berths/:id', function(req, res, next) {
     });
 });
 
-router.route('/berths/:id/positions').post(function(req, res, next) {
+router.route('/berths/:id/positions')
+.get(function(req, res, next){
+    Berth.findOne({_id: req.params.id}, function(err, berth){
+        res.json(berth.positions[0]);
+    });
+})
+.post(function(req, res, next) {
     /*Berth.findOne({_id: req.params.id}, function(err, berth){
         res.json(berth);
     });*/
