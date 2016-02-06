@@ -17,7 +17,7 @@ function Camera(settings) {
         hostname: settings.hostname, //"85.27.160.128",
         username: settings.username,//"admin",
         password: settings.password,//"admin",
-        port:     settings.port,// "8080"
+        port:     settings.onvif,// "8080"
         }, function(err, result) {
             if (err) { console.error("Could not initialize camera. (" + err.message + ")"); return; }
             console.log("Camera initialized.");
