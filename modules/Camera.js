@@ -1,41 +1,73 @@
 const EventEmitter = require('events').EventEmitter;
+const util = require('util');
 var OnvifCam = require('onvif').Cam;
-var Camera = new EventEmitter();
 
 
-var isMoving = false;
-var isMovingTo = false;
-var moveTarget = {x: 0, y: 0, zoom: 0};
-Camera.position = {x: 0, y: 0, zoom: 0};
-var previousPosition = {x: 0, y: 0, zoom: 0};
+function Camera(settings) {
+    EventEmitter.call(this);
+    var self = this;
+
+    this.position = {x: 0, y: 0, zoom: 0};
+    this._isMoving = false;
+    this._isMovingTo = false;
+    this._moveTarget = {x: 0, y: 0, zoom: 0};
+    this._previousPosition = {x: 0, y: 0, zoom: 0};
+
+    this._onvifCamera = new OnvifCam({
+        hostname: settings.hostname, //"85.27.160.128",
+        username: settings.username,//"admin",
+        password: settings.password,//"admin",
+        port:     settings.port,// "8080"
+        }, function(err, result) {
+            if (err) { console.error("Could not initialize camera. (" + err.message + ")"); return; }
+            console.log("Camera initialized.");
+            self._updateStatus();
+        });
+};
+
+util.inherits(Camera, EventEmitter);
 
 
-var OnvifCamera = new OnvifCam({
-  hostname: "85.27.160.128",
-  username: "admin",
-  password: "admin",
-  port: "8080"
-}, function(err, result) {
-    if (err) { console.error("Could not initialize camera. (" + err.message + ")"); return; }
-    console.log("Camera initialized.");
-    /*setInterval(function(){
-        Camera.absoluteMove({x:9200.0, y:2500.0, zoom:1000.0});
-    }, 1000);*/
-});
+Camera.prototype._updateStatus = function(message) {
+    var self = this;
+    this._onvifCamera.getStatus(function(err, status){
+        //console.log(status, null, 2);
+        self._previousPosition = self.position;
+        var pos = self.position = status.position;
 
+        if (!posIsEqual(self._previousPosition, pos)) {
+            self._isMoving = true;
+            setTimeout(() => self._updateStatus(), 50);
+            self.emit("move", pos);
+        } else {
+            self._isMoving = false;
 
-Camera.moveTo = function(position) {
-    moveTarget = {x: parseFloat(position.x), y: parseFloat(position.y), zoom: parseFloat(position.zoom) };
+            if (self._isMovingTo) {
+                if(posIsEqual(self._moveTarget, pos)) {
+                    self._isMovingTo = false;
+                    console.log("MovingTo finished: x=" + pos.x + ", y=" + pos.y + ", zoom=" + pos.zoom);
+                } else {
+                    self.moveTo(self._moveTarget);
+                    // TODO: Create repeat limit and error reporting
+                    console.log("MovingTo repeat: x=" + pos.x + ", y=" + pos.y + ", zoom=" + pos.zoom);
+                }
+            }
+        }
+    });
+}
+
+Camera.prototype.moveTo = function(position) {
+    this._moveTarget = {x: parseFloat(position.x), y: parseFloat(position.y), zoom: parseFloat(position.zoom) };
     //absoluteTarget = {x:9200.0, y:2500.0, zoom:1000.0};
-    OnvifCamera.absoluteMove(moveTarget, function(){});
-    isMovingTo = true;
+    this._onvifCamera.absoluteMove(this._moveTarget, function(){});
+    this._isMovingTo = true;
     // Order: x, zoom, y
     //
-    setTimeout(updateStatus, 100);
+    setTimeout(() => this._updateStatus(), 100);
 }
 
 
-Camera.move = function(command) {
+Camera.prototype.move = function(command) {
     //console.log(direction);
     var direction = {x: 0, y: 0};
     switch(command) {
@@ -60,10 +92,10 @@ Camera.move = function(command) {
             direction.zoom = 1.0;
             break;
     }
-    OnvifCamera.continuousMove(direction, function(){});
-    isMovingTo = false;
-    //setTimeout(updateStatus, 100);
-    updateStatus();
+    this._onvifCamera.continuousMove(direction, function(){});
+    this._isMovingTo = false;
+    setTimeout(() => this._updateStatus(), 100);
+    //this._updateStatus();
 
 }
 
@@ -75,33 +107,5 @@ function isEqual(a, b) {
 function posIsEqual(a, b) {
     return isEqual(a.x, b.x) && isEqual(a.y, b.y) && isEqual(a.zoom, b.zoom);
 }
-
-function updateStatus() {
-
-    OnvifCamera.getStatus(function(err, status){
-        //console.log(status, null, 2);
-        previousPosition = Camera.position;
-        var pos = Camera.position = status.position;
-
-        if (!posIsEqual(previousPosition, pos)) {
-            isMoving = true;
-            setTimeout(updateStatus, 50);
-            Camera.emit("move", pos);
-        } else {
-            isMoving = false;
-
-            if (isMovingTo) {
-                if(posIsEqual(moveTarget, pos)) {
-                    isMovingTo = false;
-                    console.log("MovingTo finished: x=" + pos.x + ", y=" + pos.y + ", zoom=" + pos.zoom);
-                } else {
-                    Camera.moveTo(moveTarget);
-                    console.log("MovingTo repeat: x=" + pos.x + ", y=" + pos.y + ", zoom=" + pos.zoom);
-                }
-            }
-        }
-    });
-}
-
 
 module.exports = Camera;
