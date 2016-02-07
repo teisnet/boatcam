@@ -50,7 +50,7 @@ $.getJSON('api/berths', function(berthData) {
 });
 
 $(Camera).on('move', function (event, pos) {
-    $('.status').text("x: " + pos.x + "\xB0 y: " + pos.y + "\xB0 zoom: " + pos.zoom + "x");
+    $('.status').text("x: " + (pos.x).toFixed(1) + "\xB0 y: " + (pos.y).toFixed(1) + "\xB0 zoom: " + (pos.zoom).toFixed(1) + "x");
 });
 
 

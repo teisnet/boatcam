@@ -7,7 +7,8 @@ function Camera(settings) {
     EventEmitter.call(this);
     var self = this;
 
-    this.position = {x: 0, y: 0, zoom: 0};
+    // Position , moveTarget and previousPosition in degrees (not internal camera values)
+    this._position = {x: 0, y: 0, zoom: 0};
     this._isMoving = false;
     this._isMovingTo = false;
     this._moveTarget = {x: 0, y: 0, zoom: 0};
@@ -32,8 +33,9 @@ Camera.prototype._updateStatus = function(message) {
     var self = this;
     this._onvifCamera.getStatus(function(err, status){
         if (err) { console.error("Could not get camera status. (" + err.message + ")"); return; }
-        self._previousPosition = self.position;
-        var pos = self.position = status.position;
+
+        self._previousPosition = self._position;
+        var pos = self._position = cameraToDegrees(status.position);
 
         if (!posIsEqual(self._previousPosition, pos)) {
             self._isMoving = true;
@@ -57,12 +59,24 @@ Camera.prototype._updateStatus = function(message) {
     });
 }
 
+// Internal camera values are: x and y = x100, zoom = x1000
+function cameraToDegrees(internalPos) {
+    return {x: internalPos.x / 100.0, y: internalPos.y / 100.0, zoom: internalPos.zoom / 1000.0 };
+}
+
+function degreesToCamera(degreesPos) {
+    return {x: degreesPos.x * 100, y: degreesPos.y * 100, zoom: degreesPos.zoom * 1000.0 }; // parseFloat
+}
+
+Object.defineProperty(Camera.prototype, "position", {
+    get: function position() { return this._position; }
+});
+
 Camera.prototype.moveTo = function(position) {
-    this._moveTarget = {x: parseFloat(position.x), y: parseFloat(position.y), zoom: parseFloat(position.zoom) };
-    //absoluteTarget = {x:9200.0, y:2500.0, zoom:1000.0};
-    this._onvifCamera.absoluteMove(this._moveTarget, function(){});
-    this._isMovingTo = true;
+    this._moveTarget = position;
     // Camera move operations order: x, zoom, y
+    this._onvifCamera.absoluteMove(degreesToCamera(this._moveTarget), function(){});
+    this._isMovingTo = true;
     setTimeout(() => this._updateStatus(), 100);
 }
 
@@ -99,13 +113,13 @@ Camera.prototype.move = function(command) {
 
 }
 
-function isEqual(a, b) {
-    var margin = 5;
+function isEqual(a, b, m) {
+    var margin = m || 0.04;
     return a > (b - margin) && a < (b + margin) ? true : false;
 }
 
 function posIsEqual(a, b) {
-    return isEqual(a.x, b.x) && isEqual(a.y, b.y) && isEqual(a.zoom, b.zoom);
+    return isEqual(a.x, b.x) && isEqual(a.y, b.y) && isEqual(a.zoom, b.zoom, 0.004);
 }
 
 module.exports = Camera;

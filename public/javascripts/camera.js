@@ -4,14 +4,9 @@ var Camera = (function(){
 
     var socket = io();
 
-    socket.on("move", function(_sta){
-        _camera.position = _sta;
-        var sta = {};
-            sta.x = parseFloat(_sta.x / 100.0).toFixed(1);
-            sta.y = parseFloat(_sta.y / 100.0).toFixed(1);
-            sta.zoom = parseFloat(_sta.zoom / 1000.0).toFixed(1);
-
-            $(_camera).triggerHandler("move", sta);
+    socket.on("move", function(pos){
+        _camera.position = pos;
+        $(_camera).triggerHandler("move", pos);
     });
 
     _camera.position = {x: 0, y: 0, zoom: 0};
