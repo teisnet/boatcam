@@ -31,13 +31,14 @@ util.inherits(Camera, EventEmitter);
 Camera.prototype._updateStatus = function(message) {
     var self = this;
     this._onvifCamera.getStatus(function(err, status){
-        //console.log(status, null, 2);
+        if (err) { console.error("Could not get camera status. (" + err.message + ")"); return; }
         self._previousPosition = self.position;
         var pos = self.position = status.position;
 
         if (!posIsEqual(self._previousPosition, pos)) {
             self._isMoving = true;
             setTimeout(() => self._updateStatus(), 50);
+            // TODO: Ensure repeat limit
             self.emit("move", pos);
         } else {
             self._isMoving = false;
@@ -61,8 +62,7 @@ Camera.prototype.moveTo = function(position) {
     //absoluteTarget = {x:9200.0, y:2500.0, zoom:1000.0};
     this._onvifCamera.absoluteMove(this._moveTarget, function(){});
     this._isMovingTo = true;
-    // Order: x, zoom, y
-    //
+    // Camera move operations order: x, zoom, y
     setTimeout(() => this._updateStatus(), 100);
 }
 
