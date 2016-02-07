@@ -1,4 +1,3 @@
-
 var Camera = (function(){
 
     var _camera = {};

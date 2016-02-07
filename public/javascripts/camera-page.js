@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
     $(".camera-control .up").mousedown("up",onMoveCamera);
     $(".camera-control .left").mousedown("left",onMoveCamera);
@@ -11,7 +10,7 @@ $(document).ready(function(){
 
     $(".savecamerapos").bind("click", function(){
         var berthId = $('#berths').val();
-        $.post('api/berths/' + berthId + '/positions', Camera.status, function(res){ });
+        $.post('api/berths/' + berthId + '/positions', Camera.position, function(res){ });
     });
 
     $(".loadcamerapos").bind("click", function(){
