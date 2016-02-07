@@ -20,6 +20,27 @@ $(document).ready(function(){
             Camera.moveTo(res);
         });
     });
+
+    flowplayer("player", "http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf", {
+        'clip': {
+            'url':'HavneCam.stream',
+            'scaling':'fit',
+            'live': true,
+            'bufferLength': 0,
+            'bufferTime': 0,
+            'provider':'rtmp',
+            'autoplay': true // No effect
+        },
+        'plugins':{
+            'controls': { display: 'none'},
+            'rtmp':{
+                'url':'http://releases.flowplayer.org/flowplayer.rtmp/flowplayer.rtmp-3.2.13.swf',
+                'netConnectionUrl': 'rtmp://85.27.160.128:1935/live'
+                }
+            },
+        'canvas':{"backgroundColor": "#000000",'backgroundGradient':'none'}
+    });
+
 });
 
 $.getJSON('api/berths', function(berthData) {

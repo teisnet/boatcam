@@ -2,12 +2,7 @@ extends layout
 
 block content
     h1= title
-    object.camera(id="wowza_api" name="wowza_api" data="http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf" type="application/x-shockwave-flash")
-        param(name="allowfullscreen", value="true")
-        param(name="allowscriptaccess", value="always")
-        param(name="quality", value="high")
-        param(name="bgcolor", value="#ffffff")
-        param(name="flashvars",value="config={'clip':{'autoplay':'true','url':'#{url}','scaling':'fit','provider':'hddn'},'plugins':{'hddn':{'url':'flowplayer.rtmp-3.2.13.swf','netConnectionUrl':'rtmp://r.demo.flowplayer.netdna-cdn.com/play'}},'canvas':{'backgroundGradient':'none'},'playerId':'wowza','playlist':[{'autoplay':'true','url':'#{url}','scaling':'fit','provider':'hddn'}]}")
+    #player.camera
     div(style="clear: both;")
         p.status
         select#berths
