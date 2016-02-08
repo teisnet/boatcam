@@ -7,6 +7,7 @@ function Camera(settings) {
     EventEmitter.call(this);
     var self = this;
 
+    this.name = settings.name;
     // Position , moveTarget and previousPosition in degrees (not internal camera values)
     this._position = {x: 0, y: 0, zoom: 0};
     this._isMoving = false;
@@ -15,10 +16,10 @@ function Camera(settings) {
     this._previousPosition = {x: 0, y: 0, zoom: 0};
 
     this._onvifCamera = new OnvifCam({
-        hostname: settings.hostname, //"85.27.160.128",
-        username: settings.username,//"admin",
-        password: settings.password,//"admin",
-        port:     settings.onvif,// "8080"
+        hostname: settings.hostname,
+        username: settings.username,
+        password: settings.password,
+        port:     settings.onvif,
         }, function(err, result) {
             if (err) { console.error("Could not initialize camera. (" + err.message + ")"); return; }
             console.log("Camera initialized.");
@@ -40,7 +41,6 @@ Camera.prototype._updateStatus = function(message) {
         if (!posIsEqual(self._previousPosition, pos)) {
             self._isMoving = true;
             setTimeout(() => self._updateStatus(), 50);
-            // TODO: Ensure repeat limit
             self.emit("move", pos);
         } else {
             self._isMoving = false;
@@ -50,8 +50,8 @@ Camera.prototype._updateStatus = function(message) {
                     self._isMovingTo = false;
                     console.log("MovingTo finished: x=" + pos.x + ", y=" + pos.y + ", zoom=" + pos.zoom);
                 } else {
+                    // TODO: Implement repeat limit and error reporting
                     self.moveTo(self._moveTarget);
-                    // TODO: Create repeat limit and error reporting
                     console.log("MovingTo repeat: x=" + pos.x + ", y=" + pos.y + ", zoom=" + pos.zoom);
                 }
             }
