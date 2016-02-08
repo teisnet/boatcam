@@ -1,0 +1,63 @@
+{
+	"__v": 0,
+	"_id": {
+		"$oid": "56b382cf03379e60d1473308"
+	},
+	"number": "6-01",
+	"owner": "Teis Draiby",
+	"positions": [
+		{
+			"_id": {
+				"$oid": "56b767f89c7a5bac12c5af3b"
+			},
+			"cameraId": {
+				"$oid": "56abf7797e59e98422a1cf0d"
+			},
+			"x": 67.91,
+			"y": 32.81,
+			"zoom": 1
+		}
+	]
+}
+{
+	"__v": 0,
+	"_id": {
+		"$oid": "56b382cf03379e60d1473309"
+	},
+	"number": "5-04",
+	"owner": "Lars Granhøj",
+	"positions": [
+		{
+			"_id": {
+				"$oid": "56b76a817549b658278211ae"
+			},
+			"cameraId": {
+				"$oid": "56abf7797e59e98422a1cf0d"
+			},
+			"x": 257.15,
+			"y": 89.99,
+			"zoom": 22
+		}
+	]
+}
+{
+	"__v": 0,
+	"_id": {
+		"$oid": "56b382cf03379e60d147330a"
+	},
+	"number": "2-07",
+	"owner": "Hjalte Granhøj",
+	"positions": [
+		{
+			"_id": {
+				"$oid": "56b77ca9e50956b42d70025b"
+			},
+			"cameraId": {
+				"$oid": "56abf7797e59e98422a1cf0d"
+			},
+			"x": 208.41,
+			"y": 8.13,
+			"zoom": 8.481
+		}
+	]
+}

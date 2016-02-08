@@ -1,0 +1,40 @@
+{
+	"__v": 0,
+	"_id": {
+		"$oid": "56b380e1f4bf13d500bb5f9a"
+	},
+	"hostname": "85.27.160.128",
+	"name": "havn",
+	"onvif": 8080.0,
+	"password": "admin",
+	"title": "Havn",
+	"uri": "rtmp://85.27.160.128:1935/live/HavneCam.stream",
+	"username": "admin"
+}
+{
+	"__v": 0,
+	"_id": {
+		"$oid": "56b380e6f4bf13d500bb5f9b"
+	},
+	"name": "minkalv1",
+	"title": "Min Kalv 1",
+	"uri": "rtmp://192.168.1.36:5119/MinKalv1"
+}
+{
+	"__v": 0,
+	"_id": {
+		"$oid": "56b380eaf4bf13d500bb5f9c"
+	},
+	"name": "minkalv2",
+	"title": "Min Kalv 2",
+	"uri": "rtmp://192.168.1.36:5119/MinKalv2"
+}
+{
+	"__v": 0,
+	"_id": {
+		"$oid": "56b380ebf4bf13d500bb5f9d"
+	},
+	"name": "minkalv3",
+	"title": "Min Kalv 3",
+	"uri": "rtmp://192.168.1.36:5119/MinKalv3"
+}
