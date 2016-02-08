@@ -1,11 +1,11 @@
 @echo off
 setlocal
+title MONGODB SERVER
 echo.
 echo  MONGODB SERVER
 echo.
 echo ----------------------------------------------------------------
 echo.
-title MONGODB SERVER
 
 SET MONGODB_PATH=C:\Program Files\MongoDB\Server\3.2\bin
 SET DB_PATH=..\database\data\db
