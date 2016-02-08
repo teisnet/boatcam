@@ -1,15 +1,19 @@
-var cameras = require("../modules/Cameras");
+var Camera = require("../models/Camera");
 
 module.exports = function(io){
 
     io.on('connection', function(socket){
-        var camera = cameras[2];
-        console.log("A user connected");
-        socket.on("move", (command) => camera.move(command) );
-        socket.on("moveto", (pos) => camera.moveTo(pos) );
-        socket.emit("move", camera.position );
 
-        // TODO: Handle properly outside handler.
-        camera.on("move", (position) => io.emit("move", position) );
+        console.log("Sockets: io.connection");
+
+        Camera.findOne({name: "havn"}, function(err, camera){
+            socket.on("move", (command) => camera.move(command) );
+            socket.on("moveto", (pos) => camera.moveTo(pos) );
+            socket.emit("move", camera.position );
+        });
+    });
+
+    Camera.findOne({name: "havn"}, function(err, camera){
+        camera.onMove((position) => io.emit("move", position) );
     });
 }

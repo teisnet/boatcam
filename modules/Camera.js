@@ -2,10 +2,14 @@ const EventEmitter = require('events').EventEmitter;
 const util = require('util');
 var OnvifCam = require('onvif').Cam;
 
+var cameras = {};
 
 function Camera(settings) {
     EventEmitter.call(this);
     var self = this;
+
+    // TODO: Handle missing id. Consider using name.
+    cameras[settings._id] = this;
 
     this.name = settings.name;
     // Position , moveTarget and previousPosition in degrees (not internal camera values)
@@ -31,6 +35,8 @@ function Camera(settings) {
 
 util.inherits(Camera, EventEmitter);
 
+
+Camera.get = function(id) { return cameras[id]; }
 
 Camera.prototype._updateStatus = function(message) {
     var self = this;

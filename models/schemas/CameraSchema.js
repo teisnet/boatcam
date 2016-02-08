@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var IpCamera = require("../../modules/Camera");
 
 var CameraSchema = new mongoose.Schema({
 	name: String,
@@ -9,5 +10,28 @@ var CameraSchema = new mongoose.Schema({
     username: String,
     password: String
 });
+
+
+CameraSchema.post('init', function(doc) {
+    console.log('CameraSchema: document has been initialized (' + doc._id + ")");
+
+    this.camera = IpCamera.get(doc._id);
+    if (!this.camera) { this.camera = new IpCamera(doc); }
+});
+
+CameraSchema.virtual("position")
+	.get(function () { return this.camera.position; });
+
+CameraSchema.methods.move = function (command) {
+    this.camera.move(command);
+};
+
+CameraSchema.methods.onMove = function (handler) {
+    this.camera.on("move", handler);
+};
+
+CameraSchema.methods.moveTo = function (pos) {
+    this.camera.moveTo(pos);
+};
 
 module.exports = CameraSchema;
