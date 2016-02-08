@@ -1,40 +1,47 @@
-{
+[{
 	"__v": 0,
 	"_id": {
 		"$oid": "56b380e1f4bf13d500bb5f9a"
 	},
 	"hostname": "85.27.160.128",
 	"name": "havn",
-	"onvif": 8080.0,
+	"onvif": 8080,
 	"password": "admin",
 	"title": "Havn",
 	"uri": "rtmp://85.27.160.128:1935/live/HavneCam.stream",
 	"username": "admin"
-}
+},
 {
 	"__v": 0,
 	"_id": {
 		"$oid": "56b380e6f4bf13d500bb5f9b"
 	},
+	"api": "12345:12345@85.27.160.128:84/form/PTZSet",
 	"name": "minkalv1",
-	"title": "Min Kalv 1",
-	"uri": "rtmp://192.168.1.36:5119/MinKalv1"
-}
+	"title": "Min Kalv Mark",
+	"uri": "rtmp://85.27.160.128:5119/Minkalv1"
+},
 {
 	"__v": 0,
 	"_id": {
 		"$oid": "56b380eaf4bf13d500bb5f9c"
 	},
+	"api": "12345:12345@85.27.160.128:85/form/PTZSet",
 	"name": "minkalv2",
-	"title": "Min Kalv 2",
-	"uri": "rtmp://192.168.1.36:5119/MinKalv2"
-}
+	"title": "Min Kalv Tårn",
+	"uri": "rtmp://85.27.160.128:5119/Minkalv2"
+},
 {
-	"__v": 0,
 	"_id": {
-		"$oid": "56b380ebf4bf13d500bb5f9d"
+		"$oid": "56b89faae3ebd4b720a32316"
 	},
-	"name": "minkalv3",
-	"title": "Min Kalv 3",
-	"uri": "rtmp://192.168.1.36:5119/MinKalv3"
-}
+	"api": "12345:12345@85.27.160.128:83/form/PTZSet",
+	"hostname": "85.27.160.128",
+	"name": "tree",
+	"onvif": 8080.0,
+	"password": "admin",
+	"title": "Træ",
+	"uri": "rtmp://85.27.160.128:5119/MinKalv3",
+	"username": "admin"
+}]
+
