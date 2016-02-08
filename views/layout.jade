@@ -4,12 +4,8 @@ html
     base(href="http://localhost:3000")
     title= title
     script(type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js")
+    block stylesheets
     link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel="stylesheet" type="text/css" href="/javascripts/flowplayer/skin/minimalist.css")
-    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
-    script(type="text/javascript" src="/javascripts/flowplayer/flowplayer-3.2.13.min.js")
-    script(src="/socket.io/socket.io.js")
-    script(src="/javascripts/camera.js")
-    script(src="/javascripts/camera-page.js")
+    block scripts
   body
     block content

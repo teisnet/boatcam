@@ -3,17 +3,17 @@ extends layout
 block content
     h1= title
     #player.camera
-    div(style="clear: both;")
+    div.clearboth
         p.status
         select#berths
         .btn.btn-success.savecamerapos Gem position
         .btn.btn-success.loadcamerapos Hent position
-    div(style="clear: both;")
+    div.clearboth
     .camera-control
-        i.fa.fa-chevron-up.fa-3x.up
-        i.fa.fa-chevron-left.fa-3x.left
-        i.fa.fa-chevron-right.fa-3x.right
-        i.fa.fa-chevron-down.fa-3x.down
+        i.fa.fa-3x.fa-chevron-up.up
+        i.fa.fa-3x.fa-chevron-left.left
+        i.fa.fa-3x.fa-chevron-right.right
+        i.fa.fa-3x.fa-chevron-down.down
     .camera-control
         center
             button.btn.btn-primary.stop Stop
@@ -21,3 +21,13 @@ block content
             button.btn.btn-primary.zoom-in Zoom ind
         center
             button.btn.btn-primary.zoom-out Zoom ud
+
+block stylesheets
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
+    link(rel="stylesheet" type="text/css" href="/javascripts/flowplayer/skin/minimalist.css")
+
+block scripts
+    script(src="/socket.io/socket.io.js")
+    script(src="/javascripts/flowplayer/flowplayer-3.2.13.min.js")
+    script(src="/javascripts/camera.js")
+    script(src="/javascripts/camera-page.js")
