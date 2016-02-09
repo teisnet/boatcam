@@ -27,7 +27,7 @@ function Camera(settings) {
         port:     settings.onvif,
         }, function(err, result) {
             if (err) { console.error("Could not initialize camera. (" + err.message + ")"); return; }
-            console.log("Camera initialized.");
+            console.log("Camera \"" + self.name + "\" initialized.");
             self._online = true;
             self._updateStatus();
         });
@@ -46,13 +46,14 @@ Camera.prototype._updateStatus = function(message) {
             this._online = false;
             return;
         }
-
+        console.log("Camera.updateStatus[" + self.name + "]: recieved " + JSON.stringify(status.position) );
         self._previousPosition = self._position;
         var pos = self._position = cameraToDegrees(status.position);
 
         if (!posIsEqual(self._previousPosition, pos)) {
             self._isMoving = true;
             setTimeout(() => self._updateStatus(), 50);
+            console.log("Camera[" + self.name + "].move event: " +  JSON.stringify(pos));
             self.emit("move", pos);
         } else {
             self._isMoving = false;
@@ -89,6 +90,7 @@ Object.defineProperty(Camera.prototype, "position", {
 });
 
 Camera.prototype.moveTo = function(position) {
+    console.log("Camera[" + this.name + "].moveTo: " +  JSON.stringify(position));
     this._moveTarget = position;
     // TODO: Test for callback error when offline
     // Camera move operations order: x, zoom, y
@@ -99,7 +101,7 @@ Camera.prototype.moveTo = function(position) {
 
 
 Camera.prototype.move = function(command) {
-    //console.log(direction);
+    console.log("Camera[" + this.name + "].move: " +  command);
     var direction = {x: 0, y: 0};
     switch(command) {
         case "stop":
