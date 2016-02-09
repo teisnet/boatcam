@@ -2,7 +2,7 @@ var Camera = (function(){
 
     var _camera = {};
 
-    var socket = io();
+    var socket = io("/" + config.slug);
 
     socket.on("move", function(pos){
         _camera.position = pos;

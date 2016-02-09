@@ -1,19 +1,26 @@
-var Camera = require("../models/Camera");
+const Camera = require("../models/Camera");
 
 module.exports = function(io){
 
-    io.on('connection', function(socket){
+    Camera.find({}, function(err, cameras){
+        cameras.map(function(camera){
 
-        console.log("Sockets: io.connection");
+            var cameraSlug = camera.name.toLowerCase();
 
-        Camera.findOne({name: "havn"}, function(err, camera){
-            socket.on("move", (command) => camera.move(command) );
-            socket.on("moveto", (pos) => camera.moveTo(pos) );
-            socket.emit("move", camera.position );
+            var cameraNamespace = io.of(cameraSlug);
+            camera.onMove((position) => cameraNamespace.emit("move", position) );
+
+            cameraNamespace.on("connection", function(socket){
+
+                console.log("Sockets: " + cameraSlug + ".connection");
+
+                socket.emit("move", camera.position );
+
+                socket.on("move", (command) => camera.move(command) );
+                socket.on("moveto", (pos) => camera.moveTo(pos) );
+
+                socket.on("disconnect", ()=> console.log("Sockets: " + cameraSlug + ".disconnect") );
+            });
         });
-    });
-
-    Camera.findOne({name: "havn"}, function(err, camera){
-        camera.onMove((position) => io.emit("move", position) );
     });
 }

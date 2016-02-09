@@ -27,6 +27,26 @@ block stylesheets
     link(rel="stylesheet" type="text/css" href="/javascripts/flowplayer/skin/minimalist.css")
 
 block scripts
+    script.
+        var uri = "#{url}";
+        var slash = uri.lastIndexOf("/");
+
+        var config = {
+            slug: "#{slug}",
+            url: uri.substr(0, slash),
+            stream: uri.substr(slash + 1)
+        }
+
+        var configHavn = {
+            url: 'rtmp://85.27.160.128:1935/live',
+            stream: 'HavneCam.stream'
+        }
+
+        var configTree = {
+            slug: 'tree',
+            url: 'rtmp://85.27.160.128:5119',
+            stream: 'MinKalv3'
+        }
     script(src="/socket.io/socket.io.js")
     script(src="/javascripts/flowplayer/flowplayer-3.2.13.min.js")
     script(src="/javascripts/camera.js")

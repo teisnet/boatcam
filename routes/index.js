@@ -20,7 +20,7 @@ router.get('/cameras/:cameraName', function(req, res, next) {
   //var camera = req.app.locals.cameras[cameraName];
   Camera.findOne({name: cameraName}, function(err, camera){
         //res.render('cameras', { title: req.app.locals.title, cameras: cameras });
-        res.render('camera', { title: camera.title, url: camera.uri });
+        res.render('camera', { title: camera.title, url: camera.uri, slug: camera.name.toLowerCase() });
     });
 });
 
