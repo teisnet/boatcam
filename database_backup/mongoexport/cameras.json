@@ -38,7 +38,7 @@
 	"api": "12345:12345@85.27.160.128:83/form/PTZSet",
 	"hostname": "85.27.160.128",
 	"name": "tree",
-	"onvif": 8080.0,
+	"onvif": 8000.0,
 	"password": "admin",
 	"title": "Træ",
 	"uri": "rtmp://85.27.160.128:5119/MinKalv3",
