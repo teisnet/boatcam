@@ -1,3 +1,34 @@
+var down = {};
+
+$(document).keydown(function(event){
+    var key = event.which || event.keyCode || 0;
+
+    if (!down[key]) { // first press
+        down[key] = true; // record that the key's down
+
+        switch(key) {
+            case 38:
+                onMoveCameraKey("up");
+            break;
+            case 40:
+                onMoveCameraKey("down");
+            break;
+            case 37:
+                onMoveCameraKey("left");
+            break;
+            case 39:
+                onMoveCameraKey("right");
+            break;
+        }
+    }
+});
+
+$(document).keyup(function(event){
+    var key = event.which || event.keyCode || 0;
+    down[key] = null;
+    onMoveCameraKey("Stop");
+});
+
 $(document).ready(function(){
     $(".camera-control .up").mousedown("up",onMoveCamera);
     $(".camera-control .left").mousedown("left",onMoveCamera);
@@ -53,6 +84,10 @@ $(Camera).on('move', function (event, pos) {
     $('.status').text("x: " + pos.x.toFixed(1) + "\xB0 y: " + pos.y.toFixed(1) + "\xB0 zoom: " + pos.zoom.toFixed(1) + "x");
 });
 
+
+function onMoveCameraKey(command) {
+    Camera.move(command);
+};
 
 function onMoveCamera(event) {
     Camera.move(event.data);
