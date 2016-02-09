@@ -20,38 +20,47 @@ router.get('/berths', function(req, res, next) {
 });
 
 router.get('/berths/:id', function(req, res, next) {
-    Berth.findOne({_id: req.params.id}, function(err, berth){
+    var id = req.params.id;
+    Berth.findById(id, function(err, berth){
+        if (!berth) {
+            // TODO: consider returning null in subobject
+            res.status(404).send('There is no berth with id ' + id);
+            return;
+        }
         res.json(berth);
     });
 });
 
 router.route('/berths/:id/positions')
 .get(function(req, res, next){
-    Berth.findOne({_id: req.params.id}, function(err, berth){
+    var id = req.params.id;
+    Berth.findById(id, function(err, berth){
+        if (!berth) {
+            // TODO: consider returning empty array in subobject
+            res.status(404).send('There is no berth with id ' + id);
+            return;
+        }
         res.json(berth.positions[0]);
     });
 })
 .post(function(req, res, next) {
-    /*Berth.findOne({_id: req.params.id}, function(err, berth){
-        res.json(berth);
-    });*/
-    // ObjectId("56abf7797e59e98422a1cf0d")
+    var berthId = req.params.id;
         
     var newPosition = {cameraId: "56abf7797e59e98422a1cf0d", x: req.body.x, y: req.body.y, zoom: req.body.zoom }
     
     // find by document id and update
-    Berth.findOneAndUpdate(
-        {_id: req.params.id},
+    Berth.findByIdAndUpdate(
+        berthId,
         { $pull: { positions: { cameraId: new ObjectId("56abf7797e59e98422a1cf0d") } } },
         function(err, berth) {
             Berth.findByIdAndUpdate(
-            req.params.id,
-            {$push: {positions: newPosition}},
-            function(err, model) {
-                console.log(err);
-                console.log("Berth id: " + req.params.id + ", posx: " + req.body.x);
-                res.json({ message: 'Berth position created!' });
-            }
+                berthId,
+                {$push: {positions: newPosition}},
+                function(err, model) {
+                    console.log(err);
+                    //req.body.x, y and zoom
+                    res.json({ message: 'Created Berth position, berthId = ' + berthId});
+                }
         );
     });
     
