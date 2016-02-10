@@ -31,27 +31,29 @@ router.get('/berths/:id', function(req, res, next) {
     });
 });
 
-router.route('/berths/:id/positions')
+router.route('/berths/:berthId/positions/:cameraId')
 .get(function(req, res, next){
-    var id = req.params.id;
-    Berth.findById(id, function(err, berth){
+    var berthId = req.params.berthId;
+    var cameraId = req.params.cameraId;
+    Berth.findOne({_id: berthId, "positions.cameraId" : cameraId}, {'positions.$': 1}, function(err, berth){
         if (!berth) {
             // TODO: consider returning empty array in subobject
-            res.status(404).send('There is no berth with id ' + id);
+            res.status(404).send('Berth id ' + berthId + " containing position with camera id " + cameraId + " not found");
             return;
         }
         res.json(berth.positions[0]);
     });
 })
 .post(function(req, res, next) {
-    var berthId = req.params.id;
-        
-    var newPosition = {cameraId: "56abf7797e59e98422a1cf0d", x: req.body.x, y: req.body.y, zoom: req.body.zoom }
-    
+    var berthId = req.params.berthId;
+    var cameraId = req.params.cameraId;
+
+    var newPosition = {cameraId: cameraId, x: req.body.x, y: req.body.y, zoom: req.body.zoom }
+
     // find by document id and update
     Berth.findByIdAndUpdate(
         berthId,
-        { $pull: { positions: { cameraId: new ObjectId("56abf7797e59e98422a1cf0d") } } },
+        { $pull: { positions: { cameraId: new ObjectId(cameraId) } } },
         function(err, berth) {
             Berth.findByIdAndUpdate(
                 berthId,

@@ -24,7 +24,7 @@ router.get('/cameras/:cameraName', function(req, res, next) {
             return;
         }
         //res.render('cameras', { title: req.app.locals.title, cameras: cameras });
-        res.render('camera', { title: camera.title, url: camera.uri, slug: camera.name.toLowerCase() });
+        res.render('camera', { title: camera.title, camera: camera });
     });
 });
 
