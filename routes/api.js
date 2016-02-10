@@ -19,12 +19,12 @@ router.get('/berths', function(req, res, next) {
     });
 });
 
-router.get('/berths/:id', function(req, res, next) {
-    var id = req.params.id;
-    Berth.findById(id, function(err, berth){
+router.get('/berths/:berthId', function(req, res, next) {
+    var berthId = req.params.berthId;
+    Berth.findById(berthId, function(err, berth){
         if (!berth) {
             // TODO: consider returning null in subobject
-            res.status(404).send('There is no berth with id ' + id);
+            res.status(404).send('There is no berth with id ' + berthId);
             return;
         }
         res.json(berth);
@@ -65,7 +65,7 @@ router.route('/berths/:berthId/positions/:cameraId')
                 }
         );
     });
-    
+
     /*Berth.findById(req.params.id).exec()
     .then(function(doc){
         doc.positions.pull({ cameraId: new ObjectId("56abf7797e59e98422a1cf0d") });
