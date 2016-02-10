@@ -11,7 +11,7 @@
 				"$oid": "56b767f89c7a5bac12c5af3b"
 			},
 			"cameraId": {
-				"$oid": "56abf7797e59e98422a1cf0d"
+				"$oid": "56b380e1f4bf13d500bb5f9a"
 			},
 			"x": 67.91,
 			"y": 32.81,
@@ -32,7 +32,7 @@
 				"$oid": "56b76a817549b658278211ae"
 			},
 			"cameraId": {
-				"$oid": "56abf7797e59e98422a1cf0d"
+				"$oid": "56b380e1f4bf13d500bb5f9a"
 			},
 			"x": 257.15,
 			"y": 89.99,
@@ -53,7 +53,7 @@
 				"$oid": "56b882db288c2a7830c4a65e"
 			},
 			"cameraId": {
-				"$oid": "56abf7797e59e98422a1cf0d"
+				"$oid": "56b380e1f4bf13d500bb5f9a"
 			},
 			"x": 215.43,
 			"y": 1.2,
