@@ -20,12 +20,19 @@ CameraSchema.post('init', function(doc) {
 CameraSchema.virtual("position")
 	.get(function () { return this.camera.position; });
 
+CameraSchema.virtual("online")
+	.get(function () { return this.camera.online; });
+
 CameraSchema.methods.move = function (command) {
     this.camera.move(command);
 };
 
 CameraSchema.methods.onMove = function (handler) {
     this.camera.on("move", handler);
+};
+
+CameraSchema.methods.onOnline = function (handler) {
+    this.camera.on("online", handler);
 };
 
 CameraSchema.methods.moveTo = function (pos) {

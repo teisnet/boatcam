@@ -84,6 +84,10 @@ $(Camera).on('move', function (event, pos) {
     $('.status').text("x: " + pos.x.toFixed(1) + "\xB0 y: " + pos.y.toFixed(1) + "\xB0 zoom: " + pos.zoom.toFixed(1) + "x");
 });
 
+$(Camera).on('online', function (event, value) {
+    $(".circle").css('background-color', value ? '#0F0' : 'red');
+});
+
 
 function onMoveCameraKey(command) {
     Camera.move(command);
