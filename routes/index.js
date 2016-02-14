@@ -4,8 +4,11 @@ var router = express.Router();
 var Camera = require("../models/Camera");
 var Berth = require("../models/Berth");
 
-
 router.get('/', function(req, res, next) {
+    res.redirect('/cameras');
+});
+
+router.get('/cameras', function(req, res, next) {
     Camera.find({}, function(err, cameras){
         res.render('cameras', { title: req.app.locals.title, cameras: cameras });
     });
