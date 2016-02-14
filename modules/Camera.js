@@ -3,6 +3,7 @@ const util = require('util');
 var OnvifCam = require('onvif').Cam;
 
 var cameras = {};
+var reconnectTime = 7000;
 
 function Camera(settings) {
     EventEmitter.call(this);
@@ -14,9 +15,10 @@ function Camera(settings) {
     this.name = settings.name;
     // Position , moveTarget and previousPosition in degrees (not internal camera values)
     this._position = {x: 0, y: 0, zoom: 0};
+    this._pendingStatus = false;
     this._isMoving = false;
     this._isMovingTo = false;
-    this._online = false,
+    this._online = false;
     this._moveTarget = {x: 0, y: 0, zoom: 0};
     this._previousPosition = {x: 0, y: 0, zoom: 0};
 
@@ -28,12 +30,15 @@ function Camera(settings) {
         }, function(err, result) {
             if (err) {
                  console.error("Camera[" + self.name + "]: could not initialize camera (" + err.message + ")");
+                 //setTimeout(function(){ self.connect(); }, reconnectTime);
                  return;
             }
             console.log("Camera[" + self.name + "] initialized");
-            self._online = true;
+            self._setOnline(true);
             self._updateStatus();
         });
+
+    setInterval(() => self.connect(), reconnectTime);
 };
 
 util.inherits(Camera, EventEmitter);
@@ -41,12 +46,44 @@ util.inherits(Camera, EventEmitter);
 
 Camera.get = function(id) { return cameras[id]; }
 
-Camera.prototype._updateStatus = function(message) {
+Camera.prototype.connect = function() {
+    if (this._online) {
+        this._updateStatus();
+        return;
+    }
     var self = this;
+
+    this._onvifCamera.connect(function(err, result){
+        if (err) {
+            console.error("Camera[" + self.name + "]: could not initialize camera (" + err.message + ")");
+            // Still disconnected. Try again later.
+            //setTimeout(function(){ self.connect(); }, reconnectTime);
+            return;
+        }
+        console.log("Camera[" + self.name + "] initialized");
+        self._setOnline(true);
+        self._updateStatus();
+    });
+}
+
+Camera.prototype._setOnline = function(value) {
+    if (this._online == value) return;
+
+    this._online = value;
+    this.emit("online", this._online);
+}
+
+Camera.prototype._updateStatus = function(message) {
+    if (this._pendingStatus || !this._onvifCamera) return;
+    var self = this;
+
+    this._pendingStatus = true;
+
     this._onvifCamera.getStatus(function(err, status){
+        self._pendingStatus = false;
         if (err) {
             console.error("Camera[" + self.name + "].updateStatus: " + err.message + ")");
-            this._online = false;
+            self._setOnline(false);
             return;
         }
         console.log("Camera[" + self.name + "].updateStatus: recieved " + JSON.stringify(status.position) );
