@@ -1,3 +1,5 @@
+"use strict";
+
 const Camera = require("../models/Camera");
 
 module.exports = function(io){
@@ -5,7 +7,7 @@ module.exports = function(io){
     const camerasNamespace = io.of("/cameras");
     camerasNamespace.on("connection", function(socket){
         Camera.find({}, function(err, cameras){
-            var status = cameras.map(function(camera){
+            let status = cameras.map(function(camera){
                     return {id: camera._id, value: camera.online};
                 });
             camerasNamespace.emit("online", status);
@@ -16,9 +18,9 @@ module.exports = function(io){
     Camera.find({}, function(err, cameras){
         cameras.map(function(camera){
 
-            var cameraSlug = camera.name.toLowerCase();
+            let cameraSlug = camera.name.toLowerCase();
 
-            var cameraNamespace = io.of("/cameras/" + cameraSlug);
+            let cameraNamespace = io.of("/cameras/" + cameraSlug);
 
             camera.onMove((position) => cameraNamespace.emit("move", position) );
             camera.onOnline((value) => { cameraNamespace.emit("online", value); camerasNamespace.emit("online", {id: camera._id, value: value}); } );

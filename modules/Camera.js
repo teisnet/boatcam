@@ -1,8 +1,11 @@
+"use strict";
+
 const EventEmitter = require('events').EventEmitter;
 const util = require('util');
-var OnvifCam = require('onvif').Cam;
+const OnvifCam = require('onvif').Cam;
 
-var cameras = {};
+const cameras = {};
+
 var reconnectTime = 7000;
 
 function Camera(settings) {
