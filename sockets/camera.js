@@ -19,7 +19,7 @@ module.exports = function(io){
                 socket.on("move", (command) => camera.move(command) );
                 socket.on("moveto", (pos) => camera.moveTo(pos) );
 
-                socket.on("disconnect", ()=> console.log("Sockets: " + cameraSlug + ".disconnect") );
+                socket.on("disconnect", () => console.log("Sockets: " + cameraSlug + ".disconnect") );
             });
         });
     });

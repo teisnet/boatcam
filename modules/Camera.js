@@ -26,8 +26,11 @@ function Camera(settings) {
         password: settings.password,
         port:     settings.onvif,
         }, function(err, result) {
-            if (err) { console.error("Could not initialize camera. (" + err.message + ")"); return; }
-            console.log("Camera \"" + self.name + "\" initialized.");
+            if (err) {
+                 console.error("Camera[" + self.name + "]: could not initialize camera (" + err.message + ")");
+                 return;
+            }
+            console.log("Camera[" + self.name + "] initialized");
             self._online = true;
             self._updateStatus();
         });
@@ -42,18 +45,18 @@ Camera.prototype._updateStatus = function(message) {
     var self = this;
     this._onvifCamera.getStatus(function(err, status){
         if (err) {
-            console.error("Could not get camera status. (" + err.message + ")");
+            console.error("Camera[" + self.name + "].updateStatus: " + err.message + ")");
             this._online = false;
             return;
         }
-        console.log("Camera.updateStatus[" + self.name + "]: recieved " + JSON.stringify(status.position) );
+        console.log("Camera[" + self.name + "].updateStatus: recieved " + JSON.stringify(status.position) );
         self._previousPosition = self._position;
         var pos = self._position = cameraToDegrees(status.position);
 
         if (!posIsEqual(self._previousPosition, pos)) {
             self._isMoving = true;
             setTimeout(() => self._updateStatus(), 50);
-            console.log("Camera[" + self.name + "].move event: " +  JSON.stringify(pos));
+            console.log("Camera[" + self.name + "] move event: " +  JSON.stringify(pos));
             self.emit("move", pos);
         } else {
             self._isMoving = false;
@@ -61,11 +64,11 @@ Camera.prototype._updateStatus = function(message) {
             if (self._isMovingTo) {
                 if(posIsEqual(self._moveTarget, pos)) {
                     self._isMovingTo = false;
-                    console.log("MovingTo finished: x=" + pos.x + ", y=" + pos.y + ", zoom=" + pos.zoom);
+                    console.log("Camera[" + self.name + "] movingTo finished: x=" + pos.x + ", y=" + pos.y + ", zoom=" + pos.zoom);
                 } else {
                     // TODO: Implement repeat limit and error reporting
                     self.moveTo(self._moveTarget);
-                    console.log("MovingTo repeat: x=" + pos.x + ", y=" + pos.y + ", zoom=" + pos.zoom);
+                    console.log("Camera[" + self.name + "] movingTo repeat: x=" + pos.x + ", y=" + pos.y + ", zoom=" + pos.zoom);
                 }
             }
         }

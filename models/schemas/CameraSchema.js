@@ -13,8 +13,6 @@ var CameraSchema = new mongoose.Schema({
 
 
 CameraSchema.post('init', function(doc) {
-    console.log('CameraSchema: document has been initialized (' + doc._id + ")");
-
     this.camera = IpCamera.get(doc._id);
     if (!this.camera) { this.camera = new IpCamera(doc); }
 });
