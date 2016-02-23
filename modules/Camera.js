@@ -5,6 +5,7 @@ const util = require('util');
 const OnvifCam = require('onvif').Cam;
 var http = require('http');
 var fs = require('fs');
+var path = require("path");
 
 const cameras = {};
 
@@ -224,3 +225,30 @@ function download(url, tempFilepath, filepath, callback) {
     if (callback) callback(err.message);
     });
 };
+
+/*
+let snapshotFile = fs.createWriteStream(SnapshotFilename);
+        snapshotFile.on("open", function(){
+            http.get(snapshotUri, function(res) {
+                res.pipe(snapshotFile);
+                cb(null, SnapshotFilename);
+            });
+        });
+        */
+/*
+function download(url, tempFilepath, filepath, callback) {
+   var tempFile = fs.createWriteStream(path.join(__dirname, "../", tempFilepath));
+   tempFile.on('open', function(fd) {
+        http.get(url, function(res) {
+            res.on('data', function(chunk) {
+                tempFile.write(chunk);
+            }).on('end', function() {
+                tempFile.end();
+                fs.renameSync(tempFile.path, path.join(__dirname, "../", filepath));
+                return callback(filepath);
+            }).on("error", function(){
+                console.log("Error download");
+            });
+        });
+    });
+}*/
