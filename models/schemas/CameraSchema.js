@@ -13,6 +13,8 @@ var CameraSchema = new mongoose.Schema({
 });
 
 
+// available post events: init, validate, save, remove
+
 CameraSchema.post('init', function(doc) {
     this.camera = IpCamera.get(doc._id);
     if (!this.camera) { this.camera = new IpCamera(doc); }
@@ -28,6 +30,10 @@ CameraSchema.methods.move = function (command) {
     this.camera.move(command);
 };
 
+CameraSchema.methods.moveTo = function (pos) {
+    this.camera.moveTo(pos);
+};
+
 CameraSchema.methods.snapshot = function (err, cb) {
     this.camera.snapshot(err, cb);
 };
@@ -38,10 +44,6 @@ CameraSchema.methods.onMove = function (handler) {
 
 CameraSchema.methods.onOnline = function (handler) {
     this.camera.on("online", handler);
-};
-
-CameraSchema.methods.moveTo = function (pos) {
-    this.camera.moveTo(pos);
 };
 
 module.exports = CameraSchema;
