@@ -35,6 +35,12 @@ module.exports = function(io){
                 socket.on("move", (command) => camera.move(command) );
                 socket.on("moveto", (pos) => camera.moveTo(pos) );
 
+                socket.on("snapshot", (data, cb) => {
+                    camera.snapshot( (err, result) => {
+                        cb(result);
+                    } );
+                } );
+
                 socket.on("disconnect", () => console.log("Sockets: " + cameraSlug + ".disconnect") );
             });
         });

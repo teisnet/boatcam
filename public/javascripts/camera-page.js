@@ -39,6 +39,8 @@ $(document).ready(function(){
     $(".camera-control .zoom-in").mousedown("zoomIn",onMoveCamera);
     $(".camera-control .zoom-out").mousedown("zoomOut",onMoveCamera);
 
+    $(".camera-control .snapshot").click(onSnapshot);
+
     $(".savecamerapos").bind("click", function(){
         var berthId = $('#berths').val();
         $.post('api/berths/' + berthId + '/positions/' + config.cameraId, Camera.position, function(res){ });
@@ -101,4 +103,11 @@ function onMoveCamera(event) {
 function onStopCamera() {
     Camera.stop();
     $(document).unbind("mouseup", onStopCamera);
+}
+
+function onSnapshot() {
+    var snapshotWindow = window.open("","Snapshot","");
+    Camera.snapshot(function(err, result) {
+        snapshotWindow.location = "/snapshots/" + result;
+    });
 }

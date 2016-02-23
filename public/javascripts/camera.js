@@ -31,5 +31,11 @@ var Camera = (function(){
         socket.emit('move', "stop");
     }
 
+    _camera.snapshot = function(cb) {
+        socket.emit('snapshot', null, function(result) {
+            cb(null, result);
+        });
+    }
+
     return _camera;
 })();
