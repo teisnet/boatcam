@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+    h1 Opret ny bådplads
+    form
+        label Number:
+        input(type="text" name="number" placeholder="Nummer")
+        .clear
+        label Owner:
+        input(type="text" name="owner" placeholder="Ejer")
+        .clear
+        input#berthSubmit.btn.btn-success(type="submit" value="Opret")
+
+block scripts
+    script(src="/javascripts/admin/new-berth-page.js")

@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+    h1 #{berth.number} - #{berth.owner}
+    form
+        label Number:
+        input(type="text" name="number" value="#{berth.number}")
+        .clear
+        label Owner:
+        input(type="text" name="owner" value="#{berth.owner}")
+        .clear
+        input#berthSubmit.btn.btn-success(type="submit" value="Gem")
+        button#berthDelete.btn.btn-danger Slet plads
+
+block scripts
+    script.
+        var berthData =  !{JSON.stringify(berth, null, 2)}
+    script(src="/javascripts/admin/berth-page.js")

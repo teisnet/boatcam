@@ -13,13 +13,24 @@ router.get('/cameras', function(req, res, next) {
     });
 });
 
-router.get('/berths', function(req, res, next) {
+router.route('/berths')
+.get(function(req, res, next) {
     Berth.find({}, function(err, berths){
         res.json(berths);
     });
-});
+})
+// Create
+.post(function(req, res, next) {
+    var changes = req.body;
+    // find by document id and update
+    var berth = new Berth(changes);
+    berth.save(function(err, b){
+        res.json(berth);
+    });
+})
 
-router.get('/berths/:berthId', function(req, res, next) {
+router.route('/berths/:berthId')
+.get(function(req, res, next) {
     var berthId = req.params.berthId;
     Berth.findById(berthId, function(err, berth){
         if (!berth) {
@@ -29,6 +40,29 @@ router.get('/berths/:berthId', function(req, res, next) {
         }
         res.json(berth);
     });
+})
+// Update
+.put(function(req, res, next) {
+    var berthId = req.params.berthId;
+    var changes = req.body;
+    // find by document id and update
+    Berth.findByIdAndUpdate(
+        berthId,
+        { $set:  changes},
+        { new: true},
+        function(err, berth) {
+            res.json(berth);
+        }
+    );
+})
+.delete(function(req, res, next) {
+    var berthId = req.params.berthId;
+    Berth.findByIdAndRemove(
+        berthId,
+        function(err) {
+            res.sendStatus(200);
+        }
+    );
 });
 
 router.route('/berths/:berthId/positions/:cameraId')

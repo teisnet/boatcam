@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+    h1 Bådpladser
+    ul
+        each berth in berths
+            li(id="#{berth._id}")
+                a(href="admin/berths/#{berth.number}") #{berth.number} - #{berth.owner}
+    a.btn.btn-success(href="admin/berths/new") Opret ny plads
