@@ -6,6 +6,7 @@
 	"hostname": "85.27.160.128",
 	"name": "havn",
 	"onvif": 8080,
+	"http": 88,
 	"password": "admin",
 	"title": "Havn",
 	"uri": "rtmp://85.27.160.128:1935/live/HavneCam.stream",
@@ -16,6 +17,7 @@
 	"_id": {
 		"$oid": "56b380e6f4bf13d500bb5f9b"
 	},
+	"http": 84,
 	"api": "12345:12345@85.27.160.128:84/form/PTZSet",
 	"name": "minkalv1",
 	"title": "Min Kalv Mark",
@@ -26,6 +28,7 @@
 	"_id": {
 		"$oid": "56b380eaf4bf13d500bb5f9c"
 	},
+	"http": 85,
 	"api": "12345:12345@85.27.160.128:85/form/PTZSet",
 	"name": "minkalv2",
 	"title": "Min Kalv Tårn",
@@ -39,6 +42,7 @@
 	"hostname": "85.27.160.128",
 	"name": "tree",
 	"onvif": 8000.0,
+	"http": 83,
 	"password": "admin",
 	"title": "Træ",
 	"uri": "rtmp://85.27.160.128:5119/MinKalv3",

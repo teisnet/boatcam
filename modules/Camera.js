@@ -3,6 +3,8 @@
 const EventEmitter = require('events').EventEmitter;
 const util = require('util');
 const OnvifCam = require('onvif').Cam;
+var http = require('http');
+var fs = require('fs');
 
 const cameras = {};
 
@@ -24,6 +26,7 @@ function Camera(settings) {
     this._online = false;
     this._moveTarget = {x: 0, y: 0, zoom: 0};
     this._previousPosition = {x: 0, y: 0, zoom: 0};
+    this._settings = settings;
 
     this._onvifCamera = new OnvifCam({
         hostname: settings.hostname,
@@ -176,6 +179,28 @@ Camera.prototype.move = function(command) {
 
 }
 
+Camera.prototype.snapshot = function(cb) {
+    var self = this;
+    if (!this._onvifCamera) return;
+    this._onvifCamera.getSnapshotUri(function(err, result){
+        if (err) {
+            console.error("Camera[" + self.name + "].snapshot: " + err.message + ")");
+            cb(err);
+            return;
+        }
+
+        let credentials = self._settings.username + ":" + self._settings.password + "@";
+        let snapshotUri = "http://" + credentials + self._settings.hostname + ":" + self._settings.http +  result.uri.replace(/^.*\/\/[^\/]+/, '');
+
+        console.log("Camera[" + self.name + "].snapshot: " +  snapshotUri);
+
+        let timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '');
+        let SnapshotFilename = "files/snapshot_" + self.name + "-" + timestamp + ".jpg";
+
+        download(snapshotUri, "temp", SnapshotFilename, function(filePath){ cb(null, filePath); });
+    });
+}
+
 function isEqual(a, b, m) {
     var margin = m || 0.04;
     return a > (b - margin) && a < (b + margin) ? true : false;
@@ -186,3 +211,16 @@ function posIsEqual(a, b) {
 }
 
 module.exports = Camera;
+
+function download(url, tempFilepath, filepath, callback) {
+    var file = fs.createWriteStream(filepath);
+    var request = http.get(url, function(response) {
+        response.pipe(file);
+        file.on('finish', function() {
+            file.close(callback);  // close() is async, call cb after close completes.
+        });
+    }).on('error', function(err) { // Handle errors
+        fs.unlink(filepath); // Delete the file async. (But we don't check the result)
+    if (callback) callback(err.message);
+    });
+};

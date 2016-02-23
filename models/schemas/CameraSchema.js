@@ -7,6 +7,7 @@ var CameraSchema = new mongoose.Schema({
     uri: String,
     hostname: String,
     onvif: Number,
+    http: Number,
     username: String,
     password: String
 });
@@ -25,6 +26,10 @@ CameraSchema.virtual("online")
 
 CameraSchema.methods.move = function (command) {
     this.camera.move(command);
+};
+
+CameraSchema.methods.snapshot = function (err, cb) {
+    this.camera.snapshot(err, cb);
 };
 
 CameraSchema.methods.onMove = function (handler) {
