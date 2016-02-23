@@ -35,16 +35,7 @@ function Camera(settings) {
         username: settings.username,
         password: settings.password,
         port:     settings.onvif,
-        }, function(err, result) {
-            if (err) {
-                 console.error("Camera[" + self.name + "]: could not initialize camera (" + err.message + ")");
-                 //setTimeout(function(){ self.connect(); }, reconnectTime);
-                 return;
-            }
-            console.log("Camera[" + self.name + "] initialized");
-            self._setOnline(true);
-            self._updateStatus();
-        });
+        }, connectHandler.bind(this) );
 
     setInterval(() => self.connect(), reconnectTime);
 };
@@ -59,19 +50,20 @@ Camera.prototype.connect = function() {
         this._updateStatus();
         return;
     }
-    var self = this;
 
-    this._onvifCamera.connect(function(err, result){
-        if (err) {
-            console.error("Camera[" + self.name + "]: could not initialize camera (" + err.message + ")");
-            // Still disconnected. Try again later.
-            //setTimeout(function(){ self.connect(); }, reconnectTime);
-            return;
-        }
-        console.log("Camera[" + self.name + "] initialized");
-        self._setOnline(true);
-        self._updateStatus();
-    });
+    this._onvifCamera.connect( connectHandler.bind(this) );
+}
+
+function connectHandler(err, result){
+    if (err) {
+        console.error("Camera[" + this.name + "]: could not initialize camera (" + err.message + ")");
+        // Still disconnected. Try again later.
+        //setTimeout(function(){ self.connect(); }, reconnectTime);
+        return;
+    }
+    console.log("Camera[" + this.name + "] initialized");
+    this._setOnline(true);
+    this._updateStatus();
 }
 
 Camera.prototype._setOnline = function(value) {
