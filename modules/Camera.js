@@ -7,6 +7,7 @@ var http = require('http');
 var fs = require('fs');
 var path = require("path");
 
+let snapshotPath = "files";
 const cameras = {};
 
 var reconnectTime = 7000;
@@ -196,9 +197,9 @@ Camera.prototype.snapshot = function(cb) {
         console.log("Camera[" + self.name + "].snapshot: " +  snapshotUri);
 
         let timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '');
-        let SnapshotFilename = "files/snapshot_" + self.name + "-" + timestamp + ".jpg";
+        let snapshotFilename = "snapshot_" + self.name + "-" + timestamp + ".jpg";
 
-        download(snapshotUri, "temp", SnapshotFilename, function(filePath){ cb(null, filePath); });
+        download(snapshotUri, snapshotFilename, function(err){ cb(err, snapshotFilename); });
     });
 }
 
@@ -213,7 +214,8 @@ function posIsEqual(a, b) {
 
 module.exports = Camera;
 
-function download(url, tempFilepath, filepath, callback) {
+function download(url, filename, callback) {
+    let filepath = path.join(snapshotPath, filename);
     var file = fs.createWriteStream(filepath);
     var request = http.get(url, function(response) {
         response.pipe(file);
@@ -222,7 +224,7 @@ function download(url, tempFilepath, filepath, callback) {
         });
     }).on('error', function(err) { // Handle errors
         fs.unlink(filepath); // Delete the file async. (But we don't check the result)
-    if (callback) callback(err.message);
+        if (callback) callback(err.message);
     });
 };
 
@@ -236,7 +238,9 @@ let snapshotFile = fs.createWriteStream(SnapshotFilename);
         });
         */
 /*
-function download(url, tempFilepath, filepath, callback) {
+function download(url, filename, callback) {
+   let tempFilepath = "temp";
+   let filepath = path.join(snapshotPath, filename);
    var tempFile = fs.createWriteStream(path.join(__dirname, "../", tempFilepath));
    tempFile.on('open', function(fd) {
         http.get(url, function(res) {
