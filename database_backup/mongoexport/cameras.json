@@ -10,7 +10,8 @@
 	"password": "admin",
 	"title": "Havn",
 	"uri": "rtmp://85.27.160.128:1935/live/HavneCam.stream",
-	"username": "admin"
+	"username": "admin",
+	"enabled": true
 },
 {
 	"__v": 0,
@@ -21,7 +22,8 @@
 	"api": "12345:12345@85.27.160.128:84/form/PTZSet",
 	"name": "minkalv1",
 	"title": "Min Kalv Mark",
-	"uri": "rtmp://85.27.160.128:5119/Minkalv1"
+	"uri": "rtmp://85.27.160.128:5119/Minkalv1",
+	"enabled": false
 },
 {
 	"__v": 0,
@@ -32,7 +34,8 @@
 	"api": "12345:12345@85.27.160.128:85/form/PTZSet",
 	"name": "minkalv2",
 	"title": "Min Kalv Tårn",
-	"uri": "rtmp://85.27.160.128:5119/Minkalv2"
+	"uri": "rtmp://85.27.160.128:5119/Minkalv2",
+	"enabled": false
 },
 {
 	"_id": {
@@ -46,6 +49,7 @@
 	"password": "admin",
 	"title": "Træ",
 	"uri": "rtmp://85.27.160.128:5119/MinKalv3",
-	"username": "admin"
+	"username": "admin",
+	"enabled": true
 }]
 

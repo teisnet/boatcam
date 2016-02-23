@@ -30,8 +30,25 @@ i:hover {
     width: @circle-size;
     height: @circle-size;
     border-radius: @circle-size / 2;
+    border: 1px solid #bbb;
+    background-color: transparent;
+}
+
+.online .circle {
+    border: none;
+    background-color: #0F0;
+}
+
+.offline .circle {
+    border: none;
+    background-color: #F00;
+}
+
+.disabled .circle {
+    border: none;
     background-color: lightgray;
 }
+
 
 .camera-control {
     width: 100px;

@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var IpCamera = require("../../modules/Camera");
 
 var CameraSchema = new mongoose.Schema({
+    enabled: Boolean,
 	name: String,
 	title: String,
     uri: String,
@@ -26,6 +27,9 @@ CameraSchema.virtual("position")
 CameraSchema.virtual("online")
 	.get(function () { return this.camera.online; });
 
+CameraSchema.virtual("status")
+	.get(function () { return this.camera.status; });
+
 CameraSchema.methods.move = function (command) {
     this.camera.move(command);
 };
@@ -42,8 +46,8 @@ CameraSchema.methods.onMove = function (handler) {
     this.camera.on("move", handler);
 };
 
-CameraSchema.methods.onOnline = function (handler) {
-    this.camera.on("online", handler);
+CameraSchema.methods.onStatus = function (handler) {
+    this.camera.on("status", handler);
 };
 
 module.exports = CameraSchema;

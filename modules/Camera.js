@@ -25,19 +25,24 @@ function Camera(settings) {
     this._pendingStatus = false;
     this._isMoving = false;
     this._isMovingTo = false;
-    this._online = false;
     this._moveTarget = {x: 0, y: 0, zoom: 0};
     this._previousPosition = {x: 0, y: 0, zoom: 0};
     this._settings = settings;
+    this._online = false;
+    this._enabled = settings.enabled;
 
-    this._onvifCamera = new OnvifCam({
-        hostname: settings.hostname,
-        username: settings.username,
-        password: settings.password,
-        port:     settings.onvif,
-        }, connectHandler.bind(this) );
+    if (this._enabled) {
+        this._onvifCamera = new OnvifCam({
+            hostname: settings.hostname,
+            username: settings.username,
+            password: settings.password,
+            port:     settings.onvif,
+            }, connectHandler.bind(this) );
 
-    setInterval(() => self.connect(), reconnectTime);
+        setInterval(() => self.connect(), reconnectTime);
+    } else {
+     console.log("Camera[" + this.name + "]: disabled");
+    }
 };
 
 util.inherits(Camera, EventEmitter);
@@ -70,7 +75,7 @@ Camera.prototype._setOnline = function(value) {
     if (this._online == value) return;
 
     this._online = value;
-    this.emit("online", this._online);
+    this.emit("status", this.status);
 }
 
 Camera.prototype._updateStatus = function(message) {
@@ -123,6 +128,10 @@ function degreesToCamera(degreesPos) {
 
 Object.defineProperty(Camera.prototype, "online", {
     get: function online() { return this._online; }
+});
+
+Object.defineProperty(Camera.prototype, "status", {
+    get: function status() { return { enabled: this._enabled, online: this._online, status: this._online ? "online" : this._enabled ? "offline" : "disabled"  } }
 });
 
 Object.defineProperty(Camera.prototype, "position", {

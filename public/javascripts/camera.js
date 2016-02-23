@@ -9,9 +9,11 @@ var Camera = (function(){
         $(_camera).triggerHandler("move", pos);
     });
 
-    socket.on("online", function(value){
-        _camera.online = value;
-        $(_camera).triggerHandler("online", value);
+    socket.on("status", function(value){
+        _camera.online = value.online;
+        _camera.enabled = value.enabled;
+        _camera.status = value.status;
+        $(_camera).triggerHandler("status", value);
     });
 
     _camera.position = {x: 0, y: 0, zoom: 0};

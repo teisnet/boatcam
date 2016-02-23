@@ -2,10 +2,13 @@
 
 var socket = io("/cameras");
 
-socket.on("online", function(status){
-    $.isArray(status) ? status.map(function(value) { setOnline(value); }) : setOnline(status);
+socket.on("status", function(status){
+    $.isArray(status) ? status.map(function(value) { setStatus(value); }) : setStatus(status);
 });
 
-function setOnline(status) {
-    $("#" + status.id + " .circle").css('background-color', status.value ? '#0F0' : 'red');
+function setStatus(status) {
+    var element = $("#" + status._id);
+
+   element.removeClass("online offline disabled");
+   element.addClass(status.status);
 }
