@@ -34,7 +34,6 @@ global = {
 
 function Camera(settings) {
     EventEmitter.call(this);
-    var self = this;
 
     // TODO: Handle missing id. Consider using name.
     cameras[settings._id] = this;
@@ -42,27 +41,20 @@ function Camera(settings) {
     this.name = settings.name;
     // Position , moveTarget and previousPosition in degrees (not internal camera values)
     this._position = {x: 0, y: 0, zoom: 0};
+
     this._pendingStatus = false;
+    this._pendingConnect = false;
+
     this._isMoving = false;
     this._isMovingTo = false;
     this._moveTarget = {x: 0, y: 0, zoom: 0};
     this._previousPosition = {x: 0, y: 0, zoom: 0};
     this._settings = settings;
     this._online = false;
-    this._enabled = settings.enabled;
+    this._enabled = false;
+    this._heartbeat = null;
 
-    if (this._enabled) {
-        this._onvifCamera = new OnvifCam({
-            hostname: settings.hostname,
-            username: settings.username,
-            password: settings.password,
-            port:     settings.onvif,
-            }, connectHandler.bind(this) );
-
-        setInterval(() => self.connect(), reconnectTime);
-    } else {
-     console.log("Camera[" + this.name + "]: disabled");
-    }
+    if (settings.enabled) this.enable();
 };
 
 util.inherits(Camera, EventEmitter);
@@ -70,25 +62,61 @@ util.inherits(Camera, EventEmitter);
 
 Camera.get = function(id) { return cameras[id]; }
 
-Camera.prototype.connect = function() {
-    if (this._online) {
-        this._updateStatus();
-        return;
-    }
 
-    this._onvifCamera.connect( connectHandler.bind(this) );
+Camera.prototype.enable = function() {
+    if (this._enabled) return;
+
+    this._enabled = true;
+    this._connect();
+    this._heartbeat = setInterval( () => { this._connect(); } , reconnectTime);
+
+    console.log("Camera[" + this.name + "]: enabled");
 }
 
-function connectHandler(err, result){
-    if (err) {
-        console.error("Camera[" + this.name + "]: could not initialize camera (" + err.message + ")");
-        // Still disconnected. Try again later.
-        //setTimeout(function(){ self.connect(); }, reconnectTime);
+
+Camera.prototype.disable = function() {
+    if (!this._enabled) return;
+
+    this._enabled = false;
+    // TODO: Stop any movements in progress
+    clearInterval(this._heartbeat);
+    this._setOnline(false);
+    console.log("Camera[" + this.name + "]: disabled");
+}
+
+
+Camera.prototype._connect = function() {
+    if (this._pendingConnect || this._pendingStatus) {
         return;
     }
-    console.log("Camera[" + this.name + "] initialized");
-    this._setOnline(true);
-    this._updateStatus();
+    else if (this._online) {
+        this._updateStatus();
+    } else if (this._onvifCamera) {
+        this._pendingConnect = true;
+        this._onvifCamera.connect( connectHandler.bind(this) );
+    }
+    else {
+        this._pendingConnect = true;
+        this._onvifCamera = new OnvifCam({
+            hostname: this._settings.hostname,
+            username: this._settings.username,
+            password: this._settings.password,
+            port:     this._settings.onvif,
+        }, connectHandler.bind(this) );
+    }
+
+    function connectHandler(err, result){
+        this._pendingConnect = false;
+        if (err) {
+            console.error("Camera[" + this.name + "]: could not connect camera (" + err.message + ")");
+            // Still disconnected. Try again later.
+            //setTimeout(function(){ self.connect(); }, reconnectTime);
+            return;
+        }
+        console.log("Camera[" + this.name + "] connected");
+        this._setOnline(true);
+        this._updateStatus();
+    }
 }
 
 Camera.prototype._setOnline = function(value) {
@@ -145,6 +173,11 @@ function cameraToDegrees(internalPos) {
 function degreesToCamera(degreesPos) {
     return {x: degreesPos.x * 100, y: degreesPos.y * 100, zoom: degreesPos.zoom * 1000.0 }; // parseFloat
 }
+
+
+Object.defineProperty(Camera.prototype, "enabled", {
+    get: function getEnabled() { return this._enabled; }
+});
 
 Object.defineProperty(Camera.prototype, "online", {
     get: function online() { return this._online; }
