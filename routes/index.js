@@ -33,7 +33,7 @@ router.get('/cameras', function(req, res, next) {
 
 
 router.get('/cameras/:cameraName', function(req, res, next) {
-  var cameraName = req.params.cameraName.toLowerCase();
+  var cameraName = req.params.cameraName;
 
   Camera.findOne({name: cameraName}, function(err, camera){
         if (!camera) {

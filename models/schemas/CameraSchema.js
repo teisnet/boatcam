@@ -3,14 +3,14 @@ var IpCamera = require("../../modules/Camera");
 
 var CameraSchema = new mongoose.Schema({
     enabled: Boolean,
-	name: String,
+	name: { type: String, lowercase: true, trim: true },
 	title: String,
     uri: String,
     hostname: String,
     onvif: Number,
     http: Number,
-    username: String,
-    password: String
+    username: { type: String, trim: true },
+    password: { type: String, trim: true }
 });
 
 

@@ -7,7 +7,7 @@ block content
         each camera in cameras
             li(id="#{camera._id}")
                 .circle
-                a(href="cameras/#{camera.name.toLowerCase()}")= camera.title
+                a(href="cameras/#{camera.name}")= camera.title
 
 block scripts
     script.

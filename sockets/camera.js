@@ -20,7 +20,7 @@ module.exports = function(io){
     Camera.find({}, function(err, cameras){
         cameras.map(function(camera){
 
-            let cameraSlug = camera.name.toLowerCase();
+            let cameraSlug = camera.name;
 
             let cameraNamespace = io.of("/cameras/" + cameraSlug);
 
