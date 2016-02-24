@@ -6,11 +6,61 @@ var ObjectId = require('mongoose').Types.ObjectId;
 var Berth = require("../models/Berth");
 var Camera = require("../models/Camera");
 
-
-router.get('/cameras', function(req, res, next) {
+// CAMERAS
+router.route('/cameras')
+// Get all
+.get(function(req, res, next) {
     Camera.find({}, function(err, cameras){
         res.json(cameras);
     });
+})
+// Create
+.post(function(req, res, next) {
+    var newCameraParams = req.body;
+    newCameraParams.name = newCameraParams.name.toLowerCase();
+    // find by document id and update
+    var newCamera = new Camera(newCameraParams);
+    newCamera.save(function(err, camera){
+        res.json(camera);
+    });
+})
+
+
+router.route('/cameras/:cameraId')
+// Get one
+.get(function(req, res, next) {
+    var cameraId = req.params.cameraId;
+    Camera.findById(cameraId, function(err, camera){
+        if (!camera) {
+            res.status(404).send('There is no camera with id ' + cameraId);
+            return;
+        }
+        res.json(camera);
+    });
+})
+// Update
+.put(function(req, res, next) {
+    var cameraId = req.params.cameraId;
+    var changes = req.body;
+    // find by document id and update
+    Camera.findByIdAndUpdate(
+        cameraId,
+        { $set:  changes},
+        { new: true},
+        function(err, camera) {
+            res.json(camera);
+        }
+    );
+})
+// Delete
+.delete(function(req, res, next) {
+    var cameraId = req.params.cameraId;
+    Camera.findByIdAndRemove(
+        cameraId,
+        function(err) {
+            res.sendStatus(200);
+        }
+    );
 });
 
 

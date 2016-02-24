@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+    h1 Opret nyt camera
+    form
+        label Titel:
+        input(type="text" name="title" placeholder="Titel")
+        .clear
+        label Navn:
+        input(type="text" name="name" placeholder="Navn")
+        .clear
+        input#cameraSubmit.btn.btn-success(type="submit" value="Opret")
+
+block scripts
+    script(src="/javascripts/admin/admin-new-camera-page.js")

@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+    h1= title
+    h2 Kameraer
+    ul
+        each camera in cameras
+            li(id="#{camera._id}")
+                .circle
+                a(href="admin/cameras/#{camera.name.toLowerCase()}")= camera.title
+    a.btn.btn-success(href="admin/cameras/new") Opret nyt kamera
+
+block scripts
+    script.
+        var camerasData =  !{JSON.stringify(cameras, null, 2)}
+    script(src="/socket.io/socket.io.js")
+    script(src="/javascripts/cameras-page.js")

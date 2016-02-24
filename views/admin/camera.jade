@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+    h1 #{camera.title}
+    form
+        label Title:
+        input(type="text" name="title" value="#{camera.title}")
+        .clear
+        label Name:
+        input(type="text" name="name" value="#{camera.name}")
+        .clear
+        input#cameraSubmit.btn.btn-success(type="submit" value="Gem")
+        button#cameraDelete.btn.btn-danger Slet kamera
+
+block scripts
+    script.
+        var cameraData =  !{JSON.stringify(camera, null, 2)}
+    script(src="/javascripts/admin/admin-camera-page.js")
