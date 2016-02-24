@@ -11,7 +11,7 @@ $(document).ready(function(){
             data: $('form').serialize(),
             success: function(data) {
                         console.log("OK: " + JSON.stringify(data));
-                        document.location.href = '/admin/cameras/' + data.name;
+                        document.location.href = '/admin/cameras/' + data.slug;
                     }
         });
     });

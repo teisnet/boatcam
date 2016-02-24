@@ -7,7 +7,7 @@ block content
         each camera in cameras
             li(id="#{camera._id}")
                 .circle
-                a(href="admin/cameras/#{camera.name}")= camera.title
+                a(href="admin/cameras/#{camera.slug}")= camera.title
     a.btn.btn-success(href="admin/cameras/new") Opret nyt kamera
 
 block scripts

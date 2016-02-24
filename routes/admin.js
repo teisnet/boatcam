@@ -24,9 +24,9 @@ router.get('/cameras/new', function(req, res, next) {
 });
 
 
-router.get('/cameras/:cameraName', function(req, res, next) {
-    let cameraName = req.params.cameraName;
-    Camera.findOne({name: cameraName}, function(err, camera){
+router.get('/cameras/:cameraSlug', function(req, res, next) {
+    let cameraSlug = req.params.cameraSlug;
+    Camera.findOne({slug: cameraSlug}, function(err, camera){
         // TODO: 404
         res.render('admin/camera', { title: req.app.locals.title, camera: camera });
     });
