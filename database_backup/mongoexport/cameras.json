@@ -4,7 +4,7 @@
 		"$oid": "56b380e1f4bf13d500bb5f9a"
 	},
 	"hostname": "85.27.160.128",
-	"name": "havn",
+	"slug": "havn",
 	"onvif": 8080,
 	"http": 88,
 	"password": "admin",
@@ -20,7 +20,7 @@
 	},
 	"http": 84,
 	"api": "12345:12345@85.27.160.128:84/form/PTZSet",
-	"name": "minkalv1",
+	"slug": "minkalv1",
 	"title": "Min Kalv Mark",
 	"uri": "rtmp://85.27.160.128:5119/Minkalv1",
 	"enabled": false
@@ -32,7 +32,7 @@
 	},
 	"http": 85,
 	"api": "12345:12345@85.27.160.128:85/form/PTZSet",
-	"name": "minkalv2",
+	"slug": "minkalv2",
 	"title": "Min Kalv Tårn",
 	"uri": "rtmp://85.27.160.128:5119/Minkalv2",
 	"enabled": false
@@ -43,7 +43,7 @@
 	},
 	"api": "12345:12345@85.27.160.128:83/form/PTZSet",
 	"hostname": "85.27.160.128",
-	"name": "tree",
+	"slug": "tree",
 	"onvif": 8000.0,
 	"http": 83,
 	"password": "admin",

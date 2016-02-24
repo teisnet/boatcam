@@ -20,9 +20,7 @@ module.exports = function(io){
     Camera.find({}, function(err, cameras){
         cameras.map(function(camera){
 
-            let cameraSlug = camera.name;
-
-            let cameraNamespace = io.of("/cameras/" + cameraSlug);
+            let cameraNamespace = io.of("/cameras/" + camera.slug);
 
             camera.onMove( (position) => cameraNamespace.emit("move", position) );
 
@@ -34,7 +32,7 @@ module.exports = function(io){
 
             cameraNamespace.on("connection", function(socket){
 
-                console.log("Sockets: " + cameraSlug + ".connection");
+                console.log("Sockets: " + camera.slug + ".connection");
 
                 socket.emit("move", camera.position );
                 socket.emit("status", camera.status );
@@ -48,7 +46,7 @@ module.exports = function(io){
                     } );
                 } );
 
-                socket.on("disconnect", () => console.log("Sockets: " + cameraSlug + ".disconnect") );
+                socket.on("disconnect", () => console.log("Sockets: " + camera.name + ".disconnect") );
             });
         });
     });

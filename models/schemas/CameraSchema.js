@@ -3,7 +3,7 @@ var IpCamera = require("../../modules/Camera");
 
 var CameraSchema = new mongoose.Schema({
     enabled: Boolean,
-	name: { type: String, lowercase: true, trim: true },
+    slug: { type: String, lowercase: true, trim: true }, // Lowercase, no danish letters. Used for urls and logging. "ostrebassin"
 	title: String,
     uri: String,
     hostname: String,
@@ -20,6 +20,9 @@ CameraSchema.post('init', function(doc) {
     this.camera = IpCamera.get(doc._id);
     if (!this.camera) { this.camera = new IpCamera(doc); }
 });
+
+CameraSchema.virtual("name")
+	.get(function () { return this.slug; });
 
 CameraSchema.virtual("position")
 	.get(function () { return this.camera.position; });

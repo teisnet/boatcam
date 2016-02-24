@@ -32,12 +32,12 @@ router.get('/cameras', function(req, res, next) {
 });
 
 
-router.get('/cameras/:cameraName', function(req, res, next) {
-  var cameraName = req.params.cameraName;
+router.get('/cameras/:cameraSlug', function(req, res, next) {
+  var cameraSlug = req.params.cameraSlug;
 
-  Camera.findOne({name: cameraName}, function(err, camera){
+  Camera.findOne({slug: cameraSlug}, function(err, camera){
         if (!camera) {
-            res.status(404).send('Camera "' + cameraName + '" not found');
+            res.status(404).send('Camera "' + cameraSlug + '" not found');
             return;
         }
         res.render('camera', { title: camera.title, camera: camera });
