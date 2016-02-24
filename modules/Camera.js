@@ -41,7 +41,10 @@ function Camera(settings) {
     this.name = settings.name;
     // Position , moveTarget and previousPosition in degrees (not internal camera values)
     this._position = {x: 0, y: 0, zoom: 0};
+
     this._pendingStatus = false;
+    this._pendingConnect = false;
+
     this._isMoving = false;
     this._isMovingTo = false;
     this._moveTarget = {x: 0, y: 0, zoom: 0};
@@ -77,19 +80,23 @@ Camera.prototype.disable = function() {
     this._enabled = false;
     // TODO: Stop any movements in progress
     clearInterval(this._heartbeat);
-
+    this._setOnline(false);
     console.log("Camera[" + this.name + "]: disabled");
 }
 
 
 Camera.prototype._connect = function() {
-    if (this._online) {
+    if (this._pendingConnect || this._pendingStatus) {
+        return;
+    }
+    else if (this._online) {
         this._updateStatus();
     } else if (this._onvifCamera) {
-        // TODO: Make 'connectInProgress' flag
+        this._pendingConnect = true;
         this._onvifCamera.connect( connectHandler.bind(this) );
     }
     else {
+        this._pendingConnect = true;
         this._onvifCamera = new OnvifCam({
             hostname: this._settings.hostname,
             username: this._settings.username,
@@ -99,6 +106,7 @@ Camera.prototype._connect = function() {
     }
 
     function connectHandler(err, result){
+        this._pendingConnect = false;
         if (err) {
             console.error("Camera[" + this.name + "]: could not connect camera (" + err.message + ")");
             // Still disconnected. Try again later.
