@@ -47,6 +47,7 @@ router.route('/cameras/:cameraId')
         { $set:  changes},
         { new: true},
         function(err, camera) {
+            // TODO: Update camera instance accordingly
             res.json(camera);
         }
     );

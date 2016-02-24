@@ -3,11 +3,32 @@ extends ../layout
 block content
     h1 Opret nyt camera
     form
-        label Titel:
-        input(type="text" name="title" placeholder="Titel")
+        label Title:
+        input(type="text" name="title")
         .clear
         label Slug:
-        input(type="text" name="slug" placeholder="Slug")
+        input(type="text" name="slug")
+        .clear
+        label Enabled:
+        input(type="checkbox" name="enabled")
+        .clear
+        label Hostname:
+        input(type="text" name="hostname")
+        .clear
+        label Username:
+        input(type="text" name="username")
+        .clear
+        label Password:
+        input(type="text" name="password")
+        .clear
+        label RTMP hostname:
+        input(type="text" name="uri")
+        .clear
+        label ONVIF port:
+        input(type="text" name="onvif")
+        .clear
+        label HTTP port:
+        input(type="text" name="http")
         .clear
         input#cameraSubmit.btn.btn-success(type="submit" value="Opret")
 
