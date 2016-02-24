@@ -17,7 +17,6 @@ router.route('/cameras')
 // Create
 .post(function(req, res, next) {
     var newCameraParams = req.body;
-    newCameraParams.name = newCameraParams.name.toLowerCase();
     // find by document id and update
     var newCamera = new Camera(newCameraParams);
     newCamera.save(function(err, camera){
