@@ -12,6 +12,26 @@ const cameras = {};
 
 var reconnectTime = 7000;
 
+/*
+settings = {
+    _id,
+    name,
+    enabled,
+
+    hostname,
+    username,
+    password,
+    onvif,
+
+    http
+}
+
+global = {
+    reconnectTime,
+    snapshotPath,
+}
+*/
+
 function Camera(settings) {
     EventEmitter.call(this);
     var self = this;
