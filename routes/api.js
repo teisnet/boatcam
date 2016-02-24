@@ -13,7 +13,11 @@ router.get('/cameras', function(req, res, next) {
     });
 });
 
+
+// BERTHS
+
 router.route('/berths')
+// Get all
 .get(function(req, res, next) {
     Berth.find({}, function(err, berths){
         res.json(berths);
@@ -27,9 +31,11 @@ router.route('/berths')
     berth.save(function(err, b){
         res.json(berth);
     });
-})
+});
+
 
 router.route('/berths/:berthId')
+// Get one
 .get(function(req, res, next) {
     var berthId = req.params.berthId;
     Berth.findById(berthId, function(err, berth){
@@ -55,6 +61,7 @@ router.route('/berths/:berthId')
         }
     );
 })
+// Delete
 .delete(function(req, res, next) {
     var berthId = req.params.berthId;
     Berth.findByIdAndRemove(
@@ -65,7 +72,10 @@ router.route('/berths/:berthId')
     );
 });
 
+
+// BERTH CAMERA POSITIONS
 router.route('/berths/:berthId/positions/:cameraId')
+// Get
 .get(function(req, res, next){
     var berthId = req.params.berthId;
     var cameraId = req.params.cameraId;
@@ -78,6 +88,7 @@ router.route('/berths/:berthId/positions/:cameraId')
         res.json(berth.positions[0]);
     });
 })
+// Create / update
 .post(function(req, res, next) {
     var berthId = req.params.berthId;
     var cameraId = req.params.cameraId;
