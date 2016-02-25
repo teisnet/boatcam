@@ -77,6 +77,9 @@ Camera.prototype.enable = function() {
     if (this._enabled) return;
 
     this._enabled = true;
+
+    // In case camera is not online, emit 'enabled' at least.
+    this.emit("status", this.status);
     this._connect();
     this._heartbeat = setInterval( () => { this._connect(); } , reconnectTime);
 
@@ -90,7 +93,12 @@ Camera.prototype.disable = function() {
     this._enabled = false;
     // TODO: Stop any movements in progress
     clearInterval(this._heartbeat);
-    this._setOnline(false);
+    if (this._online) {
+        // setOnline will emit status only if 'online' has changed
+        this._setOnline(false);
+    } else {
+        this.emit("status", this.status);
+    }
     console.log("Camera[" + this.name + "]: disabled");
 }
 
