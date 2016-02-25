@@ -27,7 +27,10 @@ router.get('/cameras/new', function(req, res, next) {
 router.get('/cameras/:cameraSlug', function(req, res, next) {
     let cameraSlug = req.params.cameraSlug;
     Camera.findOne({slug: cameraSlug}, function(err, camera){
-        // TODO: 404
+        if (!camera) {
+            res.status(404).send('Camera "' + cameraSlug + '" not found');
+            return;
+        }
         res.render('admin/camera', { title: req.app.locals.title, camera: camera });
     });
 });
@@ -48,7 +51,10 @@ router.get('/berths/new', function(req, res, next) {
 router.get('/berths/:berthNumber', function(req, res, next) {
     let berthNumber = req.params.berthNumber;
     Berth.findOne({number: berthNumber}, function(err, berth){
-        // TODO: 404
+        if (!berth) {
+            res.status(404).send('Berth "' + berthNumber + '" not found');
+            return;
+        }
         res.render('admin/berth', { title: req.app.locals.title, berth: berth });
     });
 });
