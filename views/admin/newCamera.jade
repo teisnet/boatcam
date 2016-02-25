@@ -1,7 +1,8 @@
 extends ../layout
 
 block content
-    h1 Opret nyt camera
+    +breadcrumb('admin', 'cameras')
+    h1 Create new camera
     form
         label Title:
         input(type="text" name="title")

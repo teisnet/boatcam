@@ -1,7 +1,8 @@
 extends ../layout
 
 block content
-    h1 Opret ny bådplads
+    +breadcrumb('admin', 'berths')
+    h1 Create new berth
     form
         label Number:
         input(type="text" name="number" placeholder="Nummer")

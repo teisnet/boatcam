@@ -8,7 +8,8 @@ var Berth = require("../models/Berth");
 
 
 router.get('/', function(req, res, next) {
-    res.redirect('admin/berths');
+    //res.redirect('admin/berths');
+    res.render('admin/index');
 });
 
 

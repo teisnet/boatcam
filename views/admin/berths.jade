@@ -1,7 +1,8 @@
 extends ../layout
 
 block content
-    h1 Bådpladser
+    +breadcrumb('admin')
+    h1 Berths
     ul
         each berth in berths
             li(id="#{berth._id}")

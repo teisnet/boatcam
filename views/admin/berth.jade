@@ -1,6 +1,7 @@
 extends ../layout
 
 block content
+    +breadcrumb('admin', 'berths')
     h1 #{berth.number} - #{berth.owner}
     form
         label Number:
