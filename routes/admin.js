@@ -50,7 +50,9 @@ router.get('/berths/new', function(req, res, next) {
 
 router.get('/berths/:berthNumber', function(req, res, next) {
     let berthNumber = req.params.berthNumber;
-    Berth.findOne({number: berthNumber}, function(err, berth){
+    Berth.findOne({number: berthNumber})
+    .populate("positions.camera")
+    .exec(function(err, berth){
         if (!berth) {
             res.status(404).send('Berth "' + berthNumber + '" not found');
             return;

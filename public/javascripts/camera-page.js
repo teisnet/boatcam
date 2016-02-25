@@ -43,12 +43,12 @@ $(document).ready(function(){
 
     $(".savecamerapos").bind("click", function(){
         var berthId = $('#berths').val();
-        $.post('api/berths/' + berthId + '/positions/' + config.cameraId, Camera.position, function(res){ });
+        $.post('api/berths/' + berthId + '/positions/' + config.camera, Camera.position, function(res){ });
     });
 
     $(".loadcamerapos").bind("click", function(){
         var berthId = $('#berths').val();
-        $.getJSON('api/berths/' + berthId + '/positions/' + config.cameraId, function(res){
+        $.getJSON('api/berths/' + berthId + '/positions/' + config.camera, function(res){
             Camera.moveTo(res);
         });
     });

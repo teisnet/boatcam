@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var BerthSchema = new mongoose.Schema({
 	number: String,
 	owner: String,
-    positions: [{ cameraId: mongoose.Schema.ObjectId, x: Number, y: Number, zoom: Number}]
+    positions: [{ camera: { type: mongoose.Schema.ObjectId, ref: "Camera" }, x: Number, y: Number, zoom: Number}]
 });
 
 module.exports = BerthSchema;
