@@ -103,6 +103,38 @@ Camera.prototype.disable = function() {
 }
 
 
+Camera.prototype.config = function(config) {
+    if (config.name) this.name = config.name;
+    if (config.http) this._config.httpPort = config.http;
+    let self = this;
+    let changed = false;
+    changed = setConfig("hostname") || changed;
+    changed = setConfig("username") || changed;
+    changed = setConfig("password") || changed;
+    changed = setConfig("onvifPort", "onvif") || changed;
+
+    if (changed && this._onvifCamera) {
+        // TODO: Wait for or, preferably, cancel pending operations
+        // TODO: queue camera immediately to get faster status response
+        this._onvifCamera.hostname = this._config.hostname;
+        this._onvifCamera.username = this._config.username;
+        this._onvifCamera.password = this._config.password;
+        this._onvifCamera.port     = this._config.onvifPort;
+        console.warn("Camera[" + this.name + "]: new configuration");
+    }
+
+    // undefined 'config.enabled'  will leave parameter unchanged
+    if (config.enabled === true) this.enable()
+    else if (config.enabled === false) this.disable()
+
+    function setConfig(key, configKey) {
+        if (self._config[key] === config[configKey || key]) return false;
+        self._config[key] = config[configKey || key];
+        return true;
+    }
+}
+
+
 Camera.prototype._connect = function() {
     if (this._pendingConnect || this._pendingStatus) {
         return;

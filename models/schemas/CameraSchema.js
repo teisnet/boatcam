@@ -18,7 +18,11 @@ var CameraSchema = new mongoose.Schema({
 
 CameraSchema.post('init', function(doc) {
     this.camera = IpCamera.get(doc._id);
-    if (!this.camera) { this.camera = new IpCamera(doc); }
+    if (!this.camera) {
+        this.camera = new IpCamera(doc);
+    } else {
+        this.camera.config(doc);
+    }
 });
 
 CameraSchema.virtual("name")
