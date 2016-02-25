@@ -32,29 +32,39 @@ global = {
 }
 */
 
-function Camera(settings) {
+function Camera(config) {
     EventEmitter.call(this);
 
     // TODO: Handle missing id. Consider using name.
-    cameras[settings._id] = this;
+    this.id = config._id;
+    this.name = config.name;
 
-    this.name = settings.name;
-    // Position , moveTarget and previousPosition in degrees (not internal camera values)
-    this._position = {x: 0, y: 0, zoom: 0};
+    cameras[this.id] = this;
 
+    this._config = {
+        hostname:  config.hostname,
+        username:  config.username,
+        password:  config.password,
+        onvifPort: config.onvif,
+        httpPort:  config.http
+    }
+
+    this._online  = false;
+    this._enabled = false;
+
+    this._heartbeat = null;
     this._pendingStatus = false;
     this._pendingConnect = false;
 
+    // Position , moveTarget and previousPosition in degrees (not internal camera values)
+    this._position = {x: 0, y: 0, zoom: 0};
     this._isMoving = false;
     this._isMovingTo = false;
     this._moveTarget = {x: 0, y: 0, zoom: 0};
     this._previousPosition = {x: 0, y: 0, zoom: 0};
-    this._settings = settings;
-    this._online = false;
-    this._enabled = false;
-    this._heartbeat = null;
 
-    if (settings.enabled) this.enable();
+    if (config.enabled) this.enable();
+    else console.warn("Camera[" + this.name + "]: disabled");
 };
 
 util.inherits(Camera, EventEmitter);
@@ -98,17 +108,17 @@ Camera.prototype._connect = function() {
     else {
         this._pendingConnect = true;
         this._onvifCamera = new OnvifCam({
-            hostname: this._settings.hostname,
-            username: this._settings.username,
-            password: this._settings.password,
-            port:     this._settings.onvif,
+            hostname: this._config.hostname,
+            username: this._config.username,
+            password: this._config.password,
+            port:     this._config.onvifPort,
         }, connectHandler.bind(this) );
     }
 
     function connectHandler(err, result){
         this._pendingConnect = false;
         if (err) {
-            console.error("Camera[" + this.name + "]: could not connect camera (" + err.message + ")");
+            console.error("Camera[" + this.name + "]: could not connect to camera using ONVIF (" + err.message + ")");
             // Still disconnected. Try again later.
             //setTimeout(function(){ self.connect(); }, reconnectTime);
             return;
@@ -120,7 +130,7 @@ Camera.prototype._connect = function() {
 }
 
 Camera.prototype._setOnline = function(value) {
-    if (this._online == value) return;
+    if (this._online === value) return;
 
     this._online = value;
     this.emit("status", this.status);
@@ -245,8 +255,8 @@ Camera.prototype.snapshot = function(cb) {
             return;
         }
 
-        let credentials = self._settings.username + ":" + self._settings.password + "@";
-        let snapshotUri = "http://" + credentials + self._settings.hostname + ":" + self._settings.http +  result.uri.replace(/^.*\/\/[^\/]+/, '');
+        let credentials = self._config.username + ":" + self._config.password + "@";
+        let snapshotUri = "http://" + credentials + self._config.hostname + ":" + self._config.httpPort +  result.uri.replace(/^.*\/\/[^\/]+/, '');
 
         console.log("Camera[" + self.name + "].snapshot: " +  snapshotUri);
 
