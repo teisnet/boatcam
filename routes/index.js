@@ -10,7 +10,8 @@ var Camera = require("../models/Camera");
 var Berth = require("../models/Berth");
 
 router.get('/', function(req, res, next) {
-    res.redirect('/cameras');
+    //res.redirect('/cameras');
+    res.render('index');
 });
 
 router.get('/snapshots/:filename', function(req, res, next) {

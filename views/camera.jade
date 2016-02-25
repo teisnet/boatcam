@@ -1,10 +1,11 @@
 extends layout
 
 block content
+    +breadcrumb('cameras')
     h1
         span#status-field
             .circle
-        | #{title}
+        | #{camera.title}
     #player.camera
     div.clearboth
         p.status
