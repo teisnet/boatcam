@@ -48,7 +48,7 @@ $(document).ready(function(){
 
     $(".loadcamerapos").bind("click", function(){
         var berthId = $('#berths').val();
-        $.getJSON('api/berths/' + berthId + '/positions/' + config.camera, function(res){
+        $.getJSON('api/berths/' + berthId + '/positions/' + config.cameraId, function(res){
             Camera.moveTo(res);
         });
     });

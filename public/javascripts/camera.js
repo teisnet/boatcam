@@ -25,7 +25,7 @@ var Camera = (function(){
         }
 
     _camera.moveTo = function(pos) {
-        console.log("Camera.moveTo: " + pos);
+        console.log("Camera.moveTo: " + JSON.stringify(pos));
         socket.emit('moveto', pos);
     }
 
