@@ -12,6 +12,13 @@ block content
         .clear
         input#berthSubmit.btn.btn-success(type="submit" value="Gem")
         button#berthDelete.btn.btn-danger Slet plads
+    h3 Positions
+    ul
+        each position in berth.positions
+            li
+                a(href="/admin/cameras/#{position.camera.slug}") #{position.camera.title}
+                | &nbsp;(x=#{position.x.toFixed(1)}, y=#{position.y.toFixed(1)}, zoom=#{position.zoom.toFixed(1)})
+                button.btn.btn-danger Slet
 
 block scripts
     script.
