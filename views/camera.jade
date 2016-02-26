@@ -33,14 +33,14 @@ block stylesheets
     link(rel="stylesheet" type="text/css" href="/javascripts/flowplayer/skin/minimalist.css")
 
 block scripts
-    script.
-        var uri = "#{camera.uri}";
-        var slash = uri.lastIndexOf("/");
+    - var uri = camera.uri;
+    - var slash = uri.lastIndexOf("/");
 
+    script.
         var config = {
             slug: "#{camera.slug}",
-            url: uri.substr(0, slash),
-            stream: uri.substr(slash + 1),
+            url:  "#{uri.substr(0, slash)}",
+            stream: "#{uri.substr(slash + 1)}",
             cameraId: "#{camera._id}",
             enabled: #{camera.enabled}
         }
