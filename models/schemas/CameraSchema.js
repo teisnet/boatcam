@@ -10,7 +10,8 @@ var CameraSchema = new mongoose.Schema({
     onvif: Number,
     http: Number,
     username: { type: String, trim: true },
-    password: { type: String, trim: true }
+    password: { type: String, trim: true },
+    positions: [{ ref: "CameraPosition" }]
 });
 
 

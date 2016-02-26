@@ -5,6 +5,7 @@ var ObjectId = require('mongoose').Types.ObjectId;
 
 var Berth = require("../models/Berth");
 var Camera = require("../models/Camera");
+var CameraPosition = require("../models/CameraPosition");
 
 // CAMERAS
 router.route('/cameras')
@@ -129,13 +130,17 @@ router.route('/berths/:berthId/positions/:cameraId')
 .get(function(req, res, next){
     var berthId = req.params.berthId;
     var cameraId = req.params.cameraId;
-    Berth.findOne({_id: berthId, "positions.cameraId" : cameraId}, {'positions.$': 1}, function(err, berth){
+    /*Berth.findOne({_id: berthId, "positions.cameraId" : cameraId}, {'positions.$': 1}, function(err, berth){
         if (!berth) {
             // TODO: consider returning empty array in subobject
             res.status(404).send('Berth id ' + berthId + " containing position with camera id " + cameraId + " not found");
             return;
         }
         res.json(berth.positions[0]);
+    });
+    */
+    CameraPosition.find({camera: new ObjectId(cameraId), berth: new ObjectId(berthId)}, function(err, positions){
+        res.json(positions);
     });
 })
 // Create / update

@@ -4,20 +4,7 @@
 		"$oid": "56b382cf03379e60d1473308"
 	},
 	"number": "6-01",
-	"owner": "Teis Draiby",
-	"positions": [
-		{
-			"_id": {
-				"$oid": "56b767f89c7a5bac12c5af3b"
-			},
-			"camera": {
-				"$oid": "56b380e1f4bf13d500bb5f9a"
-			},
-			"x": 67.91,
-			"y": 32.81,
-			"zoom": 1
-		}
-	]
+	"owner": "Teis Draiby"
 },
 {
 	"__v": 0,
@@ -25,20 +12,7 @@
 		"$oid": "56b382cf03379e60d1473309"
 	},
 	"number": "5-04",
-	"owner": "Lars Granhøj",
-	"positions": [
-		{
-			"_id": {
-				"$oid": "56b76a817549b658278211ae"
-			},
-			"camera": {
-				"$oid": "56b380e1f4bf13d500bb5f9a"
-			},
-			"x": 257.15,
-			"y": 89.99,
-			"zoom": 22
-		}
-	]
+	"owner": "Lars Granhøj"
 },
 {
 	"__v": 0,
@@ -46,19 +20,6 @@
 		"$oid": "56b382cf03379e60d147330a"
 	},
 	"number": "2-07",
-	"owner": "Hjalte Granhøj",
-	"positions": [
-		{
-			"_id": {
-				"$oid": "56b882db288c2a7830c4a65e"
-			},
-			"camera": {
-				"$oid": "56b380e1f4bf13d500bb5f9a"
-			},
-			"x": 215.43,
-			"y": 1.2,
-			"zoom": 13.756
-		}
-	]
+	"owner": "Hjalte Granhøj"
 }]
 

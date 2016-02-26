@@ -51,7 +51,7 @@ router.get('/berths/new', function(req, res, next) {
 
 router.get('/berths/:berthNumber', function(req, res, next) {
     let berthNumber = req.params.berthNumber;
-    Berth.findOne({number: berthNumber})
+    /*Berth.findOne({number: berthNumber})
     .populate("positions.camera")
     .exec(function(err, berth){
         if (!berth) {
@@ -59,7 +59,25 @@ router.get('/berths/:berthNumber', function(req, res, next) {
             return;
         }
         res.render('admin/berth', { title: req.app.locals.title, berth: berth });
+    });*/
+    Berth.findOne({number: berthNumber}, function(err, berth){
+        CameraPosition.find({berth: berth._id}, function(err, cameraPositions){
+        });
     });
+    /*.populate({
+        path: 'positions',
+        match: {camera: new ObjectId(cameraId), berth: new ObjectId(berthId)},
+        select: 'text',
+        model: 'modelName'
+        //options: opts
+        })
+    .exec(function(err, berth){
+        if (!berth) {
+            res.status(404).send('Berth "' + berthNumber + '" not found');
+            return;
+        }
+        res.render('admin/berth', { title: req.app.locals.title, berth: berth });
+    });*/
 });
 
 
