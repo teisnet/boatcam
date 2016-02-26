@@ -1,5 +1,4 @@
-# boatcam
-BoatCam Repository
+# BoatCam
 
 ## Requirements
 - Node 4.2 or later
