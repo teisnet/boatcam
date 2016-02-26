@@ -130,7 +130,7 @@ router.route('/berths/:berthId/positions/:cameraId')
 .get(function(req, res, next){
     var berthId = req.params.berthId;
     var cameraId = req.params.cameraId;
-    /*Berth.findOne({_id: berthId, "positions.cameraId" : cameraId}, {'positions.$': 1}, function(err, berth){
+    /*Berth.findOne({_id: berthId, "positions.camera" : cameraId}, {'positions.$': 1}, function(err, berth){
         if (!berth) {
             // TODO: consider returning empty array in subobject
             res.status(404).send('Berth id ' + berthId + " containing position with camera id " + cameraId + " not found");
@@ -148,12 +148,12 @@ router.route('/berths/:berthId/positions/:cameraId')
     var berthId = req.params.berthId;
     var cameraId = req.params.cameraId;
 
-    var newPosition = {cameraId: cameraId, x: req.body.x, y: req.body.y, zoom: req.body.zoom }
+    var newPosition = {camera: cameraId, x: req.body.x, y: req.body.y, zoom: req.body.zoom }
 
     // find by document id and update
     Berth.findByIdAndUpdate(
         berthId,
-        { $pull: { positions: { cameraId: new ObjectId(cameraId) } } },
+        { $pull: { positions: { camera: new ObjectId(cameraId) } } },
         function(err, berth) {
             Berth.findByIdAndUpdate(
                 berthId,
