@@ -21,7 +21,10 @@ $(document).ready(function(){
             success: function(data) {
                         console.log("OK: " + JSON.stringify(data));
                         document.location.href = '/admin/cameras/' + data.slug;
-                    }
+                    },
+            error: function(e) {
+                $(".error").text(e.responseText || "Could not create new camera");
+            }
         });
     });
 

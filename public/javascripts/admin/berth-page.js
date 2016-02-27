@@ -14,7 +14,10 @@ $(document).ready(function(){
             data: $('form').serialize(),
             success: function(data) {
                         console.log("OK: " + JSON.stringify(data));
-                    }
+                    },
+            error: function(e) {
+                $(".error").text(e.responseText || "Could not edit berth");
+            }
         });
     });
 
@@ -25,7 +28,10 @@ $(document).ready(function(){
             success: function(data) {
                         console.log("DELETED: " + JSON.stringify(data));
                         document.location.href='/admin/berths';
-                    }
+                    },
+            error: function(e) {
+                $(".error").text(e.responseText || "Could not delete berth");
+            }
         });
     });
 

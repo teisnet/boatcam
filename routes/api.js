@@ -6,11 +6,27 @@ var ObjectId = require('mongoose').Types.ObjectId;
 var Berth = require("../models/Berth");
 var Camera = require("../models/Camera");
 
+// TODO: respond with 500 at database connection failures
+
+function handleError(res, err, message) {
+    // 400 (Bad Request)
+    res.status(400).send(message + " (" + err.message + ")");
+    console.error("400 Bad Request:" + message + " (" + err.message + ")");
+}
+
+
+function handleNotFound(res, message) {
+    // 404 (Not Found)
+    res.status(404).send(message);
+    console.warn("404 Not Found:" + message);
+}
+
 // CAMERAS
 router.route('/cameras')
 // Get all
 .get(function(req, res, next) {
-    Camera.find({}, function(err, cameras){
+    Camera.find({}, function(err, cameras) {
+        if (err) return handleError(res, err, "Could not get cameras");
         res.json(cameras);
     });
 })
@@ -20,7 +36,9 @@ router.route('/cameras')
     // find by document id and update
     var newCamera = new Camera(newCameraParams);
     newCamera.save(function(err, camera){
-        res.json(camera);
+        if (err || !camera) return handleError(res, err, "Could not create camera");
+        // 201 (Created)
+        res.status(201).json(camera);
     });
 })
 
@@ -30,10 +48,8 @@ router.route('/cameras/:cameraId')
 .get(function(req, res, next) {
     var cameraId = req.params.cameraId;
     Camera.findById(cameraId, function(err, camera){
-        if (!camera) {
-            res.status(404).send('There is no camera with id ' + cameraId);
-            return;
-        }
+        if (err) return handleError(res, err, "Could not get camera " + cameraId);
+        if(!camera) return handleNotFound(res, "Camera " + cameraId + " not found");
         res.json(camera);
     });
 })
@@ -47,6 +63,8 @@ router.route('/cameras/:cameraId')
         { $set:  changes},
         { new: true, runValidators: true },
         function(err, camera) {
+            if (err) return handleError(res, err, "Could not update camera " + cameraId);
+            if(!camera) return handleNotFound(res, "Camera " + cameraId + " not found");
             // TODO: Update camera instance accordingly
             res.json(camera);
         }
@@ -58,6 +76,7 @@ router.route('/cameras/:cameraId')
     Camera.findByIdAndRemove(
         cameraId,
         function(err) {
+            if (err) return handleError(res, err, "Could not delete camera " + cameraId);
             res.sendStatus(200);
         }
     );
@@ -70,6 +89,7 @@ router.route('/berths')
 // Get all
 .get(function(req, res, next) {
     Berth.find({}, function(err, berths){
+        if (err) return handleError(res, err, "Could not get berths");
         res.json(berths);
     });
 })
@@ -77,9 +97,11 @@ router.route('/berths')
 .post(function(req, res, next) {
     var changes = req.body;
     // find by document id and update
-    var berth = new Berth(changes);
-    berth.save(function(err, b){
-        res.json(berth);
+    var newBerth = new Berth(changes);
+    newBerth.save(function(err, berth){
+        if (err || !berth) return handleError(res, err, "Could not create berth");
+        // 201 (Created)
+        res.status(201).json(berth);
     });
 });
 
@@ -89,11 +111,8 @@ router.route('/berths/:berthId')
 .get(function(req, res, next) {
     var berthId = req.params.berthId;
     Berth.findById(berthId, function(err, berth){
-        if (!berth) {
-            // TODO: consider returning null in subobject
-            res.status(404).send('There is no berth with id ' + berthId);
-            return;
-        }
+        if (err) return handleError(res, err, "Could not get berth " + berthId);
+        if(!berth) return handleNotFound(res, "Berth " + berthId + " not found");
         res.json(berth);
     });
 })
@@ -107,6 +126,8 @@ router.route('/berths/:berthId')
         { $set:  changes},
         { new: true, runValidators: true },
         function(err, berth) {
+            if (err) return handleError(res, err, "Could not update berth " + berthId);
+            if(!berth) return handleNotFound(res, "Berth " + berthId + " not found");
             res.json(berth);
         }
     );
@@ -117,6 +138,7 @@ router.route('/berths/:berthId')
     Berth.findByIdAndRemove(
         berthId,
         function(err) {
+            if (err) return handleError(res, err, "Could not delete berth " + berthId);
             res.sendStatus(200);
         }
     );
@@ -130,11 +152,9 @@ router.route('/berths/:berthId/positions/:cameraId')
     var berthId = req.params.berthId;
     var cameraId = req.params.cameraId;
     Berth.findOne({_id: berthId, "positions.camera" : cameraId}, {'positions.$': 1}, function(err, berth){
-        if (!berth) {
-            // TODO: consider returning empty array in subobject
-            res.status(404).send('Berth id ' + berthId + " containing position with camera id " + cameraId + " not found");
-            return;
-        }
+        if (err) return handleError(res, err, "Could not get position for berth " + berthId + " and camera " + cameraId);
+        // TODO: consider returning empty array in subobject
+        if(!berth) return handleNotFound(res, 'Berth id ' + berthId + " containing position with camera id " + cameraId + " not found");
         res.json(berth.positions[0]);
     });
 })
@@ -151,11 +171,12 @@ router.route('/berths/:berthId/positions/:cameraId')
         { $pull: { positions: { camera: new ObjectId(cameraId) } } },
         { runValidators: true },
         function(err, berth) {
+            if (err) return handleError(res, err, "Could not save position for berth " + berthId + " and camera " + cameraId);
             Berth.findByIdAndUpdate(
                 berthId,
                 {$push: {positions: newPosition}},
                 function(err, model) {
-                    console.log(err);
+                    if (err) return handleError(res, err, "Could not save position for berth " + berthId + " and camera " + cameraId);
                     //req.body.x, y and zoom
                     res.json({ message: 'Created Berth position, berthId = ' + berthId});
                 }

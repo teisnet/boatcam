@@ -20,7 +20,10 @@ $(document).ready(function(){
             data: formData,
             success: function(data) {
                         console.log("OK: " + JSON.stringify(data));
-                    }
+                    },
+            error: function(e) {
+                $(".error").text(e.responseText || "Could not edit camera");
+            }
         });
     });
 
@@ -31,7 +34,10 @@ $(document).ready(function(){
             success: function(data) {
                         console.log("DELETED: " + JSON.stringify(data));
                         document.location.href='/admin/cameras';
-                    }
+                    },
+            error: function(e) {
+                $(".error").text(e.responseText || "Could not delete camera");
+            }
         });
     });
 

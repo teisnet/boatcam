@@ -15,7 +15,10 @@ $(document).ready(function(){
             success: function(data) {
                         console.log("OK: " + JSON.stringify(data));
                         document.location.href = '/admin/berths/' + data.number;
-                    }
+                    },
+            error: function(e) {
+                $(".error").text(e.responseText || "Could not create new berth");
+            }
         });
     });
 
