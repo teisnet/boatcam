@@ -5,13 +5,13 @@ block content
     h1 Create new camera
     form
         label Title:
-        input(type="text" name="title")
+        input(type="text" name="title" autofocus)
         .clear
         label Slug:
         input(type="text" name="slug")
         .clear
         label Enabled:
-        input(type="checkbox" name="enabled")
+        input(type="checkbox" name="enabled" value="true" checked="checked")
         .clear
         label Hostname:
         input(type="text" name="hostname")
@@ -23,13 +23,13 @@ block content
         input(type="text" name="password")
         .clear
         label RTMP hostname:
-        input(type="text" name="uri")
+        input.wide(type="text" name="uri")
         .clear
         label ONVIF port:
-        input(type="text" name="onvif")
+        input.narrow(type="text" name="onvif")
         .clear
         label HTTP port:
-        input(type="text" name="http")
+        input.narrow(type="text" name="http")
         .clear
         input#cameraSubmit.btn.btn-success(type="submit" value="Opret")
         .clear
