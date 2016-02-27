@@ -4,6 +4,9 @@ $(document).ready(function(){
 
     $("form").on("submit", function(e) {
         e.preventDefault();
+    });
+
+    $("#berthSubmit").click(function(e) {
         $.ajax({
             url: '/api/berths/' + berthData._id,
             type: "put",

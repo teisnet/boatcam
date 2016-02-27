@@ -4,7 +4,9 @@ $(document).ready(function(){
 
     $("form").on("submit", function(e) {
         e.preventDefault();
+    });
 
+    $("#cameraSubmit").click(function(e) {
         var formData = $('form').serialize();
 
         if (!formData.match("enabled")) {
