@@ -1,3 +1,5 @@
+"use strict";
+
 var down = {};
 
 $(document).keydown(function(event){

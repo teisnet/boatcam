@@ -1,3 +1,5 @@
+"use strict";
+
 var Camera = (function(){
 
     var _camera = {};
