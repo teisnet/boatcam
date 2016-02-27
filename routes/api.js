@@ -45,7 +45,7 @@ router.route('/cameras/:cameraId')
     Camera.findByIdAndUpdate(
         cameraId,
         { $set:  changes},
-        { new: true},
+        { new: true, runValidators: true },
         function(err, camera) {
             // TODO: Update camera instance accordingly
             res.json(camera);
@@ -105,7 +105,7 @@ router.route('/berths/:berthId')
     Berth.findByIdAndUpdate(
         berthId,
         { $set:  changes},
-        { new: true},
+        { new: true, runValidators: true },
         function(err, berth) {
             res.json(berth);
         }
@@ -149,6 +149,7 @@ router.route('/berths/:berthId/positions/:cameraId')
     Berth.findByIdAndUpdate(
         berthId,
         { $pull: { positions: { camera: new ObjectId(cameraId) } } },
+        { runValidators: true },
         function(err, berth) {
             Berth.findByIdAndUpdate(
                 berthId,

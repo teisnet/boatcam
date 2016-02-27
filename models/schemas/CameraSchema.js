@@ -3,7 +3,20 @@ var IpCamera = require("../../modules/Camera");
 
 var CameraSchema = new mongoose.Schema({
     enabled: Boolean,
-    slug: { type: String, lowercase: true, trim: true }, // Lowercase, no danish letters. Used for urls and logging. "ostrebassin"
+    // Lowercase, no danish letters. Used for urls and logging. "ostrebassin"
+    slug: {
+        type: String,
+        lowercase: true,
+        trim: true,
+        required: true,
+        unique : true,
+        validate: {
+            validator: function(value) {
+                return /^[a-z][a-z0-9-_]*$/.test(value);
+            },
+            message: 'Field "slug" must only contain english lowercase characters and numbers ("{VALUE}")'
+        }
+    },
 	title: String,
     uri: String,
     hostname: String,
