@@ -1,0 +1,21 @@
+#1 Log camera communication along with both request and response times (consider one log per camera)
+#2 Limit repeated requests to camera
+    Case 1: issued move command to camera with no support for position queries
+    Case 2: Camera is stuck (eg. zoom) 
+#3 Ensure incoming camera request are in number formats
+#4 General logging
+#5 Discover and handle camera operations from external sources
+#6 Dont query camera if no users are connected (camera sleep)
+#8 Handle range error for Onvif and other port settings. Crashes server.
+#9 Fix error at invalid onvif response: TypeError: Cannot read property 'panTilt' of undefined at ...\node_modules\onvif\lib\ptz.js:105:21
+   Appears when onvif is set to a address/port that exists but is not ONVIF
+#10 Warn if database is disconnected 
+#13 Disable camera with missing or invalid hostname parameter. Proper client side error notification
+#14 Disconnect client side video streaming when camera is disabled
+
+SOLVED
+#7 Create Camera 'disabled' field to turn off camera queries.
+#11 Create new websocket handler for newly created cameras
+    Fix ONVIF connectivity bug for newly created cameras (client side). Connectivity is only established after server restart.
+#12 New cameras with empty 'slug' field becomes unreachable. Validate new cameras before creation, slug field nonempty, english characters.
+#13 Delete camera instance when camera is delted from database.
