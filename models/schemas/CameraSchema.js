@@ -20,6 +20,8 @@ CameraSchema.post('init', function(doc) {
     this.camera = IpCamera.get(doc._id);
     if (!this.camera) {
         this.camera = new IpCamera(doc);
+        // Emit 'new' from 'Camera' model
+        this.constructor.emit("new", doc);
     } else {
         this.camera.config(doc);
     }
