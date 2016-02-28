@@ -12,10 +12,13 @@
 #10 Warn if database is disconnected 
 #13 Disable camera with missing or invalid hostname parameter. Proper client side error notification
 #14 Disconnect client side video streaming when camera is disabled
+#15 Delete camera instance when camera is delted from database.
+#16 Database validation script
+#17 Fix new Camera "null" ports issue: "Could not update camera 56d210adf89cc1480ce783ac (Cast to number failed for value "null" at path "onvif")"
+#18 Duplicate existing camera feature
 
 SOLVED
 #7 Create Camera 'disabled' field to turn off camera queries.
 #11 Create new websocket handler for newly created cameras
     Fix ONVIF connectivity bug for newly created cameras (client side). Connectivity is only established after server restart.
 #12 New cameras with empty 'slug' field becomes unreachable. Validate new cameras before creation, slug field nonempty, english characters.
-#13 Delete camera instance when camera is delted from database.
