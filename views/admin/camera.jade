@@ -11,7 +11,7 @@ block content
             input(type="text" name="title" value=camera.title autofocus)
         .field
             label Slug:
-            input(type="text" name="slug" value=camera.slug)
+            input(type="text" name="slug" value=camera.slug  required)
         .field
             label Enabled:
             input(type="checkbox" name="enabled" value="true" checked=camera.enabled)
@@ -29,10 +29,10 @@ block content
             input.wide(type="text" name="uri" value=camera.uri)
         .field
             label ONVIF port:
-            input.narrow(type="text" name="onvif" value=camera.onvif)
+            input.narrow(type="number" name="onvif" value=camera.onvif min="0" max="65535" maxlength="5")
         .field
             label HTTP port:
-            input.narrow(type="text" name="http" value=camera.http)
+            input.narrow(type="number" name="http" value=camera.http min="0" max="65535" maxlength="5")
         .field-footer
             label
             input#cameraSubmit.btn.btn-success(type="submit" value= camera.new ? "Create" : "Save")
