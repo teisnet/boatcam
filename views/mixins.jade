@@ -6,4 +6,4 @@ mixin breadcrumb(...route)
         each level in route
             - path += "/" + level
             | &nbsp;>&nbsp;
-            a(href="#{path}") #{levelNames[level]}
+            a(href=path)= levelNames[level]

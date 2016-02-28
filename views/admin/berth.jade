@@ -2,13 +2,13 @@ extends ../layout
 
 block content
     +breadcrumb('admin', 'berths')
-    h1 #{berth.number} - #{berth.owner}
+    h1= berth.number + " - " + berth.owner
     form
         label Number:
-        input(type="text" name="number" value="#{berth.number}" autofocus)
+        input(type="text" name="number" value=berth.number autofocus)
         .clear
         label Owner:
-        input(type="text" name="owner" value="#{berth.owner}")
+        input(type="text" name="owner" value=berth.owner)
         .clear
         input#berthSubmit.btn.btn-success(type="submit" value="Gem")
         button#berthDelete.btn.btn-danger Slet plads
@@ -18,7 +18,7 @@ block content
     ul
         each position in berth.positions
             li
-                a(href="/admin/cameras/#{position.camera.slug}") #{position.camera.title}
+                a(href="/admin/cameras/#{position.camera.slug}")= position.camera.title
                 | &nbsp;(x=#{position.x.toFixed(1)}, y=#{position.y.toFixed(1)}, zoom=#{position.zoom.toFixed(1)})
                 button.btn.btn-danger Slet
 

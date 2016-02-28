@@ -5,7 +5,7 @@ block content
     h1 Cameras
     ul
         each camera in cameras
-            li(id="#{camera._id}")
+            li(id=camera._id)
                 .circle
                 a(href="cameras/#{camera.slug}")= camera.title
 

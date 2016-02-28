@@ -2,34 +2,34 @@ extends ../layout
 
 block content
     +breadcrumb('admin', 'cameras')
-    h1 #{camera.title}
+    h1= camera.title
     form
         label Title:
-        input(type="text" name="title" value="#{camera.title}" autofocus)
+        input(type="text" name="title" value=camera.title autofocus)
         .clear
         label Slug:
-        input(type="text" name="slug" value="#{camera.slug}")
+        input(type="text" name="slug" value=camera.slug)
         .clear
         label Enabled:
-        input(type="checkbox" name="enabled" value="true" checked=(camera.enabled))
+        input(type="checkbox" name="enabled" value="true" checked=camera.enabled)
         .clear
         label Hostname:
-        input(type="text" name="hostname" value="#{camera.hostname}")
+        input(type="text" name="hostname" value=camera.hostname)
         .clear
         label Username:
-        input(type="text" name="username" value="#{camera.username}")
+        input(type="text" name="username" value=camera.username)
         .clear
         label Password:
-        input(type="text" name="password" value="#{camera.password}")
+        input(type="text" name="password" value=camera.password)
         .clear
         label RTMP hostname:
-        input.wide(type="text" name="uri" value="#{camera.uri}")
+        input.wide(type="text" name="uri" value=camera.uri)
         .clear
         label ONVIF port:
-        input.narrow(type="text" name="onvif" value="#{camera.onvif}")
+        input.narrow(type="text" name="onvif" value=camera.onvif)
         .clear
         label HTTP port:
-        input.narrow(type="text" name="http" value="#{camera.http}")
+        input.narrow(type="text" name="http" value=camera.http)
         .clear
         input#cameraSubmit.btn.btn-success(type="submit" value="Gem")
         button#cameraDelete.btn.btn-danger Slet kamera

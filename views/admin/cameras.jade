@@ -5,7 +5,7 @@ block content
     h1 Cameras
     ul
         each camera in cameras
-            li(id="#{camera._id}")
+            li(id=camera._id)
                 .circle
                 a(href="admin/cameras/#{camera.slug}")= camera.title
     a.btn.btn-success(href="admin/cameras/new") Opret nyt kamera
