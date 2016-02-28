@@ -1,7 +1,9 @@
 extends ../layout
 
-block content
+block navigation
     +breadcrumb('admin', 'berths')
+
+block content
     h1= berth.new ? "New Berth" : berth.number + " - " + berth.owner
     form
         label Number:

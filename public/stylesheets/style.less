@@ -2,12 +2,35 @@
 @import "base";
 @import "buttons";
 
+@navigation-height: 40px; //51px
+@menu-color: #08c;
+
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+.navigation {
+    color: white;
+    a:link, a:visited, a:hover, a:active {
+        color: white;
+    }
+    background-color: @menu-color;
+    height: @navigation-height;
+}
+
+.content {
+  padding: 50px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position:absolute;
+  top: @navigation-height;
+  bottom: 0px;
+  left:   0px;
+  right:  0px;
+}
+
 a:link, a:visited, a:hover, a:active  {
-  color: dodgerblue;
+  color: #08c;
 }
 
 .error {

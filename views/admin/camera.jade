@@ -1,7 +1,9 @@
 extends ../layout
 
-block content
+block navigation
     +breadcrumb('admin', 'cameras')
+
+block content
     h1= camera.title || "New Camera"
     form
         label Title:
