@@ -21,7 +21,7 @@ router.get('/cameras', function(req, res, next) {
 
 
 router.get('/cameras/new', function(req, res, next) {
-    res.render('admin/newCamera', { title: req.app.locals.title });
+    res.render('admin/camera', { title: req.app.locals.title, camera: { new: true, enabled: true } });
 });
 
 
@@ -45,7 +45,7 @@ router.get('/berths', function(req, res, next) {
 
 
 router.get('/berths/new', function(req, res, next) {
-    res.render('admin/newBerth', { title: req.app.locals.title });
+    res.render('admin/berth', { title: req.app.locals.title, berth: { new: true } });
 });
 
 

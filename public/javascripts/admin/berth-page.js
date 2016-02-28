@@ -8,31 +8,36 @@ $(document).ready(function(){
 
     $("#berthSubmit").click(function(e) {
         $.ajax({
-            url: '/api/berths/' + berthData._id,
-            type: "put",
+            url:   berthData.new ? '/api/berths' : '/api/berths/' + berthData._id,
+            type:  berthData.new ? "post" : "put",
             dataType: "json",
             data: $('form').serialize(),
             success: function(data) {
                         console.log("OK: " + JSON.stringify(data));
+                        if (berthData.new) { document.location.href = '/admin/berths/' + data.number; }
                     },
             error: function(e) {
-                $(".error").text(e.responseText || "Could not edit berth");
+                var message = e.responseText;
+                if (!message) { message = berthData.new ? "Could not create new berth" : "Could not edit berth"; }
+                $(".error").text(message);
             }
         });
     });
 
-    $("#berthDelete").click(function(e) {
-        $.ajax({
-            url: '/api/berths/' + berthData._id,
-            type: "delete",
-            success: function(data) {
-                        console.log("DELETED: " + JSON.stringify(data));
-                        document.location.href='/admin/berths';
-                    },
-            error: function(e) {
-                $(".error").text(e.responseText || "Could not delete berth");
-            }
+    if (!berthData.new) {
+        $("#berthDelete").click(function(e) {
+            $.ajax({
+                url: '/api/berths/' + berthData._id,
+                type: "delete",
+                success: function(data) {
+                            console.log("DELETED: " + JSON.stringify(data));
+                            document.location.href='/admin/berths';
+                        },
+                error: function(e) {
+                    $(".error").text(e.responseText || "Could not delete berth");
+                }
+            });
         });
-    });
+    }
 
 });

@@ -2,7 +2,7 @@ extends ../layout
 
 block content
     +breadcrumb('admin', 'cameras')
-    h1= camera.title
+    h1= camera.title || "New Camera"
     form
         label Title:
         input(type="text" name="title" value=camera.title autofocus)
@@ -31,12 +31,13 @@ block content
         label HTTP port:
         input.narrow(type="text" name="http" value=camera.http)
         .clear
-        input#cameraSubmit.btn.btn-success(type="submit" value="Gem")
-        button#cameraDelete.btn.btn-danger Slet kamera
+        input#cameraSubmit.btn.btn-success(type="submit" value= camera.new ? "Create" : "Save")
+        if !camera.new
+            button#cameraDelete.btn.btn-danger Delete
         .clear
         .error
 
 block scripts
     script.
-        var cameraData =  !{JSON.stringify(camera, null, 2)}
+        var cameraData = !{JSON.stringify(camera, null, 2)}
     script(src="/javascripts/admin/admin-camera-page.js")
