@@ -6,37 +6,38 @@ block navigation
 block content
     h1= camera.title || "New Camera"
     form
-        label Title:
-        input(type="text" name="title" value=camera.title autofocus)
-        .clear
-        label Slug:
-        input(type="text" name="slug" value=camera.slug)
-        .clear
-        label Enabled:
-        input(type="checkbox" name="enabled" value="true" checked=camera.enabled)
-        .clear
-        label Hostname:
-        input(type="text" name="hostname" value=camera.hostname)
-        .clear
-        label Username:
-        input(type="text" name="username" value=camera.username)
-        .clear
-        label Password:
-        input(type="text" name="password" value=camera.password)
-        .clear
-        label RTMP hostname:
-        input.wide(type="text" name="uri" value=camera.uri)
-        .clear
-        label ONVIF port:
-        input.narrow(type="text" name="onvif" value=camera.onvif)
-        .clear
-        label HTTP port:
-        input.narrow(type="text" name="http" value=camera.http)
-        .clear
-        input#cameraSubmit.btn.btn-success(type="submit" value= camera.new ? "Create" : "Save")
-        if !camera.new
-            button#cameraDelete.btn.btn-danger Delete
-        .clear
+        .field
+            label Title:
+            input(type="text" name="title" value=camera.title autofocus)
+        .field
+            label Slug:
+            input(type="text" name="slug" value=camera.slug)
+        .field
+            label Enabled:
+            input(type="checkbox" name="enabled" value="true" checked=camera.enabled)
+        .field
+            label Hostname:
+            input(type="text" name="hostname" value=camera.hostname)
+        .field
+            label Username:
+            input(type="text" name="username" value=camera.username)
+        .field
+            label Password:
+            input(type="text" name="password" value=camera.password)
+        .field
+            label RTMP hostname:
+            input.wide(type="text" name="uri" value=camera.uri)
+        .field
+            label ONVIF port:
+            input.narrow(type="text" name="onvif" value=camera.onvif)
+        .field
+            label HTTP port:
+            input.narrow(type="text" name="http" value=camera.http)
+        .field-footer
+            label
+            input#cameraSubmit.btn.btn-success(type="submit" value= camera.new ? "Create" : "Save")
+            if !camera.new
+                button#cameraDelete.btn.btn-danger Delete
         .error
 
 block scripts

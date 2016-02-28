@@ -6,16 +6,17 @@ block navigation
 block content
     h1= berth.new ? "New Berth" : berth.number + " - " + berth.owner
     form
-        label Number:
-        input(type="text" name="number" value=berth.number autofocus)
-        .clear
-        label Owner:
-        input(type="text" name="owner" value=berth.owner)
-        .clear
-        input#berthSubmit.btn.btn-success(type="submit" value= berth.new ? "Create" : "Save")
-        if !berth.new
-            button#berthDelete.btn.btn-danger Delete
-        .clear
+        .field
+            label Number:
+            input(type="text" name="number" value=berth.number autofocus)
+        .field
+            label Owner:
+            input(type="text" name="owner" value=berth.owner)
+        .field-footer
+            label
+            input#berthSubmit.btn.btn-success(type="submit" value= berth.new ? "Create" : "Save")
+            if !berth.new
+                button#berthDelete.btn.btn-danger Delete
         .error
     if !berth.new
         h3 Positions

@@ -46,12 +46,25 @@ input[type="text"] {
     width: 120px;
 }
 
-input {
-    &.wide {
-      width: 360px;
+.field {
+    margin-bottom: 10px;
+
+    input {
+        &.wide {
+            float: left;
+            min-width: 280px;
+            width: auto;
+        }
+        &.narrow {
+            width: 60px;
+        }
     }
-    &.narrow {
-      width: 40px;
+}
+
+.field-footer {
+    margin-top: 45px;
+    button, input {
+        margin-right: 10px;
     }
 }
 
