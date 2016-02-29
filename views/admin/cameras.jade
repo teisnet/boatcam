@@ -4,13 +4,14 @@ block navigation
     +breadcrumb('admin')
 
 block content
-    h1 Cameras
+    .page-header Cameras
     ul
         each camera in cameras
             li(id=camera._id)
                 .circle
                 a(href="admin/cameras/#{camera.slug}")= camera.title
-    a.btn.btn-success(href="admin/cameras/new") Opret nyt kamera
+    .page-footer
+        a.btn.btn-success(href="admin/cameras/new") Opret nyt kamera
 
 block scripts
     script.

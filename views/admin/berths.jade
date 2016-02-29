@@ -4,9 +4,10 @@ block navigation
     +breadcrumb('admin')
 
 block content
-    h1 Berths
+    .page-header Berths
     ul
         each berth in berths
             li(id=berth._id)
                 a(href="admin/berths/#{berth.number}")= berth.number + " - " + berth.owner
-    a.btn.btn-success(href="admin/berths/new") Opret ny plads
+    .page-footer
+        a.btn.btn-success(href="admin/berths/new") Create new

@@ -4,7 +4,7 @@ block navigation
     +breadcrumb('admin', 'berths')
 
 block content
-    h1= berth.new ? "New Berth" : berth.number + " - " + berth.owner
+    .page-header= berth.new ? "New Berth" : berth.number + " - " + berth.owner
     form
         .field
             label Number:
@@ -12,8 +12,7 @@ block content
         .field
             label Owner:
             input(type="text" name="owner" value=berth.owner)
-        .field-footer
-            label
+        .page-footer
             input#berthSubmit.btn.btn-success(type="submit" value= berth.new ? "Create" : "Save")
             if !berth.new
                 button#berthDelete.btn.btn-danger Delete

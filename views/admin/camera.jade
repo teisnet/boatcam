@@ -4,7 +4,7 @@ block navigation
     +breadcrumb('admin', 'cameras')
 
 block content
-    h1= camera.title || "New Camera"
+    .page-header= camera.title || "New Camera"
     form
         .field
             label Title:
@@ -33,8 +33,7 @@ block content
         .field
             label HTTP port:
             input.narrow(type="number" name="http" value=camera.http min="0" max="65535" maxlength="5")
-        .field-footer
-            label
+        .page-footer
             input#cameraSubmit.btn.btn-success(type="submit" value= camera.new ? "Create" : "Save")
             if !camera.new
                 button#cameraDelete.btn.btn-danger Delete
