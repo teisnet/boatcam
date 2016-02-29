@@ -124,6 +124,7 @@ i:hover {
     height: 450px; //288px; // 330px
 }
 
+
 .status-indicator {
     display: inline-block;
     width: @status-indicator-size;
@@ -132,21 +133,22 @@ i:hover {
     border: 1px solid #bbb;
     background-color: transparent;
     margin-right: 12px;
-}
 
-.online .status-indicator {
-    border: none;
-    background-color: #0F0;
-}
+    &.online, &.offline, &.disabled {
+        border: none;
+    }
 
-.offline .status-indicator {
-    border: none;
-    background-color: #F00;
-}
+    &.online {
+        background-color: #0F0;
+    }
 
-.disabled .status-indicator {
-    border: none;
-    background-color: lightgray;
+    &.offline {
+        background-color: #F00;
+    }
+
+    &.disabled {
+        background-color: lightgray;
+    }
 }
 
 

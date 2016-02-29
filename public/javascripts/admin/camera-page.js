@@ -1,5 +1,39 @@
 "use strict";
 
+if (!cameraData.new) {
+
+    var socket = io("/cameras/" + cameraData.slug);
+
+    socket.on("status", function(value){
+        var element = $(".status-indicator");
+        element.removeClass("online offline disabled");
+        element.addClass(value.status);
+    });
+
+    $(document).ready(function(){
+        $('form #enabled').change(function() {
+            var isChecked = $(this).is(':checked');
+
+            $.ajax({
+                url: '/api/cameras/' + cameraData._id,
+                type: "put",
+                dataType: "json",
+                data: { enabled: isChecked },
+                success: function(data) {
+                            console.log("OK: " + JSON.stringify(data));
+                        },
+                error: function(e) {
+                    var message = e.responseText;
+                    if (!message) { message = "Could not set camera enabled = " + JSON.stringify(isChecked); }
+                    $(".error").text(message);
+                }
+            });
+        });
+    });
+
+}
+
+
 $(document).ready(function(){
 
     $("form").on("submit", function(e) {

@@ -4,17 +4,22 @@ block navigation
     +breadcrumb('admin', 'cameras')
 
 block content
-    .page-header= camera.title || "New Camera"
+    .page-header
+        .status-indicator
+        if camera.new
+            | New Camera
+        else
+            a(href="/cameras/" + camera.slug target="_blank")= camera.title
     form
+        .field
+            label Enabled:
+            input#enabled(type="checkbox" name="enabled" value="true" checked=camera.enabled)
         .field
             label Title:
             input(type="text" name="title" value=camera.title autofocus)
         .field
             label Slug:
             input(type="text" name="slug" value=camera.slug  required)
-        .field
-            label Enabled:
-            input(type="checkbox" name="enabled" value="true" checked=camera.enabled)
         .field
             label Hostname:
             input(type="text" name="hostname" value=camera.hostname)
@@ -42,4 +47,5 @@ block content
 block scripts
     script.
         var cameraData = !{JSON.stringify(camera, null, 2)}
+    script(src="/socket.io/socket.io.js")
     script(src="/javascripts/admin/camera-page.js")

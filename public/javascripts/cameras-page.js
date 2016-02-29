@@ -7,7 +7,7 @@ socket.on("status", function(status){
 });
 
 function setStatus(status) {
-    var element = $("#" + status._id);
+    var element = $("#" + status._id + " .status-indicator");
 
    element.removeClass("online offline disabled");
    element.addClass(status.status);

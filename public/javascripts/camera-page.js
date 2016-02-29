@@ -89,7 +89,7 @@ $(Camera).on('move', function (event, pos) {
 });
 
 $(Camera).on('status', function (event, value) {
-    var element = $("#status-field");
+    var element = $(".status-indicator");
 
    element.removeClass("online offline disabled");
    element.addClass(value.status);
