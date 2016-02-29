@@ -16,6 +16,7 @@
 #16 Database validation script
 #18 Duplicate existing camera feature
 
+
 SOLVED
 #7 Create Camera 'disabled' field to turn off camera queries.
 #11 Create new websocket handler for newly created cameras
@@ -23,3 +24,4 @@ SOLVED
 #12 New cameras with empty 'slug' field becomes unreachable. Validate new cameras before creation, slug field nonempty, english characters.
 #17 Fix new Camera "null" ports issue: "Could not update camera 56d210adf89cc1480ce783ac (Cast to number failed for value "null" at path "onvif")"
     Fixed: Jade non-escaped use of variables
+#19 Form pages still submit to server when required fields are empty

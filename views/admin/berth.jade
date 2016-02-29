@@ -15,7 +15,7 @@ block content
         .page-footer
             input#berthSubmit.btn.btn-success(type="submit" value= berth.new ? "Create" : "Save")
             if !berth.new
-                button#berthDelete.btn.btn-danger Delete
+                button#berthDelete.btn.btn-danger(type="button") Delete
         .error
     if !berth.new
         h3 Positions
@@ -24,7 +24,7 @@ block content
                 li
                     a(href="/admin/cameras/#{position.camera.slug}")= position.camera.title
                     | &nbsp;(x=#{position.x.toFixed(1)}, y=#{position.y.toFixed(1)}, zoom=#{position.zoom.toFixed(1)})
-                    button.btn.btn-danger Slet
+                    button.btn.btn-danger(type="button") Delete
 
 block scripts
     script.

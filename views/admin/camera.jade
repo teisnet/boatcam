@@ -41,7 +41,7 @@ block content
         .page-footer
             input#cameraSubmit.btn.btn-success(type="submit" value= camera.new ? "Create" : "Save")
             if !camera.new
-                button#cameraDelete.btn.btn-danger Delete
+                button#cameraDelete.btn.btn-danger(type="button") Delete
         .error
 
 block scripts
