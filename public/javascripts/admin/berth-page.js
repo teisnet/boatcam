@@ -5,37 +5,40 @@ $(document).ready(function(){
     $("form").on("submit", function(e) {
         e.preventDefault();
 
-        $.ajax({
-            url:   berthData.new ? '/api/berths' : '/api/berths/' + berthData._id,
-            type:  berthData.new ? "post" : "put",
-            dataType: "json",
-            data: $('form').serialize(),
-            success: function(data) {
-                        console.log("OK: " + JSON.stringify(data));
-                        if (berthData.new) { document.location.href = '/admin/berths/' + data.number; }
-                    },
-            error: function(e) {
-                var message = e.responseText;
-                if (!message) { message = berthData.new ? "Could not create new berth" : "Could not edit berth"; }
-                $(".error").text(message);
-            }
-        });
+        var data = $('form').serialize();
+        var errorMessage = berthData.new ? "Could not create new berth" : "Could not edit berth";
+        var type = berthData.new ? "post" : "put";
+
+        send(type, data, errorMessage, true);
+
     });
 
     if (!berthData.new) {
         $("#berthDelete").click(function(e) {
-            $.ajax({
-                url: '/api/berths/' + berthData._id,
-                type: "delete",
-                success: function(data) {
-                            console.log("DELETED: " + JSON.stringify(data));
-                            document.location.href='/admin/berths';
-                        },
-                error: function(e) {
-                    $(".error").text(e.responseText || "Could not delete berth");
-                }
-            });
+            send("delete", null, "Could not delete berth", true);
         });
     }
 
 });
+
+
+function send(type, data, errorMessage, redirect) {
+    $.ajax({
+        url: type === "post" ? '/api/berths' : '/api/berths/' + berthData._id,
+        type: type,
+        dataType: data ? "json" : null,
+        data: data,
+        success: function(data) {
+            if (redirect) {
+                var redirectTo = '/admin/berths';
+                // new vs. save, delete
+                if (type === "post") { redirectTo +=  "/" + data.number; }
+                document.location.href = redirectTo;
+            }
+        },
+        error: function(e) {
+            var message = errorMessage + " (" + e.responseText + ")";
+            $(".error").text(message);
+        }
+    });
+}
