@@ -15,6 +15,7 @@
 #15 Delete camera instance when camera is delted from database.
 #16 Database validation script
 #18 Duplicate existing camera feature
+#20 Prevent slashes in slugs and berth numbers, as they don't work in urls
 
 
 SOLVED
