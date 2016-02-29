@@ -4,6 +4,8 @@
 
 @navigation-height: 40px; //51px
 @menu-color: #08c;
+@status-indicator-size: 24px;
+@status-indicator-small-size: 14px;
 
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -74,6 +76,15 @@ input[type="text"] {
     }
 }
 
+li {
+   .status-indicator {
+        width: @status-indicator-small-size;
+        height: @status-indicator-small-size;
+        border-radius: @status-indicator-small-size / 2;
+        margin-right: 6px;
+   }
+}
+
 i:hover { 
     color: red;
 }
@@ -87,28 +98,27 @@ i:hover {
     height: 450px; //288px; // 330px
 }
 
-@circle-size: 24px;
-
-.circle {
+.status-indicator {
     display: inline-block;
-    width: @circle-size;
-    height: @circle-size;
-    border-radius: @circle-size / 2;
+    width: @status-indicator-size;
+    height: @status-indicator-size;
+    border-radius: @status-indicator-size / 2;
     border: 1px solid #bbb;
     background-color: transparent;
+    margin-right: 12px;
 }
 
-.online .circle {
+.online .status-indicator {
     border: none;
     background-color: #0F0;
 }
 
-.offline .circle {
+.offline .status-indicator {
     border: none;
     background-color: #F00;
 }
 
-.disabled .circle {
+.disabled .status-indicator {
     border: none;
     background-color: lightgray;
 }

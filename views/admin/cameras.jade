@@ -8,7 +8,7 @@ block content
     ul
         each camera in cameras
             li(id=camera._id)
-                .circle
+                .status-indicator
                 a(href="admin/cameras/#{camera.slug}")= camera.title
     .page-footer
         a.btn.btn-success(href="admin/cameras/new") Opret nyt kamera

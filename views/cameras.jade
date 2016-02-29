@@ -8,7 +8,7 @@ block content
     ul
         each camera in cameras
             li(id=camera._id)
-                .circle
+                .status-indicator
                 a(href="cameras/#{camera.slug}")= camera.title
 
 block scripts
