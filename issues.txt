@@ -12,9 +12,10 @@
 #10 Warn if database is disconnected 
 #13 Disable camera with missing or invalid hostname parameter. Proper client side error notification
 #14 Disconnect client side video streaming when camera is disabled
-#15 Delete camera instance when camera is delted from database.
+#15 Delete camera instance when camera is deleted from database.
 #16 Database validation script
 #18 Duplicate existing camera feature
+#21 Prevent camera movements when disabled
 
 
 SOLVED
