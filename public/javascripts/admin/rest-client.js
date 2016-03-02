@@ -3,7 +3,7 @@
 		var opts = $.extend({}, RestClient.defaults, options);
 		expand(opts);
 
-		opts.selectLinks.live('click', function (event) {
+		opts.rowsContainer.on('click', opts.selectLinks.selector, function (event) {
 			var id = $(this).data('id');
 			doAjaxCall('GET', url(opts.url, id), null, function(data) {
 				onSelect(opts, data);
@@ -11,7 +11,7 @@
 			event.preventDefault();
 		});
 
-		opts.deleteLinks.live('click', function (event) {
+		opts.rowsContainer.on('click', opts.deleteLinks.selector, function (event) {
 			var id = $(this).data('id');
 			doAjaxCall('DELETE', url(opts.url, id), null, function(data) {
 				doResetAndReload(opts);
@@ -75,9 +75,12 @@
 		$.ajax({
 			type: type,
 			url: url,
-			dataType: "json",
+			dataType: data ? "json" : null,
 			data: data,
-			success: callback
+			success: callback,
+            error: function() {
+                console.error("XHR Error");
+            }
 		});
 	}
 
@@ -111,7 +114,7 @@
 	RestClient.defaults = {
 			plural: '{name}s',
 
-			baseUrl: 'services',
+			baseUrl: 'api',
 			url: '{baseUrl}/{plural}/',
 
 			rowTemplate: '#{name}RowTemplate',

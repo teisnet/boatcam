@@ -1,0 +1,43 @@
+extends ../layout
+
+block navigation
+    +breadcrumb('admin')
+
+block content
+    .list-column
+        .page-header Cameras
+        table
+            caption Cameras
+            thead
+                tr
+                    th.idCol Id
+                    th.titleCol Title
+            tbody#camerasContainer
+        .page-footer
+            a.btn.btn-success(href="admin/cameras/new") Opret nyt kamera
+    .content-column
+        #cameraContainer
+            | Camera:
+            form#cameraForm
+                fieldset#cameraEntryContainer
+                input(type="reset" value="Cancel")
+                input(type="submit" value="Save")
+
+block scripts
+    script(src="/socket.io/socket.io.js")
+    script(src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js")
+    script(src="/javascripts/admin/rest-client.js")
+    script#cameraRowTemplate(type="text/x-jquery-tmpl").
+        <tr>
+            <td class="idCol"><a href="#" data-id="${_id}" class="cameraSelect">${_id}</a></td>
+            <td class="titleCol">${title}</td>
+            <td><a href="#" data-id="${_id}" class="cameraDelete">delete</a></td>
+        </tr>
+    script#cameraEntryTemplate(type="text/x-jquery-tmpl")
+        p Id: ${_id}
+        {{if _id}}
+        input#idField(name="id" type="hidden" value="${_id}")
+        {{/if}}
+        label(for="titleFld") Title:
+        input#titleFld(name="title" value="${title}")
+    script(src="/javascripts/admin/cameras-list-page.js")
