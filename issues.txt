@@ -16,6 +16,9 @@
 #16 Database validation script
 #18 Duplicate existing camera feature
 #21 Prevent camera movements when disabled
+#22 Make logs avilable on admin pages. Individual logs for each camera.
+#23 Ensure that camera slugs and berth numbers are not ObjectId's
+#25 Authentication
 
 
 SOLVED
