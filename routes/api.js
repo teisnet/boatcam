@@ -1,3 +1,5 @@
+"use strict";
+
 var express = require('express');
 var router = express.Router();
 
@@ -8,10 +10,29 @@ var Camera = require("../models/Camera");
 
 // TODO: respond with 500 at database connection failures
 
+// Format Mogoose errors
+function createErrorMessage(err) {
+    let message = "";
+    let errors = err.errors;
+
+    if (err.code === 11000) {
+        message += "Field value must be unique. Another item has the same value for thit field."
+    } else {
+        for (var field in errors) {
+            if (errors.hasOwnProperty(field)) {
+                message += field + ": " + errors[field].message + ". ";
+            }
+        }
+    }
+
+   return message;
+}
+
 function handleError(res, err, message) {
     // 400 (Bad Request)
-    res.status(400).send(message + " (" + err.message + ")");
-    console.error("400 Bad Request:" + message + " (" + err.message + ")");
+    var errorMessage = message + ". " + createErrorMessage(err);
+    res.status(400).send(errorMessage);
+    console.error("400 Bad Request:" + errorMessage);
 }
 
 

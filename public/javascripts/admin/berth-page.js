@@ -37,7 +37,7 @@ function send(type, data, errorMessage, redirect) {
             }
         },
         error: function(e) {
-            var message = errorMessage + " (" + e.responseText + ")";
+            var message = errorMessage + ". " + e.responseText;
             $(".error").text(message);
         }
     });
