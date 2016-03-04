@@ -8,6 +8,8 @@ var ObjectId = require('mongoose').Types.ObjectId;
 var Berth = require("../models/Berth");
 var Camera = require("../models/Camera");
 
+var objectIdRegex = new RegExp("^[0-9a-fA-F]{24}$");
+
 // TODO: respond with 500 at database connection failures
 
 // Format Mogoose errors
@@ -68,7 +70,11 @@ router.route('/cameras/:cameraId')
 // Get one
 .get(function(req, res, next) {
     var cameraId = req.params.cameraId;
-    Camera.findById(cameraId, function(err, camera){
+
+    // Check if cameraId refer to the '_id' field or the 'slug' field
+    var query = objectIdRegex.test(cameraId) ? {_id: cameraId} : {slug: cameraId};
+
+    Camera.findOne(query, function(err, camera){
         if (err) return handleError(res, err, "Could not get camera " + cameraId);
         if(!camera) return handleNotFound(res, "Camera " + cameraId + " not found");
         res.json(camera);
@@ -131,7 +137,11 @@ router.route('/berths/:berthId')
 // Get one
 .get(function(req, res, next) {
     var berthId = req.params.berthId;
-    Berth.findById(berthId, function(err, berth){
+
+    // Check if berthId refer to the '_id' field or the 'number' field
+    var query = objectIdRegex.test(berthId) ? {_id: berthId} : {slug: berthId};
+
+    Berth.findOne(query, function(err, berth){
         if (err) return handleError(res, err, "Could not get berth " + berthId);
         if(!berth) return handleNotFound(res, "Berth " + berthId + " not found");
         res.json(berth);

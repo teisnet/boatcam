@@ -3,6 +3,8 @@
 		var opts = $.extend({}, RestClient.defaults, options);
 		expand(opts);
 
+        this._options = opts;
+
 		opts.rowsContainer.on('click', opts.selectLinks.selector, function (event) {
 			var id = $(this).data('id');
 			doAjaxCall('GET', url(opts.url, id), null)
@@ -47,6 +49,10 @@
 
 		doResetAndReload(opts);
 	};
+
+    RestClient.prototype.select = function(data) {
+        useTemplate(this._options.entryTemplate, data, this._options.entryContainer);
+    }
 
 	function doResetAndReload(options) {
 		onSelect(options, null);

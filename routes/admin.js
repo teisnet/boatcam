@@ -19,8 +19,7 @@ router.get('/cameras', function(req, res, next) {
     });
 });
 
-
-router.get('/cameras-list', function(req, res, next) {
+router.get("/cameras-list/:optional?", function(req, res, next) {
     Camera.find({}, function(err, cameras){
         res.render('admin/cameras-list', { title: req.app.locals.title, cameras: cameras });
     });
