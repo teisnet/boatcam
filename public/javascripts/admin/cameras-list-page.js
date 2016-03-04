@@ -12,6 +12,10 @@ var options = {
         if (selectedListElement) { selectedListElement.removeClass("selected"); }
         selectedListElement = $("#" + data._id);
         selectedListElement.addClass("selected");
+    },
+    onError: function (err){
+        var message = err.responseText;
+        $(".error").text(message);
     }
 };
 

@@ -5,7 +5,8 @@
 
 		opts.rowsContainer.on('click', opts.selectLinks.selector, function (event) {
 			var id = $(this).data('id');
-			doAjaxCall('GET', url(opts.url, id), null, function(data) {
+			doAjaxCall('GET', url(opts.url, id), null)
+            .done(function(data) {
 				onSelect(opts, data);
 			});
 			event.preventDefault();
@@ -13,7 +14,8 @@
 
 		opts.rowsContainer.on('click', opts.deleteLinks.selector, function (event) {
 			var id = $(this).data('id');
-			doAjaxCall('DELETE', url(opts.url, id), null, function(data) {
+			doAjaxCall('DELETE', url(opts.url, id), null)
+            .done(function(data) {
 				doResetAndReload(opts);
 			});
 			event.preventDefault();
@@ -23,15 +25,18 @@
 			var form = $(this);
 			var data = form.serialize();
 			var id = $('#'+opts.entryIdField).val();
-			if (id) {
-				doAjaxCall('PUT', url(opts.url, id), data, function(data) {
-					doResetAndReload(opts);
-				});
-			} else {
-				doAjaxCall('POST', opts.url, data, function(data) {
-					doResetAndReload(opts);
-				});
-			}
+
+            var type = id ? 'PUT' : 'POST';
+            var u =  id ? url(opts.url, id) : opts.url;
+
+            doAjaxCall(type, u, data)
+            .done(function(data) {
+                doResetAndReload(opts);
+            })
+            .fail(function(err){
+                opts.onError(err);
+            });
+
 			event.preventDefault();
 		});
 
@@ -49,7 +54,8 @@
 	}
 
 	function loadList (options) {
-		doAjaxCall('GET', options.url, null, function(data) {
+		doAjaxCall('GET', options.url, null)
+        .done(function(data) {
 			onReload(options, data);
 		});
 	};
@@ -71,16 +77,12 @@
 		}
 	}
 
-	function doAjaxCall(type, url, data, callback) {
-		$.ajax({
+	function doAjaxCall(type, url, data) {
+		return $.ajax({
 			type: type,
 			url: url,
 			dataType: data ? "json" : null,
-			data: data,
-			success: callback,
-            error: function() {
-                console.error("XHR Error");
-            }
+			data: data
 		});
 	}
 
