@@ -85,7 +85,9 @@
 			type: type,
 			url: url,
 			dataType: data ? "json" : null,
-			data: data
+			data: data,
+            // TODO: Only set to 'false' in 'dumb' browers that don't invalidate cache on PUT requests
+            cache: false
 		})
         .fail(function(err){
             options.onError(err);
