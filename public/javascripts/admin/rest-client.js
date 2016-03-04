@@ -7,7 +7,7 @@
 
 		opts.rowsContainer.on('click', opts.selectLinks.selector, function (event) {
 			var id = $(this).data('id');
-			doAjaxCall('GET', url(opts.url, id), null)
+			doAjaxCall('GET', url(opts.url, id), null, opts)
             .done(function(data) {
 				onSelect(opts, data);
 			});
@@ -16,7 +16,7 @@
 
 		opts.rowsContainer.on('click', opts.deleteLinks.selector, function (event) {
 			var id = $(this).data('id');
-			doAjaxCall('DELETE', url(opts.url, id), null)
+			doAjaxCall('DELETE', url(opts.url, id), null, opts)
             .done(function(data) {
 				doResetAndReload(opts);
 			});
@@ -31,12 +31,9 @@
             var type = id ? 'PUT' : 'POST';
             var u =  id ? url(opts.url, id) : opts.url;
 
-            doAjaxCall(type, u, data)
+            doAjaxCall(type, u, data, opts)
             .done(function(data) {
                 doResetAndReload(opts);
-            })
-            .fail(function(err){
-                opts.onError(err);
             });
 
 			event.preventDefault();
@@ -60,7 +57,7 @@
 	}
 
 	function loadList (options) {
-		doAjaxCall('GET', options.url, null)
+		doAjaxCall('GET', options.url, null, options)
         .done(function(data) {
 			onReload(options, data);
 		});
@@ -83,13 +80,16 @@
 		}
 	}
 
-	function doAjaxCall(type, url, data) {
+	function doAjaxCall(type, url, data, options) {
 		return $.ajax({
 			type: type,
 			url: url,
 			dataType: data ? "json" : null,
 			data: data
-		});
+		})
+        .fail(function(err){
+            options.onError(err);
+        });
 	}
 
 	function url(url, id) {
@@ -137,7 +137,8 @@
 			deleteLinks: '.{name}Delete',
 
 			onSelect: $.noop,
-			onReload: $.noop
+			onReload: $.noop,
+			onError:  $.noop
 		};
 
 })(jQuery);
