@@ -53,6 +53,7 @@ $(document).ready(function(){
         })
         .done(function(data){
             restClient.select(data);
+            setSelected(data);
         })
         .fail(apiErrorHandler);
     }
