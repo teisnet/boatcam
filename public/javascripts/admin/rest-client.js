@@ -1,86 +1,90 @@
-(function( $, undefined ) {
-	RestClient = function (options) {
-		var opts = $.extend({}, RestClient.defaults, options);
-		expand(opts);
+"use strict";
 
-        this._options = opts;
+var RestClient = (function($) {
 
-		opts.rowsContainer.on('click', opts.selectLinks.selector, function (event) {
+	var restClient = function (cfg) {
+        var self = this;
+		var config = self.config = $.extend({}, self.defaults, cfg);
+		expand(config);
+
+        // List 'click' handler
+		config.rowsContainer.on('click', config.selectLinks.selector, function (event) {
 			var id = $(this).data('id');
-			doAjaxCall('GET', url(opts.url, id), null, opts)
+			self._request('GET', id, null)
             .done(function(data) {
-				onSelect(opts, data);
+				self._onSelect(data);
 			});
 			event.preventDefault();
 		});
 
-		opts.rowsContainer.on('click', opts.deleteLinks.selector, function (event) {
+        // List 'delete' handler
+		config.rowsContainer.on('click', config.deleteLinks.selector, function (event) {
 			var id = $(this).data('id');
-			doAjaxCall('DELETE', url(opts.url, id), null, opts)
+			self._request('DELETE', id, null)
             .done(function(data) {
-				doResetAndReload(opts);
+				self._doResetAndReload();
 			});
 			event.preventDefault();
 		});
 
-		opts.entryForm.submit(function (event) {
+        // Form 'submit' handler
+		config.entryForm.submit(function (event) {
 			var form = $(this);
 			var data = form.serialize();
-			var id = $('#'+opts.entryIdField).val();
+			var id = $('#'+config.entryIdField).val();
 
             var type = id ? 'PUT' : 'POST';
-            var u =  id ? url(opts.url, id) : opts.url;
 
-            doAjaxCall(type, u, data, opts)
+            self._request(type, id || null, data)
             .done(function(data) {
-                doResetAndReload(opts);
+                self._doResetAndReload();
             });
 
 			event.preventDefault();
 		});
 
-		opts.entryForm.bind('reset', function (event) {
-			onSelect(opts, null);
+        // Form 'reset' handler
+		config.entryForm.bind('reset', function (event) {
+			self._onSelect(null);
 			event.preventDefault();
 		});
 
-		doResetAndReload(opts);
+		self._doResetAndReload();
 	};
 
-    RestClient.prototype.select = function(data) {
-        useTemplate(this._options.entryTemplate, data, this._options.entryContainer);
+
+    restClient.prototype.select = function(data) {
+        useTemplate(this.config.entryTemplate, data, this.config.entryContainer);
     }
 
-	function doResetAndReload(options) {
-		onSelect(options, null);
-		loadList(options);
+	restClient.prototype._doResetAndReload = function() {
+		this._onSelect(null);
+		this._loadList();
 	}
 
-	function loadList (options) {
-		doAjaxCall('GET', options.url, null, options)
+	restClient.prototype._loadList = function() {
+        var self = this;
+		self._request('GET', null, null)
         .done(function(data) {
-			onReload(options, data);
+			self._onReload(data);
 		});
 	};
 
-	function onReload(options, data) {
-		useTemplate(options.rowTemplate, data, options.rowsContainer);
-		options.onReload(data);
+	restClient.prototype._onReload = function(data) {
+        var config = this.config;
+		useTemplate(config.rowTemplate, data, config.rowsContainer);
+		config.onReload(data);
 	}
 
-	function onSelect(options, data) {
-		useTemplate(options.entryTemplate, data, options.entryContainer);
-		options.onSelect(data);
+	restClient.prototype._onSelect = function(data) {
+        var config = this.config;
+		useTemplate(config.entryTemplate, data, config.entryContainer);
+		config.onSelect(data);
 	}
 
-	function useTemplate(template, data, container) {
-		if (template) {
-			container.empty();
-			template.tmpl(data).appendTo(container);
-		}
-	}
-
-	function doAjaxCall(type, url, data, options) {
+	restClient.prototype._request = function(type, path, data) {
+        var self = this;
+        var url = path ? self.config.url + path : self.config.url;
 		return $.ajax({
 			type: type,
 			url: url,
@@ -90,21 +94,26 @@
             cache: false
 		})
         .fail(function(err){
-            options.onError(err);
+            self.config.onError(err);
         });
 	}
 
-	function url(url, id) {
-		return url + id + '/';
+
+
+	function useTemplate(template, data, container) {
+		if (template) {
+			container.empty();
+			template.tmpl(data).appendTo(container);
+		}
 	}
 
-	function expand(options) {
-		for (var field in options) {
-			var val = options[field];
+	function expand(config) {
+		for (var field in config) {
+			var val = config[field];
 			if ($.type(val) == 'string') {
 				while (val.match(/{([^{}]*)}/)) {
 					val = val.replace(/{([^{}]*)}/, function (key, group) {
-						return options[group];
+						return config[group];
 					});
 				}
 				if (val.charAt(0) == '#' || val.charAt(0) == '.') {
@@ -116,12 +125,13 @@
 					}
 					val = obj;
 				}
-				options[field] = val;
+				config[field] = val;
 			}
 		}
 	}
 
-	RestClient.defaults = {
+
+	restClient.prototype.defaults = {
 			plural: '{name}s',
 
 			baseUrl: 'api',
@@ -142,5 +152,8 @@
 			onReload: $.noop,
 			onError:  $.noop
 		};
+
+
+    return restClient;
 
 })(jQuery);
