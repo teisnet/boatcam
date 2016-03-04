@@ -37,10 +37,10 @@ $(document).ready(function(){
     window.onpopstate = function(event){
         var data = event.state;
         setSelected(data);
-        restClient.select(data);
+        masterDetail.select(data);
     }
 
-    var restClient = new RestClient(options);
+    var masterDetail = new MasterDetail(options);
 
     // Client side redirect if sub-route points to a camera instance
     var path = window.location.pathname;
@@ -52,7 +52,7 @@ $(document).ready(function(){
             dataType: "json"
         })
         .done(function(data){
-            restClient.select(data);
+            masterDetail.select(data);
             setSelected(data);
         })
         .fail(apiErrorHandler);

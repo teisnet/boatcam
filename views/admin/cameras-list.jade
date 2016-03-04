@@ -13,7 +13,7 @@ block content
             a.btn.btn-success(href="admin/cameras-list/new") Opret nyt kamera
     .content-column
         form#cameraForm
-            fieldset#cameraEntryContainer
+            fieldset#cameraDetailContainer
             .page-footer
                 input.btn.btn-danger(type="reset" value="Cancel")
                 input.btn.btn-success(type="submit" value="Save")
@@ -23,13 +23,13 @@ block scripts
     script(src="/location-bar/location-bar.js")
     script(src="/socket.io/socket.io.js")
     script(src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js")
-    script(src="/javascripts/admin/rest-client.js")
-    script#cameraRowTemplate(type="text/x-jquery-tmpl")
+    script(src="/javascripts/admin/master-detail.js")
+    script#cameraListTemplate(type="text/x-jquery-tmpl")
         li(id="${_id}")
             a(href="/admin/cameras/${slug}" data-id="${_id}" class="cameraSelect")
                 .status-indicator
                 | ${title}
-    script#cameraEntryTemplate(type="text/x-jquery-tmpl")
+    script#cameraDetailTemplate(type="text/x-jquery-tmpl")
         +cameraTemplate
         //-| {{if _id}}
             input#idField(name="id" type="hidden" value="${_id}")

@@ -1,14 +1,14 @@
 "use strict";
 
-var RestClient = (function($) {
+var MasterDetail = (function($) {
 
-	var restClient = function (cfg) {
+	var masterDetail = function (cfg) {
         var self = this;
 		var config = self.config = $.extend({}, self.defaults, cfg);
 		expand(config);
 
         // List 'click' handler
-		config.rowsContainer.on('click', config.selectLinks.selector, function (event) {
+		config.listContainer.on('click', config.selectLinks.selector, function (event) {
 			var id = $(this).data('id');
 			self._request('GET', id, null)
             .done(function(data) {
@@ -18,7 +18,7 @@ var RestClient = (function($) {
 		});
 
         // List 'delete' handler
-		config.rowsContainer.on('click', config.deleteLinks.selector, function (event) {
+		config.listContainer.on('click', config.deleteLinks.selector, function (event) {
 			var id = $(this).data('id');
 			self._request('DELETE', id, null)
             .done(function(data) {
@@ -28,10 +28,10 @@ var RestClient = (function($) {
 		});
 
         // Form 'submit' handler
-		config.entryForm.submit(function (event) {
+		config.detailForm.submit(function (event) {
 			var form = $(this);
 			var data = form.serialize();
-			var id = $('#'+config.entryIdField).val();
+			var id = $('#'+config.detailIdField).val();
 
             var type = id ? 'PUT' : 'POST';
 
@@ -44,7 +44,7 @@ var RestClient = (function($) {
 		});
 
         // Form 'reset' handler
-		config.entryForm.bind('reset', function (event) {
+		config.detailForm.bind('reset', function (event) {
 			self._onSelect(null);
 			event.preventDefault();
 		});
@@ -53,16 +53,16 @@ var RestClient = (function($) {
 	};
 
 
-    restClient.prototype.select = function(data) {
-        useTemplate(this.config.entryTemplate, data, this.config.entryContainer);
+    masterDetail.prototype.select = function(data) {
+        useTemplate(this.config.detailTemplate, data, this.config.detailContainer);
     }
 
-	restClient.prototype._doResetAndReload = function() {
+	masterDetail.prototype._doResetAndReload = function() {
 		this._onSelect(null);
 		this._loadList();
 	}
 
-	restClient.prototype._loadList = function() {
+	masterDetail.prototype._loadList = function() {
         var self = this;
 		self._request('GET', null, null)
         .done(function(data) {
@@ -70,19 +70,19 @@ var RestClient = (function($) {
 		});
 	};
 
-	restClient.prototype._onReload = function(data) {
+	masterDetail.prototype._onReload = function(data) {
         var config = this.config;
-		useTemplate(config.rowTemplate, data, config.rowsContainer);
+		useTemplate(config.listTemplate, data, config.listContainer);
 		config.onReload(data);
 	}
 
-	restClient.prototype._onSelect = function(data) {
+	masterDetail.prototype._onSelect = function(data) {
         var config = this.config;
-		useTemplate(config.entryTemplate, data, config.entryContainer);
+		useTemplate(config.detailTemplate, data, config.detailContainer);
 		config.onSelect(data);
 	}
 
-	restClient.prototype._request = function(type, path, data) {
+	masterDetail.prototype._request = function(type, path, data) {
         var self = this;
         var url = path ? self.config.url + path : self.config.url;
 		return $.ajax({
@@ -131,19 +131,19 @@ var RestClient = (function($) {
 	}
 
 
-	restClient.prototype.defaults = {
+	masterDetail.prototype.defaults = {
 			plural: '{name}s',
 
 			baseUrl: 'api',
 			url: '{baseUrl}/{plural}/',
 
-			rowTemplate: '#{name}RowTemplate',
-			rowsContainer: '#{plural}Container',
+			listTemplate: '#{name}ListTemplate',
+			listContainer: '#{plural}Container',
 
-			entryTemplate: '#{name}EntryTemplate',
-			entryContainer: '#{name}EntryContainer',
-			entryForm: '#{name}Form',
-			entryIdField: 'idField',
+			detailTemplate: '#{name}DetailTemplate',
+			detailContainer: '#{name}DetailContainer',
+			detailForm: '#{name}Form',
+			detailIdField: 'idField',
 
 			selectLinks: '.{name}Select',
 			deleteLinks: '.{name}Delete',
@@ -154,6 +154,6 @@ var RestClient = (function($) {
 		};
 
 
-    return restClient;
+    return masterDetail;
 
 })(jQuery);
