@@ -10,7 +10,7 @@ block content
         ul#camerasContainer
 
         .page-footer
-            a.btn.btn-success(href="admin/cameras/new") Opret nyt kamera
+            a.btn.btn-success(href="admin/cameras-list/new") Opret nyt kamera
     .content-column
         form#cameraForm
             fieldset#cameraEntryContainer
@@ -20,12 +20,13 @@ block content
             .error
 
 block scripts
+    script(src="/location-bar/location-bar.js")
     script(src="/socket.io/socket.io.js")
     script(src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js")
     script(src="/javascripts/admin/rest-client.js")
     script#cameraRowTemplate(type="text/x-jquery-tmpl")
         li(id="${_id}")
-            a(href="#" data-id="${_id}" class="cameraSelect")
+            a(href="/admin/cameras/${slug}" data-id="${_id}" class="cameraSelect")
                 .status-indicator
                 | ${title}
     script#cameraEntryTemplate(type="text/x-jquery-tmpl")
