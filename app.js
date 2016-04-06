@@ -22,8 +22,6 @@ app.locals.title   = config.title;
 var io = socket_io();
 app.io = io;
 
-//var loadDataIntoDatabase = require("./modules/loadCameraDataIntoDatabase");
-//var loadDataIntoDatabase = require("./modules/loadBerthDataIntoDatabase");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
