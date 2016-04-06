@@ -1,7 +1,7 @@
 @echo off
 setlocal
 echo.
-echo  HANVEWEB DEBUG MODE
+echo  BOATCAM DEBUG MODE
 echo.
 echo ----------------------------------------------------------------
 echo.

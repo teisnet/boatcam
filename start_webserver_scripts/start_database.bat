@@ -1,8 +1,8 @@
 @echo off
 setlocal
-title MONGODB SERVER
+title MONGODB BOATCAM SERVER
 echo.
-echo  MONGODB SERVER
+echo  MONGODB BOATCAM SERVER
 echo.
 echo ----------------------------------------------------------------
 echo.
@@ -14,6 +14,13 @@ SET LOG_PATH=..\database\log\mongod.log
 SET STARTUP_SCRIPT=mongod.exe --config %CONFIG_PATH% --dbpath %DB_PATH% --logpath %LOG_PATH%
 
 %STARTUP_SCRIPT%
+
+echo.
+echo ----------------------------------------------------------------
+echo.
+if errorlevel 1 echo ERROR STARTING DATABASE (CHECK IT IS NOT ALREADY STARTED)
+echo.
+echo.
 
 cmd /k
 endlocal
