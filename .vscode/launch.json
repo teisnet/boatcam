@@ -5,10 +5,10 @@
 			"name": "App Debug",
 			"type": "node",
 			"request": "launch",
-			"program": "./bin/www",
+			"program": "${workspaceRoot}/bin/www",
 			"stopOnEntry": false,
 			"args": [],
-			"cwd": ".",
+			"cwd": "${workspaceRoot}/",
 			"runtimeExecutable": null,
 			"runtimeArgs": [
 				"--nolazy"
@@ -31,10 +31,10 @@
 			"name": "App Release",
 			"type": "node",
 			"request": "launch",
-			"program": "./bin/www",
+			"program": "${workspaceRoot}/bin/www/bin/www",
 			"stopOnEntry": false,
 			"args": [],
-			"cwd": ".",
+			"cwd": "${workspaceRoot}/",
 			"runtimeExecutable": null,
 			"runtimeArgs": [
 				"--nolazy"
