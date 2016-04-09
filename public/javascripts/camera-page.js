@@ -1,5 +1,7 @@
 "use strict";
 
+var player = null;
+
 var down = {};
 
 $(document).keydown(function(event){
@@ -60,7 +62,9 @@ $(document).keyup(function(event){
 });
 
 $(document).ready(function(){
+    $(".play-button").mousedown(onPlayCamera);
     $(".camera-control .up").mousedown("up",onMoveCamera);
+
     $(".camera-control .left").mousedown("left",onMoveCamera);
     $(".camera-control .right").mousedown("right",onMoveCamera);
     $(".camera-control .down").mousedown("down",onMoveCamera);
@@ -92,7 +96,7 @@ $(document).ready(function(){
     });
 
 	// http://flash.flowplayer.org/documentation/configuration/clips.html
-    flowplayer("player",
+    player = flowplayer("player",
 		{
 			src: "http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf",
 			wmode: "direct"  // Needed for 'accellerated' to take effect
@@ -106,6 +110,7 @@ $(document).ready(function(){
             'provider':'rtmp',
 			'accelerated': true // Hardware accelleration
         },
+		play: null,
         'plugins':{
             'controls': null, // 'controls: null' will not download controlbar at all
 			/* 'controls': {
@@ -152,6 +157,10 @@ $(Camera).on('status', function (event, value) {
 function onMoveCameraKey(command) {
     Camera.move(command);
 };
+
+function onPlayCamera() {
+	player.toggle();
+}
 
 function onMoveCamera(event) {
     Camera.move(event.data);
