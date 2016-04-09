@@ -7,8 +7,6 @@
 #5 Discover and handle camera operations from external sources
 #6 Dont query camera if no users are connected (camera sleep)
 #8 Handle range error for Onvif and other port settings. Crashes server.
-#9 Fix error at invalid onvif response: TypeError: Cannot read property 'panTilt' of undefined at ...\node_modules\onvif\lib\ptz.js:105:21
-   Appears when onvif is set to a address/port that exists but is not ONVIF
 #10 Warn if database is disconnected 
 #13 Disable camera with missing or invalid hostname parameter. Proper client side error notification
 #14 Disconnect client side video streaming when camera is disabled
@@ -30,3 +28,5 @@ SOLVED
     Fixed: Jade non-escaped use of variables
 #19 Form pages still submit to server when required fields are empty
 #20 Prevent slashes in slugs and berth numbers, as they don't work in urls
+#9 Fix error at invalid onvif response: TypeError: Cannot read property 'panTilt' of undefined at ...\node_modules\onvif\lib\ptz.js:105:21
+   Appears when onvif is set to a address/port that exists but is not ONVIF
