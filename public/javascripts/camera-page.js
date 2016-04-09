@@ -106,9 +106,10 @@ $(document).ready(function(){
             'url': config.stream,
             'scaling':'fit',
             'live': true,
-            'bufferLength': 0.1, //0, 0.1, 0.3 or 2 sec,
+            'bufferLength': 0.3, //0, 0.1, 0.3 or 2 sec,
             'provider':'rtmp',
-			'accelerated': true // Hardware accelleration
+			'accelerated': true, // Hardware accelleration,
+            'autoplay': true // No effect
         },
 		play: null,
         'plugins':{
