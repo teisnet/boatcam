@@ -28,7 +28,7 @@ $(document).keydown(function(event){
                 onMoveCameraKey("zoomOut");
             break;
 			case 70: // F
-				toggleFullScreen($("#player").get(0));
+				toggleFullScreen($("#player-container").get(0));
 			break;
         }
 
@@ -125,7 +125,7 @@ $(document).ready(function(){
 
 
     $(".fullscreen").bind("click", function(){
-		toggleFullScreen($("#player").get(0));
+		toggleFullScreen($("#player-container").get(0));
     });
 
 });

@@ -8,18 +8,19 @@ block content
         .status-indicator
         = camera.title
     .camera
-        #player
+        #player-container
+            .camera-control
+                i.fa.fa-3x.fa-chevron-up.up
+                i.fa.fa-3x.fa-chevron-left.left
+                i.fa.fa-3x.fa-chevron-right.right
+                i.fa.fa-3x.fa-chevron-down.down
+            #player
     div.clearboth
         p.status
         select#berths
         .btn.btn-success.savecamerapos Gem position
         .btn.btn-success.loadcamerapos Hent position
     div.clearboth
-    .camera-control
-        i.fa.fa-3x.fa-chevron-up.up
-        i.fa.fa-3x.fa-chevron-left.left
-        i.fa.fa-3x.fa-chevron-right.right
-        i.fa.fa-3x.fa-chevron-down.down
     .camera-control
         center
             button.btn.btn-primary.stop Stop
