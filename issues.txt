@@ -10,14 +10,14 @@
 #10 Warn if database is disconnected 
 #13 Disable camera with missing or invalid hostname parameter. Proper client side error notification
 #14 Disconnect client side video streaming when camera is disabled
-#15 Delete camera instance when camera is deleted from database.
 #16 Database validation script
 #18 Duplicate existing camera feature
 #21 Prevent camera movements when disabled
 #22 Make logs avilable on admin pages. Individual logs for each camera.
 #23 Ensure that camera slugs and berth numbers are not ObjectId's
 #25 Authentication
-
+#26 Delete camera instances when deletion is not caught by 'post findOneAndRemove' handler"
+#27 Test that all event handlers to deleted cameras are disposed
 
 SOLVED
 #7 Create Camera 'disabled' field to turn off camera queries.
@@ -30,3 +30,4 @@ SOLVED
 #20 Prevent slashes in slugs and berth numbers, as they don't work in urls
 #9 Fix error at invalid onvif response: TypeError: Cannot read property 'panTilt' of undefined at ...\node_modules\onvif\lib\ptz.js:105:21
    Appears when onvif is set to a address/port that exists but is not ONVIF
+#15 Delete camera instance when camera is deleted from database.

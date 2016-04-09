@@ -44,6 +44,21 @@ CameraSchema.post('init', function(doc) {
     }
 });
 
+// TODO: Add event for remove too
+CameraSchema.post('findOneAndRemove', function(doc) {
+    if (!doc) { return; }
+
+    console.log("CameraSchema.remove: " + doc.title);
+
+    this.camera = IpCamera.get(doc._id);
+    if (this.camera) {
+        this.camera.remove();
+        delete this.camera;
+        // Emit 'remove' from 'Camera' model
+        //this.constructor.emit("removed", doc);
+    }
+});
+
 CameraSchema.virtual("name")
 	.get(function () { return this.slug; });
 

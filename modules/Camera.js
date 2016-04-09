@@ -307,6 +307,15 @@ Camera.prototype.snapshot = function(cb) {
     });
 }
 
+
+Camera.prototype.remove = function() {
+    this.disable();
+    this.removeAllListeners();
+    delete cameras[this.id];
+    console.log("Camera[" + this    .name + "].remove");
+}
+
+
 function isEqual(a, b, m) {
     var margin = m || 0.04;
     return a > (b - margin) && a < (b + margin) ? true : false;
