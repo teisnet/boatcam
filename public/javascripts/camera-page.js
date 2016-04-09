@@ -91,15 +91,20 @@ $(document).ready(function(){
         });
     });
 
-    flowplayer("player", "http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf", {
+	// http://flash.flowplayer.org/documentation/configuration/clips.html
+    flowplayer("player",
+		{
+			src: "http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf",
+			wmode: "direct"  // Needed for 'accellerated' to take effect
+		},
+		{
         'clip': {
             'url': config.stream,
             'scaling':'fit',
             'live': true,
-            'bufferLength': 0,
-            'bufferTime': 0,
+            'bufferLength': 0.1, //0, 0.1, 0.3 or 2 sec,
             'provider':'rtmp',
-            'autoplay': true // No effect
+			'accelerated': true // Hardware accelleration
         },
         'plugins':{
             'controls': null, // 'controls: null' will not download controlbar at all
