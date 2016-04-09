@@ -3,53 +3,76 @@
 	"_id": {
 		"$oid": "56b380e1f4bf13d500bb5f9a"
 	},
-	"hostname": "85.27.160.128",
-	"slug": "havn",
-	"onvif": 8080,
-	"http": 88,
+	"enabled": true,
+	"hostname": "85.27.160.243",
+	"http": 8002,
+	"onvif": 8082,
 	"password": "admin",
-	"title": "Havn",
-	"uri": "rtmp://85.27.160.128:1935/live/HavneCam.stream",
-	"username": "admin",
-	"enabled": true
+	"slug": "fjellebroen-ost",
+	"title": "Fjellebroen Øst",
+	"uri": "rtmp://192.168.1.36:1935/boatcam/fjellebroen-ost.stream",
+	"username": "admin"
 },
 {
 	"__v": 0,
 	"_id": {
 		"$oid": "56b380e6f4bf13d500bb5f9b"
 	},
-	"http": 84,
 	"api": "12345:12345@85.27.160.128:84/form/PTZSet",
+	"enabled": false,
+	"hostname": "",
+	"http": 84,
+	"onvif": null,
+	"password": "",
 	"slug": "minkalv1",
 	"title": "Min Kalv Mark",
 	"uri": "rtmp://85.27.160.128:5119/Minkalv1",
-	"enabled": false
+	"username": ""
 },
 {
 	"__v": 0,
 	"_id": {
 		"$oid": "56b380eaf4bf13d500bb5f9c"
 	},
-	"http": 85,
 	"api": "12345:12345@85.27.160.128:85/form/PTZSet",
+	"enabled": false,
+	"hostname": "",
+	"http": 85,
+	"onvif": null,
+	"password": "",
 	"slug": "minkalv2",
 	"title": "Min Kalv Tårn",
 	"uri": "rtmp://85.27.160.128:5119/Minkalv2",
-	"enabled": false
+	"username": ""
 },
 {
 	"_id": {
 		"$oid": "56b89faae3ebd4b720a32316"
 	},
 	"api": "12345:12345@85.27.160.128:83/form/PTZSet",
-	"hostname": "85.27.160.128",
-	"slug": "tree",
-	"onvif": 8000.0,
+	"enabled": false,
+	"hostname": "192.168.1.36",
 	"http": 83,
+	"onvif": 8000.0,
 	"password": "admin",
+	"slug": "tree",
 	"title": "Træ",
-	"uri": "rtmp://85.27.160.128:5119/MinKalv3",
-	"username": "admin",
-	"enabled": true
+	"uri": "rtmp://192.168.1.36:5119/MinKalv3",
+	"username": "admin"
+},
+{
+	"__v": 0,
+	"_id": {
+		"$oid": "57053eb30b027d801688a98e"
+	},
+	"enabled": true,
+	"hostname": "85.27.160.243",
+	"http": 8001,
+	"onvif": 8001,
+	"password": "admin",
+	"slug": "fjellebroen-vest",
+	"title": "Fjellebroen Vest",
+	"uri": "rtmp://192.168.1.36:1935/boatcam/fjellebroen-vest.stream",
+	"username": "admin"
 }]
 
