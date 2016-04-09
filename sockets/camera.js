@@ -3,6 +3,14 @@
 const Camera = require("../models/Camera");
 
 module.exports = function(io){
+	// TEST
+	io.on('connection', function (socket) {
+		socket.emit('test', { message: 'Hello from BoatCam' });
+		socket.on('test', function (data) {
+			console.log(data);
+		});
+	});
+	// END TEST
 
     const camerasNamespace = io.of("/cameras");
     camerasNamespace.on("connection", function(socket){
@@ -35,6 +43,13 @@ module.exports = function(io){
         } );
 
         cameraNamespace.on("connection", function(socket){
+
+			// BEGIN TEST
+			socket.emit('test', { message: 'Hello from camera ' + camera.slug });
+			socket.on('test', function (data) {
+				console.log(data);
+			});
+			// END TEST
 
             console.log("Sockets: " + camera.slug + ".connection");
 
