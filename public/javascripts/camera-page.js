@@ -45,7 +45,15 @@ $(document).ready(function(){
 
     $(".savecamerapos").bind("click", function(){
         var berthId = $('#berths').val();
-        $.post('api/berths/' + berthId + '/positions/' + config.cameraId, Camera.position, function(res){ });
+
+		$.ajax({
+			url: 'api/berths/' + berthId + '/positions/' + config.cameraId,
+			type: 'PUT',
+			dataType: 'json',
+			data: Camera.position,
+			success: function(res) {},
+			error:   function(err) { console.log("savecamerapos: error " + JSON.stringify(err)); }
+		});
     });
 
     $(".loadcamerapos").bind("click", function(){

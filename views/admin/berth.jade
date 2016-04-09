@@ -20,7 +20,7 @@ block content
     if !berth.new
         h3 Positions
         ul
-            each position in berth.positions
+            each position in berth.cameraPositions
                 li
                     a(href="/admin/cameras/#{position.camera.slug}")= position.camera.title
                     | &nbsp;(x=#{position.x.toFixed(1)}, y=#{position.y.toFixed(1)}, zoom=#{position.zoom.toFixed(1)})

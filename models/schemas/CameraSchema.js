@@ -76,4 +76,22 @@ CameraSchema.methods.onStatus = function (handler) {
     this.camera.on("status", handler);
 };
 
+CameraSchema.methods.populatePositions = function populatePositions (cb) {
+		return this.model('CameraPosition').find({ camera: this._id})
+		.populate("berth")
+		.exec()
+		.then( (berthCameraPositions) => {
+			this._positions = berthCameraPositions;
+		}); // TODO: Catch
+	/*
+	.catch(function(err){
+		// Catch, call callback with error and re-reject
+		cb(err);
+		return Promise.reject(err);
+	});*/
+};
+
+CameraSchema.virtual("positions")
+	.get(function () { return this._positions; });
+
 module.exports = CameraSchema;

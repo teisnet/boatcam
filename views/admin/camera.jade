@@ -44,6 +44,15 @@ block content
                 button#cameraDelete.btn.btn-danger(type="button") Delete
         .error
 
+        //-if !berth.new
+        h3 Positions
+        ul
+            each position in camera.positions
+                li
+                    a(href="/admin/berths/#{position.berth.number}")= position.berth.number
+                    | &nbsp;(x=#{position.x.toFixed(1)}, y=#{position.y.toFixed(1)}, zoom=#{position.zoom.toFixed(1)})
+                    button.btn.btn-danger(type="button") Delete
+
 block scripts
     script.
         var cameraData = !{JSON.stringify(camera, null, 2)}

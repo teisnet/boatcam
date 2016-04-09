@@ -7,6 +7,7 @@ var ObjectId = require('mongoose').Types.ObjectId;
 
 var Berth = require("../models/Berth");
 var Camera = require("../models/Camera");
+var CameraPosition = require("../models/CameraPosition");
 
 var objectIdRegex = new RegExp("^[0-9a-fA-F]{24}$");
 
@@ -178,52 +179,61 @@ router.route('/berths/:berthId')
 
 // BERTH CAMERA POSITIONS
 router.route('/berths/:berthId/positions/:cameraId')
-// Get
+
 .get(function(req, res, next){
     var berthId = req.params.berthId;
     var cameraId = req.params.cameraId;
-    Berth.findOne({_id: berthId, "positions.camera" : cameraId}, {'positions.$': 1}, function(err, berth){
-        if (err) return handleError(res, err, "Could not get position for berth " + berthId + " and camera " + cameraId);
+    CameraPosition.find({berth: berthId, camera: cameraId})
+	.exec()
+	.then((berthCameraPositions) => {
         // TODO: consider returning empty array in subobject
-        if(!berth) return handleNotFound(res, 'Berth id ' + berthId + " containing position with camera id " + cameraId + " not found");
-        res.json(berth.positions[0]);
-    });
-})
-// Create / update
-.post(function(req, res, next) {
-    var berthId = req.params.berthId;
-    var cameraId = req.params.cameraId;
-
-    var newPosition = {camera: cameraId, x: req.body.x, y: req.body.y, zoom: req.body.zoom }
-
-    // find by document id and update
-    Berth.findByIdAndUpdate(
-        berthId,
-        { $pull: { positions: { camera: new ObjectId(cameraId) } } },
-        { runValidators: true },
-        function(err, berth) {
-            if (err) return handleError(res, err, "Could not save position for berth " + berthId + " and camera " + cameraId);
-            Berth.findByIdAndUpdate(
-                berthId,
-                {$push: {positions: newPosition}},
-                function(err, model) {
-                    if (err) return handleError(res, err, "Could not save position for berth " + berthId + " and camera " + cameraId);
-                    //req.body.x, y and zoom
-                    res.json({ message: 'Created Berth position, berthId = ' + berthId});
-                }
-        );
-    });
-
-    /*Berth.findById(req.params.id).exec()
-    .then(function(doc){
-        doc.positions.pull({ cameraId: new ObjectId("56abf7797e59e98422a1cf0d") });
-        doc.markModified('positions');
-        doc.save();
+        if(!berthCameraPositions) return handleNotFound(res, 'Berth id ' + berthId + " containing position with camera id " + cameraId + " not found");
+		res.json(berthCameraPositions[0]);
     })
-    */
+	/*.catch((err) => {
+        handleError(res, err, "Could not get position for berth " + berthId + " and camera " + cameraId);
+	});*/
+})
+
+.post(function(req, res, next) {
+	var berthId = req.params.berthId;
+	var cameraId = req.params.cameraId;
+	var berthCameraPosition = new CameraPosition({camera: cameraId, berth: berthId, x: req.body.x, y: req.body.y, zoom: req.body.zoom });
+
+	berthCameraPosition.save()
+	.then((berth) => {
+		res.json({ message: 'Created Berth position, berthId = ' + berthId});
+	})
+	/*.catch((err) => {
+		handleError(res, err, "Could not save position for berth " + berthId + " and camera " + cameraId);
+	});*/
+})
+
+.put(function(req, res, next) {
+	var berthId = req.params.berthId;
+	var cameraId = req.params.cameraId;
+
+	CameraPosition.findOneAndUpdate(
+		{ camera: cameraId, berth: berthId },
+		{ $set: { x: req.body.x, y: req.body.y, zoom: req.body.zoom } },
+		{ upsert: true },
+		function(err, doc){
+			if (err) return res.send(500, { error: err });
+			return res.json({ message: 'Created Berth position, berthId = ' + berthId});
+		});
+	/*.catch((err) => {
+		handleError(res, err, "Could not save position for berth " + berthId + " and camera " + cameraId);
+	});*/
+})
+
+.delete(function() {
+	var cameraPositionId = req.params.cameraPositionId;
+	CameraPosition.findById(cameraPositionId, function(err, doc){
+		doc.remove(function(err, doc){
+			res.json({_id: cameraPositionId}); // OK
+		});
+	});
 });
-
-
 
 
 module.exports = router;
