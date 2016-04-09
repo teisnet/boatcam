@@ -21,6 +21,12 @@ $(document).keydown(function(event){
             case 39:
                 onMoveCameraKey("right");
             break;
+            case 187: // +
+                onMoveCameraKey("zoomIn");
+            break;
+            case 189: // -
+                onMoveCameraKey("zoomOut");
+            break;
         }
     }
 });
