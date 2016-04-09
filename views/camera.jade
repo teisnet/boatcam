@@ -7,7 +7,8 @@ block content
     .page-header
         .status-indicator
         = camera.title
-    #player.camera
+    .camera
+        #player
     div.clearboth
         p.status
         select#berths
@@ -28,6 +29,8 @@ block content
             button.btn.btn-primary.zoom-out Zoom ud
         center
             button.btn.btn-primary.snapshot Snapshot
+        center
+            button.btn.btn-primary.fullscreen Fullscreen
 
 block stylesheets
     link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
