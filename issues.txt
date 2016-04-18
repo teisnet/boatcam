@@ -16,7 +16,7 @@
 #22 Make logs avilable on admin pages. Individual logs for each camera.
 #23 Ensure that camera slugs and berth numbers are not ObjectId's
 #25 Authentication
-#26 Delete camera instances when deletion is not caught by 'post findOneAndRemove' handler"
+#26 Delete camera instances when deletion is not caught by 'post findOneAndRemove' handler
 #27 Test that all event handlers to deleted cameras are disposed
 #28 Fix ONVIF library errors:
         "TypeError: Cannot read property '0' of undefined" that crashes server (infrequently).
@@ -39,5 +39,5 @@ SOLVED
 #19 Form pages still submit to server when required fields are empty
 #20 Prevent slashes in slugs and berth numbers, as they don't work in urls
 #9 Fix error at invalid onvif response: TypeError: Cannot read property 'panTilt' of undefined at ...\node_modules\onvif\lib\ptz.js:105:21
-   Appears when onvif is set to a address/port that exists but is not ONVIF
+   Appears when onvif is set to an address/port that exists but is not ONVIF
 #15 Delete camera instance when camera is deleted from database.
