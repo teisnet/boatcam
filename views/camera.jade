@@ -25,17 +25,22 @@ block content
         .btn.btn-success.savecamerapos Gem position
         .btn.btn-success.loadcamerapos Hent position
     div.clearboth
-    .camera-control
+    .camera-control-panel
         center
-            button.btn.btn-primary.stop Stop
+            //- button.btn.btn-primary.zoom-in Zoom ind
+            i.fa.fa-2x.fa-plus.zoom-in
         center
-            button.btn.btn-primary.zoom-in Zoom ind
+            //- button.btn.btn-primary.zoom-out Zoom ud
+            i.fa.fa-2x.fa-minus.zoom-out
         center
-            button.btn.btn-primary.zoom-out Zoom ud
+            //- button.btn.btn-primary.snapshot Snapshot
+            i.fa.fa-2x.fa-camera.snapshot
         center
-            button.btn.btn-primary.snapshot Snapshot
+            //- button.btn.btn-primary.fullscreen Fullscreen
+            i.fa.fa-2x.fa-expand.fullscreen
         center
-            button.btn.btn-primary.fullscreen Fullscreen
+            //- button.btn.btn-primary.fullscreen Fullscreen
+            i.btn.fa.fa-pause.pause
 
 block stylesheets
     link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")

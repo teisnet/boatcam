@@ -69,11 +69,10 @@ $(document).ready(function(){
     $(".camera-control .right").mousedown("right",onMoveCamera);
     $(".camera-control .down").mousedown("down",onMoveCamera);
 
-    $(".camera-control .stop").mousedown(onStopCamera);
-    $(".camera-control .zoom-in").mousedown("zoomIn",onMoveCamera);
-    $(".camera-control .zoom-out").mousedown("zoomOut",onMoveCamera);
+    $(".camera-control-panel .zoom-in").mousedown("zoomIn",onMoveCamera);
+    $(".camera-control-panel .zoom-out").mousedown("zoomOut",onMoveCamera);
 
-    $(".camera-control .snapshot").click(onSnapshot);
+    $(".camera-control-panel .snapshot").click(onSnapshot);
 
     $(".savecamerapos").bind("click", function(){
         var berthId = $('#berths').val();
@@ -133,6 +132,10 @@ $(document).ready(function(){
 
     $(".fullscreen").bind("click", function(){
 		toggleFullScreen($("#player-container").get(0));
+    });
+
+    $(".pause").bind("click", function(){
+		player.stop(); // alternatively pause()
     });
 
 });
