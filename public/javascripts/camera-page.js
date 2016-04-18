@@ -62,7 +62,7 @@ $(document).keyup(function(event){
 });
 
 $(document).ready(function(){
-    $(".play-button").mousedown(onPlayCamera);
+    $(".camera-play-button").mousedown(onPlayCamera);
     $(".camera-control .up").mousedown("up",onMoveCamera);
 
     $(".camera-control .left").mousedown("left",onMoveCamera);
@@ -129,6 +129,7 @@ $(document).ready(function(){
         'canvas':{"backgroundColor": "#000000",'backgroundGradient':'none'}
     });
 
+	attachEventHandlers(player);
 
     $(".fullscreen").bind("click", function(){
 		toggleFullScreen($("#player-container").get(0));
@@ -160,7 +161,9 @@ function onMoveCameraKey(command) {
 };
 
 function onPlayCamera() {
-	player.toggle();
+	//player.toggle();
+	//if (!player.isPlaying) // Returns false even if the player has stopped
+		player.play();
 }
 
 function onMoveCamera(event) {
@@ -178,6 +181,61 @@ function onSnapshot() {
     Camera.snapshot(function(err, result) {
         snapshotWindow.location = "/snapshots/" + result;
     });
+}
+
+
+function attachEventHandlers(player){
+	function handler(param, param2) {
+		console.log("Handler " + this.name + ", param " + JSON.stringify(param));
+
+	}
+
+	player.onLoad(function(clip){   setPlayerStatus(clip, "pending", "onLoad"); });	  // Called on startup # 1
+	player.onBegin(function(clip){  setPlayerStatus(clip, "pending", "onBegin"); });  // Called on startup # 2
+	player.onStart(function(clip){  setPlayerStatus(clip, "playing", "onStart"); }); // Called on startup # 3
+	player.onResume(function(clip){ setPlayerStatus(clip, "playing", "onResume"); });
+
+	player.onBufferEmpty(function(clip){ setPlayerStatus(clip, null, "onBufferEmpty"); }); // Called regularily
+	player.onBufferFull(function(clip){  setPlayerStatus(clip, null, "onBufferFull"); });   // Called regularily
+	player.onBufferStop(function(clip){  setPlayerStatus(clip, null, "onBufferStop"); });   // onStop is also called
+	player.onLastSecond(function(clip){  setPlayerStatus(clip, null, "onLastSecon"); });
+	player.onSeek(function(clip){        setPlayerStatus(clip, null, "onSeek"); });
+
+	player.onClipAdd(function(clip){  setPlayerStatus(clip, null, "onClipAdd"); });
+	player.onCuepoint(function(clip){ setPlayerStatus(clip, null, "onCuepoint"); });
+
+	player.onError(function(clip){  setPlayerStatus(clip, "stopped", "onError"); });
+	player.onFinish(function(clip){ setPlayerStatus(clip, "stopped", "onFinish"); });
+	player.onStop(function(clip){   setPlayerStatus(clip, "stopped", "onStop"); });     // Called
+	player.onPause(function(clip){  setPlayerStatus(clip, "paused", "onPause"); });
+	player.onUnload(function(clip){ setPlayerStatus(clip, null, "onUnload"); });
+	player.onUpdate(function(clip){ setPlayerStatus(clip, null, "onUpdate"); });
+}
+
+var playerStatus = "pending";
+
+function setPlayerStatus(clip, status, eventName) {
+	// Status: pending, playing, paused, stopped
+	if (status) {
+		playerStatus = status;
+		console.log("%cPlayer." + eventName + ": " + playerStatus,  "color: blue");
+
+		/* if (eventName === "onBegin") {
+			var currentClip = player.getClip();
+
+			currentClip.onNetStreamEvent(function(clip, netStreamEvent){
+				console.log("NetStreamEvent: " + JSON.stringify(netStreamEvent));
+			});
+
+		}*/
+
+		var playerElement = $(".camera");
+        playerElement.removeClass("pending playing paused stopped");
+        playerElement.addClass(status);
+	}
+	else {
+		console.log("Player." + eventName);
+	}
 }
 
 

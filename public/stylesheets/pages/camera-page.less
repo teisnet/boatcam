@@ -1,6 +1,50 @@
-.camera {
-	position: relative;
+#player-container {
+	width: 100%;
+	height: 100%;
 }
+
+
+#player {
+	width: 100%;
+	height: 100%;
+
+	pointer-events: none;
+}
+
+
+.camera {
+    // margin:0 auto;
+    // background-color: gray;
+    display:block;
+    // Format is 16:9
+    width: 800px; //512px;  // 520px
+    height: 450px; //288px; // 330px
+	position: relative;
+
+	&.stopped {
+		.camera-play-button {
+			opacity: 0.8 !important;
+			transition:opacity 0.2s ease-in;
+		}
+	}
+
+	&.pending {
+		.camera-load-button {
+			opacity: 0.8 !important;
+			transition:opacity 0.2s ease-in;
+		}
+	}
+
+	&.playing {
+		.camera-navigation-control {
+			display: block !important;
+		}
+	}
+}
+.camera-control-panel {
+
+}
+
 
 .camera-control {
     width: 100%;
@@ -8,14 +52,57 @@
     position: absolute;
 	color: white;
 
-	.play-button {
-		width: 30px;
-		height: 30px;
-		background-color: white;
+	&:hover .camera-navigation-control {
+		opacity: 1.0;
+		transition:opacity 0.2s ease-in;
+	}
 
-		&:hover {
-			background-color: red;
+	.camera-navigation-control {
+		opacity: 0;
+		transition:opacity 0.2s ease-out;
+		display: none;
+	}
+
+	.camera-status {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		//width: 30px;
+		//height: 30px;
+		//line-height: 30px;
+		//background-color: white;
+		//position : absolute;
+		//text-align: center;
+		//vertical-align: middle;
+		//top: calc(~"50% - " (30px / 2));
+		//left: calc(~"50% - " (30px / 2));
+
+		> div {
+			position: absolute;
+			&:hover {
+				//background-color: red;
+			}
 		}
+
+		.camera-play-button {
+			opacity: 0; //.80;
+			&:hover {
+				opacity: 0.95;
+				//color: rgba(255, 255, 255, 0.90);
+				text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
+				//transition:opacity 0.3s ease-out;
+				//transition-delay: 0.5s;
+			}
+		}
+
+		.camera-load-button {
+			opacity: 0;
+			transition-delay: 0.6s;
+			transition:opacity 0.2s ease-out;
+		}
+
 	}
 
     .up, .left, .right, .down {
@@ -24,7 +111,13 @@
         position: absolute;
         text-align: center;
         line-height: 40px;
-		opacity: 0.7;
+		opacity: 0.4;
+		//mix-blend-mode: difference;
+		&:hover {
+				opacity: 0.8;
+				//color: rgba(255, 255, 255, 0.90);
+				text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
+		}
     }
 
     .up, .down {
