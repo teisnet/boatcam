@@ -18,6 +18,16 @@
 #25 Authentication
 #26 Delete camera instances when deletion is not caught by 'post findOneAndRemove' handler"
 #27 Test that all event handlers to deleted cameras are disposed
+#28 Fix ONVIF library errors:
+        "TypeError: Cannot read property '0' of undefined" that crashes server (infrequently).
+        Around onvif cam.js line 170
+        Cam._request(): parseSOAPString()
+#29 Fix ONVIF library errors when navigating 'fjellebroen-vest' camera:
+        1) Reload /cameras/fjellebroen-vest:
+            Status: red
+        2) Click 'move right'-button:
+            server error: "Cannot read property 'profileToken' of undefined" Cam.continuousMove (ptz.js line 366:65)
+            server doesn't crash.
 
 SOLVED
 #7 Create Camera 'disabled' field to turn off camera queries.
