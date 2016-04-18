@@ -10,6 +10,9 @@ block content
             | New Camera
         else
             a(href="/cameras/" + camera.slug target="_blank")= camera.title
+            &nbsp;
+            a.pull-right(href=("http://" + camera.username + ":" + camera.password + "@" + camera.hostname + ":" + camera.http) target="_blank")
+                i.fa.fa-external-link
     form
         .field
             label Enabled:
@@ -43,15 +46,18 @@ block content
             if !camera.new
                 button#cameraDelete.btn.btn-danger(type="button") Delete
         .error
-
         //-if !berth.new
+        .field
         h3 Positions
-        ul
+        ul.camera-positions-list
             each position in camera.positions
                 li
-                    a(href="/admin/berths/#{position.berth.number}")= position.berth.number
-                    | &nbsp;(x=#{position.x.toFixed(1)}, y=#{position.y.toFixed(1)}, zoom=#{position.zoom.toFixed(1)})
-                    button.btn.btn-danger(type="button") Delete
+                    span.number
+                        a(href="/admin/berths/#{position.berth.number}")= position.berth.number
+                    span.position= "x " + position.x.toFixed(1) + "\u00B0"
+                    span.position= "y " + position.y.toFixed(1) + "\u00B0"
+                    span.position= position.zoom.toFixed(1) + "x"
+                    i.fa.fa-close.pull-right
 
 block scripts
     script.

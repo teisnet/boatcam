@@ -1,6 +1,7 @@
 @import "base";
 @import "navigation";
 @import "scrollbar";
+@import "camera";
 
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -54,13 +55,16 @@ input[type="text"] {
     }
 
     input {
-        &.wide {
-            min-width: 340px;
-        }
-        &.narrow {
-            width: 60px;
-        }
     }
+}
+
+
+.wide {
+	min-width: 340px;
+}
+
+.narrow {
+	width: 60px;
 }
 
 .page-header {
@@ -90,11 +94,6 @@ li {
         vertical-align: middle;
     }
 
-    a {
-        display: block;
-        vertical-align: middle;
-    }
-
     &:hover, &:focus {
         text-decoration: none;
         background-color: @over-color;
@@ -105,40 +104,12 @@ li {
        background-color: @highlight-color;
    }
 
-   .status-indicator {
-        width: @status-indicator-small-size;
-        height: @status-indicator-small-size;
-        border-radius: @status-indicator-small-size / 2;
-        margin-right: 6px;
-   }
 }
 
 i:hover {
-    color: red;
+    //color: red;
 }
 
-.status-indicator {
-    display: inline-block;
-    width: @status-indicator-size;
-    height: @status-indicator-size;
-    border-radius: @status-indicator-size / 2;
-    border: 1px solid #bbb;
-    background-color: transparent;
-    margin-right: 12px;
-
-    &.online, &.offline, &.disabled {
-        border: none;
-    }
-
-    &.online {
-        background-color: #0F0;
-    }
-
-    &.offline {
-        background-color: #F00;
-    }
-
-    &.disabled {
-        background-color: lightgray;
-    }
+.pull-right {
+    float: right;
 }
