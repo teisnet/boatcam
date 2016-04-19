@@ -3,30 +3,9 @@
 const Camera = require("../models/Camera");
 
 module.exports = function(io){
-	// TEST
-	io.on('connection', function (socket) {
-		socket.emit('test', { message: 'Hello from BoatCam' });
-		socket.on('test', function (data) {
-			console.log(data);
-		});
-	});
-	// END TEST
-
-    const camerasNamespace = io.of("/cameras");
-    camerasNamespace.on("connection", function(socket){
-        Camera.find({}, function(err, cameras){
-            let status = cameras.map(function(camera){
-                    let cameraStatus = camera.status;
-                    cameraStatus._id = camera._id;
-                    return cameraStatus;
-                });
-            camerasNamespace.emit("status", status);
-        });
-
-    });
 
     Camera.find({}, function(err, cameras){
-        cameras.map(newCameraHandler);
+        cameras.forEach(newCameraHandler);
         Camera.on("new", newCameraHandler);
     });
 
@@ -35,12 +14,7 @@ module.exports = function(io){
         let cameraNamespace = io.of("/cameras/" + camera.slug);
 
         camera.onMove( (position) => cameraNamespace.emit("move", position) );
-
-        camera.onStatus( (status) => {
-            status._id = camera._id;
-            cameraNamespace.emit("status", status);
-            camerasNamespace.emit("status", status);
-        } );
+        camera.onStatus( (status) => cameraNamespace.emit("status", status) );
 
         cameraNamespace.on("connection", function(socket){
 

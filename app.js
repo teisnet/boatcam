@@ -41,7 +41,9 @@ app.use('/api', api);
 app.use('/admin', admin);
 
 // SOCKET.IO
-var camera = require('./sockets/camera')(io);
+const rootController = require('./sockets/rootController')(io);
+const cameraController = require('./sockets/cameraController')(io);
+const camerasController = require('./sockets/camerasController')(io);
 
 
 // catch 404 and forward to error handler
