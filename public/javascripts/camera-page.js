@@ -78,7 +78,7 @@ $(document).ready(function(){
         var berthId = $('#berths').val();
 
 		$.ajax({
-			url: 'api/berths/' + berthId + '/positions/' + config.cameraId,
+			url: '/api/berths/' + berthId + '/positions/' + config.cameraId,
 			type: 'PUT',
 			dataType: 'json',
 			data: Camera.position,
@@ -89,7 +89,7 @@ $(document).ready(function(){
 
     $(".loadcamerapos").bind("click", function(){
         var berthId = $('#berths').val();
-        $.getJSON('api/berths/' + berthId + '/positions/' + config.cameraId, function(res){
+        $.getJSON('/api/berths/' + berthId + '/positions/' + config.cameraId, function(res){
             Camera.moveTo(res);
         });
     });
@@ -141,7 +141,7 @@ $(document).ready(function(){
 
 });
 
-$.getJSON('api/berths', function(berthData) {
+$.getJSON('/api/berths', function(berthData) {
     $(berthData).each(function (index, berth) {
         var $option = $("<option/>").attr("value", berth._id).text(berth.number + " - " + berth.owner);
         $('#berths').append($option);
