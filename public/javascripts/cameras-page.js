@@ -3,7 +3,7 @@
 var socket = io("/cameras");
 
 socket.on("status", function(status){
-    $.isArray(status) ? status.map(function(value) { setStatus(value); }) : setStatus(status);
+    $.isArray(status) ? status.forEach(function(value) { setStatus(value); }) : setStatus(status);
 });
 
 function setStatus(status) {
