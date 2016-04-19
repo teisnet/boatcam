@@ -10,7 +10,7 @@ block content
             | New Camera
         else
             a(href="/cameras/" + camera.slug target="_blank")= camera.title
-            &nbsp;
+            | &nbsp;
             a.pull-right(href=("http://" + camera.username + ":" + camera.password + "@" + camera.hostname + ":" + camera.http) target="_blank")
                 i.fa.fa-external-link
     form
