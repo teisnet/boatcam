@@ -8,11 +8,11 @@ block content
     ul.camera-list
         each camera in cameras
             li(id=camera._id)
-                a(href="admin/cameras/#{camera.slug}")
+                a(href="cameras/#{camera.slug}")
                     .status-indicator
                     = camera.title
     .page-footer
-        a.btn.btn-success(href="admin/cameras/new") Opret nyt kamera
+        a.btn.btn-success(href="cameras/new") Opret nyt kamera
 
 block scripts
     script.

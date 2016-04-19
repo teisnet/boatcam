@@ -8,6 +8,6 @@ block content
     ul
         each berth in berths
             li(id=berth._id)
-                a(href="admin/berths/#{berth.number}")= berth.number + " - " + berth.owner
+                a(href="berths/#{berth.number}")= berth.number + " - " + berth.owner
     .page-footer
-        a.btn.btn-success(href="admin/berths/new") Create new
+        a.btn.btn-success(href="berths/new") Create new
