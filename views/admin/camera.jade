@@ -53,7 +53,7 @@ block content
             each position in camera.positions
                 li
                     span.number
-                        a(href="/admin/berths/#{position.berth.number}")= position.berth.number
+                        a(href="/admin/berths/#{position.berth && position.berth.number}")= position.berth && position.berth.number
                     span.position= "x " + position.x.toFixed(1) + "\u00B0"
                     span.position= "y " + position.y.toFixed(1) + "\u00B0"
                     span.position= position.zoom.toFixed(1) + "x"
