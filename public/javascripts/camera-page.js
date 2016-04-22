@@ -30,7 +30,7 @@ $(document).keydown(function(event){
                 onMoveCameraKey("zoomOut");
             break;
 			case 70: // F
-				toggleFullScreen($("#player-container").get(0));
+				toggleFullScreen($(".video-container").get(0));
 			break;
         }
 
@@ -63,11 +63,11 @@ $(document).keyup(function(event){
 
 $(document).ready(function(){
     $(".camera-play-button").mousedown(onPlayCamera);
-    $(".camera-control .up").mousedown("up",onMoveCamera);
+    $(".video-overlay .up").mousedown("up",onMoveCamera);
 
-    $(".camera-control .left").mousedown("left",onMoveCamera);
-    $(".camera-control .right").mousedown("right",onMoveCamera);
-    $(".camera-control .down").mousedown("down",onMoveCamera);
+    $(".video-overlay .left").mousedown("left",onMoveCamera);
+    $(".video-overlay .right").mousedown("right",onMoveCamera);
+    $(".video-overlay .down").mousedown("down",onMoveCamera);
 
     $(".camera-control-panel .zoom-in").mousedown("zoomIn",onMoveCamera);
     $(".camera-control-panel .zoom-out").mousedown("zoomOut",onMoveCamera);
@@ -132,7 +132,7 @@ $(document).ready(function(){
 	attachEventHandlers(player);
 
     $(".fullscreen").bind("click", function(){
-		toggleFullScreen($("#player-container").get(0));
+		toggleFullScreen($(".video-container").get(0));
     });
 
     $(".pause").bind("click", function(){
@@ -233,7 +233,7 @@ function setPlayerStatus(clip, status, eventName) {
 
 		}*/
 
-		var playerElement = $(".camera");
+		var playerElement = $(".video-window");
         playerElement.removeClass("pending playing paused stopped");
         playerElement.addClass(status);
 	}

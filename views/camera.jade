@@ -7,9 +7,9 @@ block content
     .page-header
         .status-indicator
         = camera.title
-    .camera
-        #player-container
-            .camera-control
+    .video-window
+        .video-container
+            .video-overlay
                 .camera-navigation-control
                     i.fa.fa-3x.fa-chevron-up.up
                     i.fa.fa-3x.fa-chevron-left.left
@@ -18,29 +18,24 @@ block content
                 .camera-status
                     i.fa.fa-5x.fa-spinner.fa-spin.camera-load-button
                     i.fa.fa-5x.fa-play.camera-play-button
+            .dock-right
+                //- .dock-top.camera-control-panel
+                        i.fa.fa-2x.fa-expand.fullscreen
+                .dock-center.camera-control-panel
+                        i.fa.fa-2x.fa-plus.zoom-in
+                        i.fa.fa-2x.fa-minus.zoom-out
+            .dock-bottom
+                .camera-control-panel
+                        i.fa.fa-pause.pause
+                        i.fa.fa-2x.fa-camera.snapshot
+                        i.fa.fa-2x.fa-expand.fullscreen
             #player
-    div.clearboth
+    .clearboth
         p.status
         select#berths
         .btn.btn-success.savecamerapos Gem position
         .btn.btn-success.loadcamerapos Hent position
-    div.clearboth
-    .camera-control-panel
-        center
-            //- button.btn.btn-primary.zoom-in Zoom ind
-            i.fa.fa-2x.fa-plus.zoom-in
-        center
-            //- button.btn.btn-primary.zoom-out Zoom ud
-            i.fa.fa-2x.fa-minus.zoom-out
-        center
-            //- button.btn.btn-primary.snapshot Snapshot
-            i.fa.fa-2x.fa-camera.snapshot
-        center
-            //- button.btn.btn-primary.fullscreen Fullscreen
-            i.fa.fa-2x.fa-expand.fullscreen
-        center
-            //- button.btn.btn-primary.fullscreen Fullscreen
-            i.btn.fa.fa-pause.pause
+    .clearboth
 
 block stylesheets
     link(rel="stylesheet" type="text/css" href="/javascripts/flowplayer/skin/minimalist.css")

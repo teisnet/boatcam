@@ -22,8 +22,7 @@ body {
     vertical-align: top;
 }
 
-.content {
-  padding: 30px 45px;
+.container {
   overflow-x: hidden;
   overflow-y: auto;
   position:absolute;
@@ -31,6 +30,13 @@ body {
   bottom: 0px;
   left:   0px;
   right:  0px;
+}
+
+.content {
+  padding: 30px 45px;
+  box-sizing: content-box;
+  margin: 0 auto;
+  width: @content-width;
 }
 
 a:link, a:visited, a:hover, a:active  {
