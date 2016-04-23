@@ -1,0 +1,13 @@
+extends ../layout
+
+block navigation
+    +breadcrumb('admin')
+
+block content
+    .page-header Users
+    ul
+        each user in users
+            li(id=user._id)
+                a(href="users/#{user._id}")= user.name
+    .page-footer
+        a.btn.btn-success(href="users/new") Create new

@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 
+var User = require("../models/user");
 var Camera = require("../models/camera");
 var Berth = require("../models/Berth");
 
@@ -13,11 +14,37 @@ router.get('/', function(req, res, next) {
 });
 
 
+router.get('/users', function(req, res, next) {
+    User.find({}, function(err, users){
+        res.render('admin/users', { title: req.app.locals.title, users: users });
+    });
+});
+
+
+router.get('/users/new', function(req, res, next) {
+    res.render('admin/user', { title: req.app.locals.title, user: { new: true } });
+});
+
+
+router.get('/users/:userId', function(req, res, next) {
+    let userId = req.params.userId;
+    User.findById(userId)
+    .exec(function(err, user){
+		if (!user) {
+			res.status(404).send('User "' + userId + '" not found');
+			return;
+		}
+        res.render('admin/user', { title: user.name, user: user });
+    });
+});
+
+
 router.get('/cameras', function(req, res, next) {
     Camera.find({}, function(err, cameras){
         res.render('admin/cameras', { title: req.app.locals.title, cameras: cameras });
     });
 });
+
 
 router.get("/cameras-list/:optional?", function(req, res, next) {
     Camera.find({}, function(err, cameras){
