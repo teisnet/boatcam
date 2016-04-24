@@ -13,10 +13,17 @@ router.route('/login')
 .get(function(req, res){
    res.render('login', { title: req.app.locals.title, message: req.flash('message') });
 })
-.post(passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }) );
+.post(
+    passport.authenticate('local' , { failureFlash: true, failureRedirect: '/login'/*, successRedirect: '/'*/}),
+    function(req, res) {
+        res.redirect(req.session.returnTo || '/');
+        delete req.session.returnTo;
+    }
+);
 
 router.use(function(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
+  req.session.returnTo = req.path;
   res.redirect('/login')
 });
 
