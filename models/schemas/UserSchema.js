@@ -9,6 +9,8 @@ var UserSchema = new mongoose.Schema({
 
 
 UserSchema.virtual("name")
-	.get(function () { return this.firstname + (this.lastname ? " " + this.lastname :  ""); });
+	.get(function () {
+		return (this.firstname || "") + (this.lastname && (" " + this.lastname) || "");
+	});
 
 module.exports = UserSchema;
