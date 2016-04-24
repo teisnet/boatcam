@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var session = require('express-session');
+var flash = require('connect-flash');
 var passport = require("passport");
 var authentication = require("./authentication");
 
@@ -37,6 +38,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(flash()); // For flash messages stored in session. TODO: consider move to relevant route.
 app.use(session({ secret: 'roedgroedmedfloede', saveUninitialized: true, resave: true})); // Session secret, required for passport
 app.use(passport.initialize());
 app.use(passport.session());
