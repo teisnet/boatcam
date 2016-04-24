@@ -10,7 +10,7 @@ var Berth = require("../models/Berth");
 
 router.get('/', function(req, res, next) {
     //res.redirect('admin/berths');
-    res.render('admin/index');
+    res.render('admin/index', { user: req.user } );
 });
 
 

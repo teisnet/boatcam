@@ -18,6 +18,12 @@ block content
         .field
             label Password:
             input(type="text" name="password" value=user.password)
+        .field
+            label Role:
+            select(name="role")
+                - var roles = [ 'User', 'Editor', 'Administrator']
+                for role in roles
+                    option(value=role selected=role==user.role )= role
         .page-footer
             input#userSubmit.btn.btn-success(type="submit" value= user.new ? "Create" : "Save")
             if !user.new
