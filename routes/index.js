@@ -9,8 +9,18 @@ var path = require("path");
 var Camera = require("../models/Camera");
 var Berth = require("../models/Berth");
 
+router.route('/login')
+.get(function(req, res){
+   res.render('login', { title: req.app.locals.title });
+})
+.post(passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login'/*, failureFlash: true*/ }) );
+
+router.use(function(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login')
+});
+
 router.get('/', function(req, res, next) {
-    //res.redirect('/cameras');
     res.render('index');
 });
 

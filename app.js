@@ -5,6 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var session = require('express-session');
+var passport = require("passport");
+var authentication = require("./authentication");
+
 var socket_io    = require( "socket.io" );
 
 var routes = require('./routes/index');
@@ -33,6 +37,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({ secret: 'roedgroedmedfloede', saveUninitialized: true, resave: true})); // Session secret, required for passport
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 

@@ -12,6 +12,12 @@ block content
         .field
             label Last name:
             input(type="text" name="lastname" value=user.lastname)
+        .field
+            label Username:
+            input(type="text" name="username" value=user.username)
+        .field
+            label Password:
+            input(type="text" name="password" value=user.password)
         .page-footer
             input#userSubmit.btn.btn-success(type="submit" value= user.new ? "Create" : "Save")
             if !user.new
