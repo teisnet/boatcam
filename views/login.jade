@@ -1,12 +1,24 @@
-form(action="/login" method="post")
-	div
-		label Username:
-		input(type="text" name="username")
-	div
-		label Password:
-		input(type="password" name="password")
-	div
-		input(type="submit" value="Log In")
-	div
-		if message
-			p #{message}
+doctype html
+html
+	head
+		meta(charset='utf-8')
+		meta(name="apple-mobile-web-app-capable" content="yes")
+		title= title
+		script(type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js")
+		block stylesheets
+		link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
+	link(rel='stylesheet', href='/stylesheets/style.css')
+	body.login-page
+		form(action="/login" method="post")
+			.page-header
+				| BoatCam Login
+			.field
+				input(type="text" name="username" placeholder="Brugernavn")
+			.field
+				input(type="password" name="password" placeholder="Kodeord")
+			.field
+				label
+				input.btn.btn-success(type="submit" value="Log In")
+			.field.message
+				if message
+						p #{message}
