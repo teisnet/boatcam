@@ -8,11 +8,6 @@ var Camera = require("../models/camera");
 var Berth = require("../models/Berth");
 
 
-router.use(function(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
-});
-
 router.get('/', function(req, res, next) {
     //res.redirect('admin/berths');
     res.render('admin/index');
