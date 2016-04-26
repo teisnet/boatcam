@@ -9,6 +9,20 @@ var path = require("path");
 var Camera = require("../models/Camera");
 var Berth = require("../models/Berth");
 
+function hasRoute(value) {
+    let length = router.stack.length;
+    for (var i = 0; i < length; i++) {
+        var route = router.stack[i];
+        if (route.route && route.route.methods.get) {
+            console.log(route.route.path);
+            if(route.regexp.test(value)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 router.route('/login')
 .get(function(req, res){
    res.render('login', { title: req.app.locals.title, message: req.flash('message') });
@@ -31,7 +45,9 @@ router.get('/logout', function(req, res) {
 
 router.use(function(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  req.session.returnTo = req.path;
+  if (hasRoute(req.path)) {
+    req.session.returnTo = req.path;
+  }
   res.redirect('/login')
 });
 

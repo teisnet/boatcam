@@ -41,3 +41,4 @@ SOLVED
 #9 Fix error at invalid onvif response: TypeError: Cannot read property 'panTilt' of undefined at ...\node_modules\onvif\lib\ptz.js:105:21
    Appears when onvif is set to an address/port that exists but is not ONVIF
 #15 Delete camera instance when camera is deleted from database.
+#30 Prevent login redirection to 'favicon.ico' or possibly other nonexisting resources caught by "/" req.session.returnTo.
