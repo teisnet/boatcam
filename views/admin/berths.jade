@@ -5,7 +5,7 @@ block navigation
 
 block content
     .page-header Berths
-    ul
+    ul.camera-list
         each berth in berths
             li(id=berth._id)
                 a(href="berths/#{berth.number}")= berth.number + " - " + berth.owner

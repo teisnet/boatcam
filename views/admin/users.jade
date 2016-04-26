@@ -5,7 +5,7 @@ block navigation
 
 block content
     .page-header Users
-    ul
+    ul.camera-list
         each user in users
             li(id=user._id)
                 a(href="users/#{user._id}")= user.name

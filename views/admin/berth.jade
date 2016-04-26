@@ -18,13 +18,17 @@ block content
                 button#berthDelete.btn.btn-danger(type="button") Delete
         .error
     if !berth.new
+        .field
         h3 Positions
-        ul
+        ul.camera-list.berth-positions-list
             each position in berth.cameraPositions
                 li
-                    a(href="/admin/cameras/#{position.camera.slug}")= position.camera.title
-                    | &nbsp;(x=#{position.x.toFixed(1)}, y=#{position.y.toFixed(1)}, zoom=#{position.zoom.toFixed(1)})
-                    button.btn.btn-danger(type="button") Delete
+                    span.title
+                        a(href="/admin/cameras/#{position.camera && position.camera.slug}")= position.camera && position.camera.title || " "
+                    span.position= "x " + position.x.toFixed(1) + "\u00B0"
+                    span.position= "y " + position.y.toFixed(1) + "\u00B0"
+                    span.position= position.zoom.toFixed(1) + "x"
+                    i.fa.fa-close.pull-right
 
 block scripts
     script.
