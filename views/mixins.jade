@@ -1,9 +1,16 @@
 mixin breadcrumb(...route)
     - var levelNames = { admin: "Admin", berths: "Berths", cameras: "Cameras", profile: "Profile" }
     - var path = "";
-    a(href="/") BoatCam
-    each level in route
-        - path += "/" + level
-        | &nbsp;>&nbsp;
-        a(href=path)= levelNames[level]
-    a.pull-right(href="/profile")= user && user.username
+    ul
+        li
+            a(href="/") BoatCam
+        each level in route
+            - path += "/" + level
+            | &nbsp;>&nbsp;
+            li
+                a(href=path)= levelNames[level]
+    ul.pull-right
+        li
+            a(href="/profile")= user && user.username
+        li
+            a(href="/logout") Log out

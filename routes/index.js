@@ -21,6 +21,14 @@ router.route('/login')
     }
 );
 
+router.get('/logout', function(req, res) {
+    req.logout();
+    req.session.destroy();
+    //delete req.session;
+    //res.clearCookie('cookiename');
+    res.redirect('/login');
+});
+
 router.use(function(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   req.session.returnTo = req.path;
