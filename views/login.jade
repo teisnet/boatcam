@@ -13,12 +13,12 @@ html
 			.page-header
 				| BoatCam Login
 			.field
-				input(type="text" name="username" placeholder="Brugernavn")
+				input(type="text" name="username" placeholder="Brugernavn" required autofocus)
 			.field
-				input(type="password" name="password" placeholder="Kodeord")
+				input(type="password" name="password" placeholder="Kodeord" required)
 			.field
 				label
 				input.btn.btn-success(type="submit" value="Log In")
 			.field.message
 				if message
-						p #{message}
+					p #{message}
