@@ -3,6 +3,14 @@
 var express = require('express');
 var router = express.Router();
 
+router.use(function (req, res, next) {
+	res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+	// ? meta(http-equiv='Pragma', content='no-cache')
+	// ? meta(http-equiv='Expires', content='-1')
+	next();
+});
+
+
 require('./users')(router);
 require('./cameras')(router);
 require('./berths')(router);
