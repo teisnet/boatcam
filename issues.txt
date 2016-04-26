@@ -15,7 +15,6 @@
 #21 Prevent camera movements when disabled
 #22 Make logs avilable on admin pages. Individual logs for each camera.
 #23 Ensure that camera slugs and berth numbers are not ObjectId's
-#25 Authentication
 #26 Delete camera instances when deletion is not caught by 'post findOneAndRemove' handler
 #27 Test that all event handlers to deleted cameras are disposed
 #28 Fix ONVIF library errors:
@@ -28,6 +27,13 @@
         2) Click 'move right'-button:
             server error: "Cannot read property 'profileToken' of undefined" Cam.continuousMove (ptz.js line 366:65)
             server doesn't crash.
+#31 Ensure that '/profile' and other routes are not loaded with data from previous users due to browser caching.
+    All dynamic pages should not be cached.
+#32 Prevent users editing their own role
+#33 Clean cache on logout
+#34 Login page 'Remember me' checkbox
+#35 Encrypted passwords witn passport-local-mongoose
+#36 Implement Berth-User relation
 
 SOLVED
 #7 Create Camera 'disabled' field to turn off camera queries.
@@ -41,4 +47,5 @@ SOLVED
 #9 Fix error at invalid onvif response: TypeError: Cannot read property 'panTilt' of undefined at ...\node_modules\onvif\lib\ptz.js:105:21
    Appears when onvif is set to an address/port that exists but is not ONVIF
 #15 Delete camera instance when camera is deleted from database.
+#25 Authentication
 #30 Prevent login redirection to 'favicon.ico' or possibly other nonexisting resources caught by "/" req.session.returnTo.
