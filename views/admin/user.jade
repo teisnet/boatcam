@@ -4,34 +4,34 @@ block navigation
     +breadcrumb('admin', 'users')
 
 block content
-    .page-header= user.new ? "New User" : user.name
+    .page-header= userData.new ? "New User" : userData.name
     form
         .field
             label First name:
-            input(type="text" name="firstname" value=user.firstname autofocus required)
+            input(type="text" name="firstname" value=userData.firstname autofocus required)
         .field
             label Last name:
-            input(type="text" name="lastname" value=user.lastname)
+            input(type="text" name="lastname" value=userData.lastname)
         .field
             label Username:
-            input(type="text" name="username" value=user.username)
+            input(type="text" name="username" value=userData.username)
         .field
             label Password:
-            input(type="text" name="password" value=user.password)
+            input(type="text" name="password" value=userData.password)
         .field
             label Role:
             select(name="role")
                 - var roles = [ 'User', 'Editor', 'Administrator']
                 for role in roles
-                    option(value=role selected=role==user.role )= role
+                    option(value=role selected=role==userData.role )= role
         .page-footer
-            input#userSubmit.btn.btn-success(type="submit" value= user.new ? "Create" : "Save")
-            if !user.new
+            input#userSubmit.btn.btn-success(type="submit" value= userData.new ? "Create" : "Save")
+            if !userData.new
                 button#userDelete.btn.btn-danger(type="button") Delete
         .error
 
 
 block scripts
     script.
-        var userData = !{JSON.stringify(user, null, 2)}
+        var userData = !{JSON.stringify(userData, null, 2)}
     script(src="/javascripts/admin/user-page.js")
