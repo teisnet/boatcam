@@ -8,6 +8,11 @@ var Camera = require("../models/camera");
 var Berth = require("../models/Berth");
 
 
+router.use(function (req, res, next) {
+    res.locals.user = req.user;
+    next();
+});
+
 router.get('/', function(req, res, next) {
     //res.redirect('admin/berths');
     res.render('admin/index', { user: req.user } );
@@ -16,13 +21,13 @@ router.get('/', function(req, res, next) {
 
 router.get('/users', function(req, res, next) {
     User.find({}, function(err, users){
-        res.render('admin/users', { title: req.app.locals.title, users: users, user: req.user });
+        res.render('admin/users', { title: req.app.locals.title, users: users});
     });
 });
 
 
 router.get('/users/new', function(req, res, next) {
-    res.render('admin/user', { title: req.app.locals.title, userData: { new: true }, user: req.user });
+    res.render('admin/user', { title: req.app.locals.title, userData: { new: true }});
 });
 
 
@@ -34,14 +39,14 @@ router.get('/users/:userId', function(req, res, next) {
 			res.status(404).send('User "' + userId + '" not found');
 			return;
 		}
-        res.render('admin/user', { title: user.name, userData: user, user: req.user });
+        res.render('admin/user', { title: user.name, userData: user});
     });
 });
 
 
 router.get('/cameras', function(req, res, next) {
     Camera.find({}, function(err, cameras){
-        res.render('admin/cameras', { title: req.app.locals.title, cameras: cameras, user: req.user });
+        res.render('admin/cameras', { title: req.app.locals.title, cameras: cameras});
     });
 });
 
@@ -54,7 +59,7 @@ router.get("/cameras-list/:optional?", function(req, res, next) {
 
 
 router.get('/cameras/new', function(req, res, next) {
-    res.render('admin/camera', { title: req.app.locals.title, camera: { new: true, enabled: true }, user: req.user });
+    res.render('admin/camera', { title: req.app.locals.title, camera: { new: true, enabled: true } });
 });
 
 
@@ -67,7 +72,7 @@ router.get('/cameras/:cameraSlug', function(req, res, next) {
         }
 		camera.populatePositions()
 		.then(() => {
-			res.render('admin/camera', { title: req.app.locals.title, camera: camera, user: req.user });
+			res.render('admin/camera', { title: req.app.locals.title, camera: camera });
 		})
     });
 });
@@ -75,13 +80,13 @@ router.get('/cameras/:cameraSlug', function(req, res, next) {
 
 router.get('/berths', function(req, res, next) {
     Berth.find({}, function(err, berths){
-        res.render('admin/berths', { title: req.app.locals.title, berths: berths, user: req.user });
+        res.render('admin/berths', { title: req.app.locals.title, berths: berths });
     });
 });
 
 
 router.get('/berths/new', function(req, res, next) {
-    res.render('admin/berth', { title: req.app.locals.title, berth: { new: true }, user: req.user });
+    res.render('admin/berth', { title: req.app.locals.title, berth: { new: true } });
 });
 
 
@@ -95,7 +100,7 @@ router.get('/berths/:berthNumber', function(req, res, next) {
 		}
 		berth.populateCameraPositions()
 		.then(() => {
-			res.render('admin/berth', { title: req.app.locals.title, berth: berth, user: req.user });
+			res.render('admin/berth', { title: req.app.locals.title, berth: berth });
 		})
     });
 });

@@ -51,8 +51,13 @@ router.use(function(req, res, next) {
   res.redirect('/login')
 });
 
+router.use(function (req, res, next) {
+    res.locals.user = req.user;
+    next();
+});
+
 router.get('/', function(req, res, next) {
-    res.render('index', {user: req.user});
+    res.render('index');
 });
 
 router.get('/snapshots/:filename', function(req, res, next) {
@@ -69,7 +74,7 @@ router.get('/snapshots/:filename', function(req, res, next) {
 
 router.get('/cameras', function(req, res, next) {
     Camera.find({}, function(err, cameras){
-        res.render('cameras', { title: req.app.locals.title, cameras: cameras, user: req.user });
+        res.render('cameras', { title: req.app.locals.title, cameras: cameras});
     });
 });
 
@@ -82,7 +87,7 @@ router.get('/cameras/:cameraSlug', function(req, res, next) {
             res.status(404).send('Camera "' + cameraSlug + '" not found');
             return;
         }
-        res.render('camera', { title: camera.title, camera: camera, user: req.user });
+        res.render('camera', { title: camera.title, camera: camera});
     });
 });
 
@@ -94,13 +99,13 @@ router.get('/cameras/:cameraSlug/ios', function(req, res, next) {
             res.status(404).send('Camera "' + cameraSlug + '" not found');
             return;
         }
-        res.render('camera-ios',  { title: camera.title, camera: camera, user: req.user });
+        res.render('camera-ios',  { title: camera.title, camera: camera});
     });
 });
 
 
 router.get('/profile', function(req, res, next) {
-    res.render('profile', { title: req.user.name, user: req.user });
+    res.render('profile', { title: req.user.name});
 });
 
 
