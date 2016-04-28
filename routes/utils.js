@@ -30,5 +30,10 @@ module.exports = function(router) {
 		res.redirect('/login');
 	});
 
+	router.use(function (req, res, next) {
+		res.locals.user = req.user;
+		next();
+	});
+
 
 }

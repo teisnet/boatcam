@@ -9,10 +9,6 @@ var Berth = require("../models/Berth");
 
 var utils = require("./utils")(router);
 
-router.use(function (req, res, next) {
-    res.locals.user = req.user;
-    next();
-});
 
 router.get('/', function(req, res, next) {
     //res.redirect('admin/berths');
