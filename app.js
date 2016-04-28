@@ -52,9 +52,9 @@ app.use(function(req, res, next) {
        next();
 });
 
-app.use('/', routes);
 app.use('/api', api);
 app.use('/admin', admin);
+app.use('/', routes);
 
 // SOCKET.IO
 const rootController = require('./sockets/rootController')(io);

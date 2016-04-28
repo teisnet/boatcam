@@ -7,6 +7,7 @@ var User = require("../models/user");
 var Camera = require("../models/camera");
 var Berth = require("../models/Berth");
 
+var utils = require("./utils")(router);
 
 router.use(function (req, res, next) {
     res.locals.user = req.user;
