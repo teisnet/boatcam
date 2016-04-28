@@ -58,26 +58,26 @@ router.get('/cameras', function(req, res, next) {
 
 router.get('/cameras/:cameraSlug', function(req, res, next) {
   var cameraSlug = req.params.cameraSlug;
+  var camera = req.camera;
 
-  Camera.findOne({slug: cameraSlug}, function(err, camera){
-        if (!camera) {
-            res.status(404).send('Camera "' + cameraSlug + '" not found');
-            return;
-        }
-        res.render('camera', { title: camera.title, camera: camera});
-    });
+  if (!camera) {
+        res.status(404).send('Camera "' + cameraSlug + '" not found');
+        return;
+  }
+  res.render('camera', { title: camera.title, camera: camera});
 });
+
 
 router.get('/cameras/:cameraSlug/ios', function(req, res, next) {
   var cameraSlug = req.params.cameraSlug;
+  var camera = req.camera;
 
-  Camera.findOne({slug: cameraSlug}, function(err, camera){
-        if (!camera) {
-            res.status(404).send('Camera "' + cameraSlug + '" not found');
-            return;
-        }
-        res.render('camera-ios',  { title: camera.title, camera: camera});
-    });
+  if (!camera) {
+      res.status(404).send('Camera "' + cameraSlug + '" not found');
+      return;
+  }
+  res.render('camera-ios',  { title: camera.title, camera: camera});
+
 });
 
 

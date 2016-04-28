@@ -1,6 +1,8 @@
 "use strict";
 
 var path = require("path");
+var Camera = require("../models/Camera");
+var Berth = require("../models/Berth");
 
 
 module.exports = function(router) {
@@ -33,6 +35,30 @@ module.exports = function(router) {
 	router.use(function (req, res, next) {
 		res.locals.user = req.user;
 		next();
+	});
+
+
+	router.param("cameraSlug", function (req, res, next, cameraSlug) {
+		Camera.findOne({slug: cameraSlug}, function(err, camera){
+			// if(err)
+			if (camera) {
+				req.camera = camera;
+			} else {
+				req.camera = null;
+				// next(new Error('Camera not found'));
+				// res.status(404).send('Camera "' + cameraSlug + '" not found');
+			}
+			next();
+		});
+	});
+
+
+	router.param("berthNumber", function (req, res, next, berthNumber) {
+		Berth.findOne({number: berthNumber})
+		.exec(function(err, berth){
+			req.berth = berth ? berth : null;
+			next();
+		});
 	});
 
 
