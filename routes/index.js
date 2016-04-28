@@ -57,8 +57,8 @@ router.get('/cameras', function(req, res, next) {
 
 
 router.get('/cameras/:cameraSlug', function(req, res, next) {
-  var cameraSlug = req.params.cameraSlug;
-  var camera = req.camera;
+  let cameraSlug = req.params.cameraSlug;
+  let camera = req.camera;
 
   if (!camera) {
         res.status(404).send('Camera "' + cameraSlug + '" not found');

@@ -1,17 +1,17 @@
 "use strict";
 
-var path = require("path");
-var Camera = require("../models/Camera");
-var Berth = require("../models/Berth");
-var User = require("../models/User");
+const path = require("path");
+const Camera = require("../models/Camera");
+const Berth = require("../models/Berth");
+const User = require("../models/User");
 
 
 module.exports = function(router) {
 
 	function hasRoute(value) {
 		let length = router.stack.length;
-		for (var i = 0; i < length; i++) {
-			var route = router.stack[i];
+		for (let i = 0; i < length; i++) {
+			let route = router.stack[i];
 			if (route.route && route.route.methods.get) {
 				console.log(route.route.path);
 				if(route.regexp.test(value)) {
