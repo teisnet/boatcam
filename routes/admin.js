@@ -30,14 +30,12 @@ router.get('/users/new', function(req, res, next) {
 
 router.get('/users/:userId', function(req, res, next) {
     let userId = req.params.userId;
-    User.findById(userId)
-    .exec(function(err, user){
-		if (!user) {
-			res.status(404).send('User "' + userId + '" not found');
-			return;
-		}
-        res.render('admin/user', { title: user.name, userData: user});
-    });
+    let userData = req.userData;
+    if (!userData) {
+        res.status(404).send('User "' + userId + '" not found');
+        return;
+    }
+    res.render('admin/user', { title: userData.name, userData: userData});
 });
 
 

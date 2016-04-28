@@ -3,6 +3,7 @@
 var path = require("path");
 var Camera = require("../models/Camera");
 var Berth = require("../models/Berth");
+var User = require("../models/User");
 
 
 module.exports = function(router) {
@@ -58,6 +59,15 @@ module.exports = function(router) {
 		.exec(function(err, berth){
 			req.berth = berth ? berth : null;
 			next();
+		});
+	});
+
+
+	router.param("userId", function (req, res, next, userId) {
+		User.findById(userId)
+		.exec(function(err, user){
+				req.userData = user ? user : null;
+				next();
 		});
 	});
 
