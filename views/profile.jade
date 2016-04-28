@@ -4,29 +4,29 @@ block navigation
     +breadcrumb('profile')
 
 block content
-    .page-header= user.new ? "New User" : user.name
+    .page-header= authenticatedUser.name
     form
         .field
             label First name:
-            input(type="text" name="firstname" value=user.firstname autofocus required)
+            input(type="text" name="firstname" value=authenticatedUser.firstname autofocus required)
         .field
             label Last name:
-            input(type="text" name="lastname" value=user.lastname)
+            input(type="text" name="lastname" value=authenticatedUser.lastname)
         .field
             label Username:
-            input(type="text" name="username" value=user.username)
+            input(type="text" name="username" value=authenticatedUser.username)
         .field
             label Password:
-            input(type="text" name="password" value=user.password)
+            input(type="text" name="password" value=authenticatedUser.password)
         .field
             label Role:
-            != user.role
+            != authenticatedUser.role
         .page-footer
-            input#userSubmit.btn.btn-success(type="submit" value= user.new ? "Create" : "Save")
+            input#userSubmit.btn.btn-success(type="submit" value= authenticatedUser.new ? "Create" : "Save")
         .error
 
 
 block scripts
     script.
-        var userData = !{JSON.stringify(user, null, 2)}
+        var userData = !{JSON.stringify(authenticatedUser, null, 2)}
     script(src="/javascripts/profile-page.js")

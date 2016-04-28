@@ -33,7 +33,7 @@ module.exports = function(router) {
 	});
 
 	router.use(function (req, res, next) {
-		res.locals.user = req.user;
+		res.locals.authenticatedUser = req.user;
 		next();
 	});
 

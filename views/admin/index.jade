@@ -8,6 +8,6 @@ block content
     a(href="/admin/cameras") Cameras
   .page-header
     a(href="/admin/berths") Berths
-  if(user.role === "Administrator")
+  if(authenticatedUser.role === "Administrator")
     .page-header
       a(href="/admin/users") Users
