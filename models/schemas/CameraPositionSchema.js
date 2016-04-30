@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var CameraPositionsSchema = new mongoose.Schema({
+var CameraPositionSchema = new mongoose.Schema({
 	camera: { type: mongoose.Schema.ObjectId, ref: "Camera" },
 	berth:  { type: mongoose.Schema.ObjectId, ref: "Berth" },
 	x: Number,
@@ -8,4 +8,4 @@ var CameraPositionsSchema = new mongoose.Schema({
 	zoom: Number
 });
 
-module.exports = CameraPositionsSchema;
+module.exports = CameraPositionSchema;
