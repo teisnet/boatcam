@@ -1,6 +1,7 @@
 //var logger = require("logger");
 //var mongoose = require('mongoose');
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 //var settings = require('settings');
 
 var db = mongoose.connection;
