@@ -51,8 +51,9 @@ module.exports = function (router) {
 		/*.catch((err) => {
 			handleError(res, err, "Could not save position for berth " + berthId + " and camera " + cameraId);
 		});*/
-	})
+	});
 
+	router.route(['/berths/positions/:cameraPositionId', '/cameras/positions/:cameraPositionId'])
 	.delete(function() {
 		var cameraPositionId = req.params.cameraPositionId;
 		CameraPosition.findById(cameraPositionId, function(err, doc){
