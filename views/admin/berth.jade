@@ -19,6 +19,13 @@ block content
         .error
     if !berth.new
         .field
+        h3 Users
+        ul.camera-list
+            each berthUser in berth.users
+                li
+                    != berthUser.name
+                    i.fa.fa-close.pull-right
+        .field
         h3 Positions
         ul.camera-list.berth-positions-list
             each position in berth.cameraPositions

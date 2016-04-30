@@ -18,6 +18,7 @@ router.use(function (req, res, next) {
 });
 
 
+require('./berthUsers')(router);
 require('./users')(router);
 require('./cameras')(router);
 require('./berths')(router);

@@ -18,6 +18,9 @@ var BerthSchema = new mongoose.Schema({
         ]
     },
 	owner: String
+}, {
+	// toObject: { virtuals: true },
+	toJSON: { virtuals: true }
 });
 
 
@@ -36,7 +39,28 @@ BerthSchema.methods.populateCameraPositions = function populateCameraPositions (
 	});*/
 };
 
+
+BerthSchema.methods.populateUsers = function populateUsers (cb) {
+	return this.model('BerthUser').find({ berth: this._id})
+	.populate("user")
+	.exec()
+	.then( (berthUsers) => {
+		if (cb) cb(undefined, this);
+		this._users = berthUsers;
+		return this;
+	})
+	.catch(function(err){
+		// Catch, call callback with error and re-reject
+		if (cb) cb(err);
+		return Promise.reject(err);
+	});
+};
+
+
 BerthSchema.virtual("cameraPositions")
 	.get(function () { return this._cameraPositions; });
+
+BerthSchema.virtual("users")
+	.get(function () { return this._users; });
 
 module.exports = BerthSchema;

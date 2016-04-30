@@ -35,7 +35,12 @@ router.get('/users/:userId', function(req, res, next) {
         res.status(404).send('User "' + userId + '" not found');
         return;
     }
-    res.render('admin/user', { title: userData.name, userData: userData});
+
+    userData.populateBerths()
+    .then(function(){
+        res.render('admin/user', { title: userData.name, userData: userData});
+    });
+
 });
 
 
@@ -91,8 +96,9 @@ router.get('/berths/:berthNumber', function(req, res, next) {
         res.status(404).send('Berth "' + berthNumber + '" not found');
         return;
     }
-    berth.populateCameraPositions()
-    .then(() => {
+
+    Promise.all([berth.populateCameraPositions(), berth.populateUsers()])
+    .then(function(){
         res.render('admin/berth', { title: req.app.locals.title, berth: berth });
     });
 });

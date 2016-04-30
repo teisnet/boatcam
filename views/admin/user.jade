@@ -29,6 +29,14 @@ block content
             if !userData.new
                 button#userDelete.btn.btn-danger(type="button") Delete
         .error
+    if !userData.new
+        .field
+        h3 Berths
+        ul.camera-positions-list
+            each userBerth in userData.berths
+                li
+                    != userBerth.number
+                    i.fa.fa-close.pull-right
 
 
 block scripts

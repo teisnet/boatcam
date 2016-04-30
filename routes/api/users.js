@@ -2,6 +2,8 @@
 
 var User = require("../../models/User");
 
+var objectIdRegex = new RegExp("^[0-9a-fA-F]{24}$");
+
 // BERTHS
 
 module.exports = function (router) {
