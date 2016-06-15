@@ -1,0 +1,58 @@
+include mixins
+
+doctype html
+html
+	header
+		meta(charset='utf-8')
+		meta(name="apple-mobile-web-app-capable" content="yes")
+		title= title
+		script(type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js")
+		link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		- var uri = camera.uri;
+		- var slash = uri.lastIndexOf("/");
+		script.
+			var config = {
+				slug: "#{camera.slug}",
+				url:  "#{uri.substr(0, slash)}",
+				stream: "#{uri.substr(slash + 1)}",
+				cameraId: "#{camera._id}",
+				enabled: #{camera.enabled}
+			}
+		script(src="/socket.io/socket.io.js")
+		script(src="/javascripts/flowplayer/flowplayer-3.2.13.min.js")
+		script(src="/javascripts/camera.js")
+		script(src="/javascripts/camera-page.js")
+	body
+		.container
+			.content
+					.page-header
+						.status-indicator
+						= camera.title
+					.video-window
+						.video-container
+							.video-overlay
+								.camera-navigation-control
+									i.fa.fa-3x.fa-chevron-up.up
+									i.fa.fa-3x.fa-chevron-left.left
+									i.fa.fa-3x.fa-chevron-right.right
+									i.fa.fa-3x.fa-chevron-down.down
+								.camera-status
+									i.fa.fa-5x.fa-spinner.fa-spin.camera-load-button
+									i.fa.fa-5x.fa-play.camera-play-button
+							.dock-right
+								//- .dock-top.camera-control-panel
+										i.fa.fa-2x.fa-expand.fullscreen
+								.dock-center.camera-control-panel
+										i.fa.fa-2x.fa-plus.zoom-in
+										i.fa.fa-2x.fa-minus.zoom-out
+							.dock-bottom
+								.camera-control-panel
+										i.fa.fa-pause.pause
+										i.fa.fa-2x.fa-camera.snapshot
+										i.fa.fa-2x.fa-expand.fullscreen
+							#player
+					.clearboth
+						p.status
+
+	+tracker()
