@@ -13,6 +13,7 @@ var authentication = require("./authentication");
 var socket_io    = require( "socket.io" );
 
 var routes = require('./routes/index');
+var public = require('./routes/public');
 var admin = require('./routes/admin');
 var api = require('./routes/api');
 
@@ -54,6 +55,7 @@ app.use(function(req, res, next) {
 
 app.use('/api', api);
 app.use('/admin', admin);
+app.use('/', public);
 app.use('/', routes);
 
 // SOCKET.IO
