@@ -15,6 +15,7 @@
 #21 Prevent camera movements when disabled
 #22 Make logs avilable on admin pages. Individual logs for each camera.
 #23 Ensure that camera slugs and berth numbers are not ObjectId's
+#24 Display video load icon immediately after play button is pressed
 #26 Delete camera instances when deletion is not caught by 'post findOneAndRemove' handler
 #27 Test that all event handlers to deleted cameras are disposed
 #28 Fix ONVIF library errors:
@@ -34,6 +35,14 @@
 #34 Login page 'Remember me' checkbox
 #35 Encrypted passwords witn passport-local-mongoose
 #36 Implement Berth-User relation
+#37 Implement 'on delete cascade' on all relational MongoDB collections
+#38 Consider using new HTTP 'SPDY' protocol
+#39 Consider using HTTPS protocol with SSL
+#40 Use process manager like PM2 for server monitoring
+#41 Start server as Windows service at server startup
+#42 Consider token based authentication
+#43 Consider caching or otherwise reducing Passport user deserilazion on requests, causing redundant database hits
+
 
 SOLVED
 #7 Create Camera 'disabled' field to turn off camera queries.
