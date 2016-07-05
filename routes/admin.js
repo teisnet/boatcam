@@ -104,4 +104,19 @@ router.get('/berths/:berthNumber', function(req, res, next) {
 });
 
 
+
+router.get('/berths/:berthNumber/users', function(req, res, next) {
+    let berthNumber = req.params.berthNumber;
+    let berth = req.berth;
+    if (!berth) {
+        res.status(404).send('Berth "' + berthNumber + '" not found');
+        return;
+    }
+
+    Promise.all([User.find({}), berth.populateUsers()])
+    .then(function(values){
+        res.render('admin/berth-users', { title: req.app.locals.title, berth: berth, users: values[0]});
+    });
+});
+
 module.exports = router;
