@@ -38,7 +38,7 @@ module.exports = function(router) {
 		next();
 	});
 
-
+// OK
 	router.param("cameraSlug", function (req, res, next, cameraSlug) {
 		Camera.findOne({slug: cameraSlug}, function(err, camera){
 			// if(err)
@@ -53,7 +53,23 @@ module.exports = function(router) {
 		});
 	});
 
+/*
+	router.param("cameraId", function (req, res, next, cameraId) {
+		Camera.findById(cameraId, function(err, camera){
+			req.camera = camera ? camera : null;
+			next();
+		});
+	});
 
+
+	router.param("berthId", function (req, res, next, berthId) {
+		Berth.findById(berthId, function(err, berth){
+			req.berth = berth ? berth : null;
+			next();
+		});
+	});
+*/
+// OK
 	router.param("berthNumber", function (req, res, next, berthNumber) {
 		Berth.findOne({number: berthNumber})
 		.exec(function(err, berth){
