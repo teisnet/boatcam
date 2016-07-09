@@ -39,7 +39,11 @@ module.exports = function (router) {
 		Camera.findOne(query, function(err, camera){
 			if (err) return handleError(res, err, "Could not get camera " + cameraId);
 			if(!camera) return handleNotFound(res, "Camera " + cameraId + " not found");
-			res.json(camera);
+
+			camera.populatePositions()
+			.then(() => {
+				res.json(camera);
+			});
 		});
 	})
 	// Update

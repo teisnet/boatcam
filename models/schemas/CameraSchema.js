@@ -30,6 +30,8 @@ var CameraSchema = new mongoose.Schema({
     password: { type: String, trim: true }
 });
 
+CameraSchema.set('toJSON', { virtuals: true });
+
 
 // available post events: init, validate, save, remove
 
@@ -63,13 +65,13 @@ CameraSchema.virtual("name")
 	.get(function () { return this.slug; });
 
 CameraSchema.virtual("position")
-	.get(function () { return this.camera.position; });
+	.get(function () { return this.camera ? this.camera.position : {x: 0, y: 0, zoom: 1.0}; });
 
 CameraSchema.virtual("online")
-	.get(function () { return this.camera.online; });
+	.get(function () { return this.camera ? this.camera.online : false; });
 
 CameraSchema.virtual("status")
-	.get(function () { return this.camera.status; });
+	.get(function () { return this.camera ? this.camera.status : "disabled"; });
 
 CameraSchema.methods.move = function (command) {
     this.camera.move(command);
@@ -106,6 +108,7 @@ CameraSchema.methods.populatePositions = function populatePositions (cb) {
 	});*/
 };
 
+// If populatePositions() has not been called this field won't appear in json
 CameraSchema.virtual("positions")
 	.get(function () { return this._positions; });
 
