@@ -11,7 +11,7 @@ function createErrorMessage(err) {
     let errors = err.errors;
 
     if (err.code === 11000) {
-        message += "Field value must be unique. Another item has the same value for thit field."
+        message += "Field value must be unique. Another item has the same value for this field."
     } else {
         for (var field in errors) {
             if (errors.hasOwnProperty(field)) {
