@@ -28,13 +28,15 @@ module.exports = function (router) {
 	});
 
 
+	var objectIdRegex = new RegExp("^[0-9a-fA-F]{24}$");
+
 	router.route('/berths/:berthId')
 	// Get one
 	.get(function(req, res, next) {
 		var berthId = req.params.berthId;
 
 		// Check if berthId refer to the '_id' field or the 'number' field
-		var query = objectIdRegex.test(berthId) ? {_id: berthId} : {slug: berthId};
+		var query = objectIdRegex.test(berthId) ? {_id: berthId} : {number: berthId};
 
 		Berth.findOne(query, function(err, berth){
 			if (err) return errorHandlers.error(res, err, "Could not get berth " + berthId);
