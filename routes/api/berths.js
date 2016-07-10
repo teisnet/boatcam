@@ -42,7 +42,10 @@ module.exports = function (router) {
 			if (err) return errorHandlers.error(res, err, "Could not get berth " + berthId);
 			if(!berth) return errorHandlers.notFound(res, "Berth " + berthId + " not found");
 
-			res.json(berth);
+			Promise.all([berth.populateCameraPositions(), berth.populateUsers()])
+			.then(function(){
+				res.json(berth);
+			});
 		});
 	})
 	// Update
