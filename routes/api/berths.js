@@ -1,5 +1,6 @@
 "use strict";
 
+var errorHandlers = require("./errorHandlers");
 var Berth = require("../../models/Berth");
 
 module.exports = function (router) {
@@ -10,7 +11,7 @@ module.exports = function (router) {
 	// Get all
 	.get(function(req, res, next) {
 		Berth.find({}, function(err, berths){
-			if (err) return handleError(res, err, "Could not get berths");
+			if (err) return errorHandlers.error(res, err, "Could not get berths");
 			res.json(berths);
 		});
 	})
@@ -20,7 +21,7 @@ module.exports = function (router) {
 		// find by document id and update
 		var newBerth = new Berth(changes);
 		newBerth.save(function(err, berth){
-			if (err || !berth) return handleError(res, err, "Could not create berth");
+			if (err || !berth) return errorHandlers.error(res, err, "Could not create berth");
 			// 201 (Created)
 			res.status(201).json(berth);
 		});
@@ -36,8 +37,9 @@ module.exports = function (router) {
 		var query = objectIdRegex.test(berthId) ? {_id: berthId} : {slug: berthId};
 
 		Berth.findOne(query, function(err, berth){
-			if (err) return handleError(res, err, "Could not get berth " + berthId);
-			if(!berth) return handleNotFound(res, "Berth " + berthId + " not found");
+			if (err) return errorHandlers.error(res, err, "Could not get berth " + berthId);
+			if(!berth) return errorHandlers.notFound(res, "Berth " + berthId + " not found");
+
 			res.json(berth);
 		});
 	})
@@ -51,8 +53,8 @@ module.exports = function (router) {
 			{ $set:  changes}, // TODO: Set only schema fields
 			{ new: true, runValidators: true },
 			function(err, berth) {
-				if (err) return handleError(res, err, "Could not update berth " + berthId);
-				if(!berth) return handleNotFound(res, "Berth " + berthId + " not found");
+				if (err) return errorHandlers.error(res, err, "Could not update berth " + berthId);
+				if(!berth) return errorHandlers.notFound(res, "Berth " + berthId + " not found");
 				res.json(berth);
 			}
 		);
@@ -63,7 +65,7 @@ module.exports = function (router) {
 		Berth.findByIdAndRemove(
 			berthId,
 			function(err) {
-				if (err) return handleError(res, err, "Could not delete berth " + berthId);
+				if (err) return errorHandlers.error(res, err, "Could not delete berth " + berthId);
 				res.sendStatus(200);
 			}
 		);

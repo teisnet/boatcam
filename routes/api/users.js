@@ -1,5 +1,6 @@
 "use strict";
 
+var errorHandlers = require("./errorHandlers");
 var User = require("../../models/User");
 
 var objectIdRegex = new RegExp("^[0-9a-fA-F]{24}$");
@@ -12,7 +13,7 @@ module.exports = function (router) {
 	// Get all
 	.get(function(req, res, next) {
 		User.find({}, function(err, users){
-			if (err) return handleError(res, err, "Could not get users");
+			if (err) return errorHandlers.error(res, err, "Could not get users");
 			res.json(users);
 		});
 	})
@@ -22,7 +23,7 @@ module.exports = function (router) {
 		// find by document id and update
 		var newUser = new User(changes);
 		newUser.save(function(err, user){
-			if (err || !user) return handleError(res, err, "Could not create user");
+			if (err || !user) return errorHandlers.error(res, err, "Could not create user");
 			// 201 (Created)
 			res.status(201).json(user);
 		});
@@ -38,8 +39,8 @@ module.exports = function (router) {
 		var query = objectIdRegex.test(userId) ? {_id: userId} : {slug: userId};
 
 		User.findOne(query, function(err, user){
-			if (err) return handleError(res, err, "Could not get user " + userId);
-			if(!user) return handleNotFound(res, "User " + userId + " not found");
+			if (err) return errorHandlers.error(res, err, "Could not get user " + userId);
+			if(!user) return errorHandlers.notFound(res, "User " + userId + " not found");
 			res.json(user);
 		});
 	})
@@ -53,8 +54,8 @@ module.exports = function (router) {
 			{ $set:  changes}, // TODO: Set only schema fields
 			{ new: true, runValidators: true },
 			function(err, user) {
-				if (err) return handleError(res, err, "Could not update user " + userId);
-				if(!user) return handleNotFound(res, "User " + userId + " not found");
+				if (err) return errorHandlers.error(res, err, "Could not update user " + userId);
+				if(!user) return errorHandlers.notFound(res, "User " + userId + " not found");
 				res.json(user);
 			}
 		);
@@ -65,7 +66,7 @@ module.exports = function (router) {
 		User.findByIdAndRemove(
 			userId,
 			function(err) {
-				if (err) return handleError(res, err, "Could not delete user " + userId);
+				if (err) return errorHandlers.error(res, err, "Could not delete user " + userId);
 				res.sendStatus(200);
 			}
 		);

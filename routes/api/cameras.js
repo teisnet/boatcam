@@ -1,6 +1,7 @@
 "use strict";
 
 var Camera = require("../../models/Camera");
+var errorHandlers = require("./errorHandlers");
 
 module.exports = function (router) {
 
@@ -9,7 +10,7 @@ module.exports = function (router) {
 	// Get all
 	.get(function(req, res, next) {
 		Camera.find({}, function(err, cameras) {
-			if (err) return handleError(res, err, "Could not get cameras");
+			if (err) return errorHandlers.error(res, err, "Could not get cameras");
 			res.json(cameras);
 		});
 	})
@@ -19,7 +20,7 @@ module.exports = function (router) {
 		// find by document id and update
 		var newCamera = new Camera(newCameraParams);
 		newCamera.save(function(err, camera){
-			if (err || !camera) return handleError(res, err, "Could not create camera");
+			if (err || !camera) return errorHandlers.error(res, err, "Could not create camera");
 			// 201 (Created)
 			res.status(201).json(camera);
 		});
@@ -37,8 +38,8 @@ module.exports = function (router) {
 		var query = objectIdRegex.test(cameraId) ? {_id: cameraId} : {slug: cameraId};
 
 		Camera.findOne(query, function(err, camera){
-			if (err) return handleError(res, err, "Could not get camera " + cameraId);
-			if(!camera) return handleNotFound(res, "Camera " + cameraId + " not found");
+			if (err) return errorHandlers.error(res, err, "Could not get camera " + cameraId);
+			if(!camera) return errorHandlers.notFound(res, "Camera " + cameraId + " not found");
 
 			camera.populatePositions()
 			.then(() => {
@@ -56,8 +57,8 @@ module.exports = function (router) {
 			{ $set:  changes},
 			{ new: true, runValidators: true },
 			function(err, camera) {
-				if (err) return handleError(res, err, "Could not update camera " + cameraId);
-				if(!camera) return handleNotFound(res, "Camera " + cameraId + " not found");
+				if (err) return errorHandlers.error(res, err, "Could not update camera " + cameraId);
+				if(!camera) return errorHandlers.notFound(res, "Camera " + cameraId + " not found");
 				// TODO: Update camera instance accordingly
 				res.json(camera);
 			}
@@ -69,7 +70,7 @@ module.exports = function (router) {
 		Camera.findByIdAndRemove(
 			cameraId,
 			function(err) {
-				if (err) return handleError(res, err, "Could not delete camera " + cameraId);
+				if (err) return errorHandlers.error(res, err, "Could not delete camera " + cameraId);
 				res.sendStatus(200);
 			}
 		);

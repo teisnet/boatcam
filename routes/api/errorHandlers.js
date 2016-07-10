@@ -2,6 +2,7 @@
 
 var objectIdRegex = new RegExp("^[0-9a-fA-F]{24}$");
 
+var errorHandlers = {}
 // TODO: respond with 500 at database connection failures
 
 // Format Mogoose errors
@@ -22,7 +23,7 @@ function createErrorMessage(err) {
    return message;
 }
 
-function handleError(res, err, message) {
+errorHandlers.error = function(res, err, message) {
     // 400 (Bad Request)
     var errorMessage = message + ". " + createErrorMessage(err);
     res.status(400).send(errorMessage);
@@ -30,8 +31,10 @@ function handleError(res, err, message) {
 }
 
 
-function handleNotFound(res, message) {
+errorHandlers.notFound = function(res, message) {
     // 404 (Not Found)
     res.status(404).send(message);
     console.warn("404 Not Found:" + message);
 }
+
+module.exports = errorHandlers;
