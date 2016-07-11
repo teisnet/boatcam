@@ -14,7 +14,7 @@
 				"--nolazy"
 			],
 			"env": {
-                "DEBUG": "boatcam:*",
+				"DEBUG": "boatcam:*",
 				"NODE_ENV": "development"
 			},
 			"externalConsole": false,
