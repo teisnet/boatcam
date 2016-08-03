@@ -98,7 +98,8 @@ $(document).ready(function(){
     player = flowplayer("player",
 		{
 			src: "http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf",
-			wmode: "direct"  // Needed for 'accellerated' to take effect
+			// wmode: "direct"  // Needed for 'accellerated' to take effect
+			wmode: "transparent" // Allows overlay icons in IE
 		},
 		{
         'clip': {
