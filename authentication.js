@@ -11,10 +11,14 @@ passport.use(new LocalStrategy(
 			if (!user) {
 				return done(null, false, req.flash('message', 'User Not found') );
 			}
-			if (password !== user.password /*!user.validPassword(password)*/) {
-				return done(null, false, req.flash('message', 'Invalid Password') );
-			}
-			return done(null, user);
+			user.validPassword(password, function (err, isEqual) {
+				if (err) { return done(err); }
+				if (!isEqual) {
+					return done(null, false, req.flash('message', 'Invalid Password') );
+				} else {
+					return done(null, user);
+				}
+			});
 		});
 	}
 ));

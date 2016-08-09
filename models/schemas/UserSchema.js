@@ -1,6 +1,7 @@
 "use strict";
 
 var mongoose = require('mongoose');
+var bcrypt = require("bcrypt");
 
 var UserSchema = new mongoose.Schema({
 	firstname: String,
@@ -14,6 +15,38 @@ var UserSchema = new mongoose.Schema({
 });
 
 
+// PASSWORD
+UserSchema.pre("save", function(next) {
+	var user = this;
+	if(this.isModified("pasword") || this.isNew) {
+		bcrypt.genSalt(10, function(err, salt) {
+			if(err) {
+				return next(err);
+			}
+			bcrypt.hash(user.password, salt, function(err, hash) {
+				if(err) {
+					return next(err);
+				}
+				user.password = hash;
+				next();
+			});
+		});
+	} else {
+		return next();
+	}
+});
+
+UserSchema.methods.validPassword = function(pw, cb) {
+	bcrypt.compare(pw, this.password, function(err, isEqual) {
+		if(err) {
+			return cb(err);
+		}
+		cb(null, isEqual);
+	});
+};
+
+
+//
 UserSchema.virtual("name")
 	.get(function () {
 		return (this.firstname || "") + (this.lastname && (" " + this.lastname) || "");
