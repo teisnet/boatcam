@@ -99,7 +99,7 @@ $(document).ready(function(){
 		{
 			src: "http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf",
 			// wmode: "direct"  // Needed for 'accellerated' to take effect
-			wmode: "transparent" // Allows overlay icons in IE
+			wmode: "transparent" // Allows overlay icons in IE. TODO: Try 'opaque'
 		},
 		{
         'clip': {
