@@ -2,6 +2,7 @@
 
 var express = require('express');
 var router = express.Router();
+var passport = require("passport");
 
 var fs = require('fs');
 var path = require("path");
