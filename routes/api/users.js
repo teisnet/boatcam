@@ -48,17 +48,37 @@ module.exports = function (router) {
 	.put(function(req, res, next) {
 		var userId = req.params.userId;
 		var changes = req.body;
-		// find by document id and update
+
+		var pw;
+		if (changes.password) {
+			var pw = changes.password;
+			delete changes.password;
+		}
+
 		User.findByIdAndUpdate(
 			userId,
 			{ $set:  changes}, // TODO: Set only schema fields
-			{ new: true, runValidators: true },
-			function(err, user) {
-				if (err) return errorHandlers.error(res, err, "Could not update user " + userId);
-				if(!user) return errorHandlers.notFound(res, "User " + userId + " not found");
+			{ new: true, runValidators: true }
+		)
+		.exec()
+		.then(function(user) {
+			if (pw && user) {
+				user.password = pw;
+				return user.save();
+			}
+			return user;
+		})
+		.then(function(user) {
+			if (!user) {
+				errorHandlers.notFound(res, "User " + userId + " not found");
+			} else {
 				res.json(user);
 			}
-		);
+		})
+		.catch(function (err) {
+			errorHandlers.error(res, err, "Could not update user " + userId);
+		});
+
 	})
 	// Delete
 	.delete(function(req, res, next) {
