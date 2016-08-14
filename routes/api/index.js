@@ -2,15 +2,35 @@
 
 var express = require('express');
 var router = express.Router();
+var User = require("../../models/User");
+var passport = require("passport");
+var jwt = require("jwt-simple");
 
-/*
-router.use(function(req, res, next) {
-	if (req.isAuthenticated()) {
-		return next();
-	}
-	res.status(401);
+
+router.post("/authenticate", function(req, res) {
+	User.findOne({
+		username: req.body.username
+	}, function(err, user) {
+		if(err) throw error;
+
+		if(!user) {
+			res.send({ success: false, message: "Authentication failed. User not found"});
+		} else {
+			user.validPassword(req.body.password, function(err, isValid) {
+				if (isValid && !err) {
+					var token = jwt.encode(user, "rodgrodmedflode"/*config.secret*/); // Teis: shouldn't token be arbitary, not generated from user
+					res.json({ success: true, token: "JWT " + token });
+				}  else {
+					res.json({ success: false, msg: "Authentication failed. Wrong password" });
+				}
+			});
+		}
+	});
 });
-*/
+
+
+router.use(passport.authenticate('jwt', { session: false }));
+
 
 router.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
