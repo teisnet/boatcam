@@ -14,11 +14,13 @@
     "express": "~4.13.1",
     "express-session": "^1.13.0",
     "jade": "~1.11.0",
+    "jwt-simple": "^0.5.0",
     "less-middleware": "1.0.x",
     "mongoose": "^4.5.8",
     "morgan": "~1.6.1",
     "onvif": "^0.4.0",
     "passport": "^0.3.2",
+    "passport-jwt": "^2.1.0",
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.3.0",
     "socket.io": "^1.4.5"
