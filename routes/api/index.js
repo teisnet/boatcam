@@ -7,6 +7,19 @@ var passport = require("passport");
 var jwt = require("jwt-simple");
 
 
+router.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header('Access-Control-Allow-Methods', "GET, POST, PUT, DELETE, OPTIONS");
+	res.header("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization"); // Origin, X-Requested-With
+
+	if(req.method === 'OPTIONS') {
+		res.status(200).end();
+	} else {
+		next();
+	}
+});
+
+
 router.post("/authenticate", function(req, res) {
 	User.findOne({
 		username: req.body.username
@@ -31,14 +44,6 @@ router.post("/authenticate", function(req, res) {
 
 router.use(passport.authenticate('jwt', { session: false }));
 
-
-router.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header('Access-Control-Allow-Methods', "GET, POST, PUT, DELETE");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	//res.header("Access-Control-Allow-Headers", "X-Requested-With,content-type, Authorization");
-	next();
-});
 
 router.use(function (req, res, next) {
 	res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
