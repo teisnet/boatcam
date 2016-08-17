@@ -52,8 +52,10 @@ module.exports = function (router) {
 		var pw;
 		if (changes.password) {
 			var pw = changes.password;
-			delete changes.password;
 		}
+
+		// Outside if statement 'as password = ""'' will not pass the statement
+		delete changes.password;
 
 		User.findByIdAndUpdate(
 			userId,
