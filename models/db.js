@@ -26,8 +26,8 @@ db.on('error',function (err) {
 
 // When the connection is disconnected
 db.on('disconnected', function () {
-  console.log('DB: Default connection "' + db.name + '" disconnected');
-  // wrong username or password?
+	console.log('DB: Default connection "' + db.name + '" disconnected');
+	// wrong username or password?
 });
 
 db.on('reconnect', console.error.bind(console, 'reconnected:'));

@@ -4,7 +4,7 @@ const Camera = require("../models/Camera");
 
 module.exports = function(io){
 
-    const camerasNamespace = io.of("/cameras");
+	const camerasNamespace = io.of("/cameras");
 
 	// Forward Camera.onStatus to socket connections
 	// TODO: Make global "status" event on Camera class
@@ -21,20 +21,20 @@ module.exports = function(io){
 		} );
 	}
 
-    camerasNamespace.on("connection", function(socket){
+	camerasNamespace.on("connection", function(socket){
 
 		// Each time a client connects send an array of all the camera statuses.
-        Camera.find({}, function(err, cameras){
+		Camera.find({}, function(err, cameras){
 			// Add the id to each camera status
-            let status = cameras.map(function(camera){
-                    let cameraStatus = camera.status;
-                    cameraStatus._id = camera._id;
-                    return cameraStatus;
-                });
+			let status = cameras.map(function(camera){
+					let cameraStatus = camera.status;
+					cameraStatus._id = camera._id;
+					return cameraStatus;
+				});
 
-            camerasNamespace.emit("status", status);
-        });
+			camerasNamespace.emit("status", status);
+		});
 
-    });
+	});
 
 }
