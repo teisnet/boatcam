@@ -21,7 +21,7 @@ db.on('connected', function () {
 // If the connection throws an error
 // db.on('error', console.error.bind(console, 'connection error:'));
 db.on('error',function (err) {
-  console.error('DB: default connection "' + db.name + '" error: ' + err);
+	console.error('DB: default connection "' + db.name + '" error: ' + err);
 });
 
 // When the connection is disconnected
