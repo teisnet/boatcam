@@ -35,7 +35,7 @@ router.post("/authenticate", function(req, res) {
 					var token = jwt.encode(user, "rodgrodmedflode"/*config.secret*/); // Teis: shouldn't token be arbitary, not generated from user
 					res.json({ success: true, token: "JWT " + token });
 				}  else {
-					res.json({ success: false, msg: "Authentication failed. Wrong password" });
+					res.json({ success: false, message: "Authentication failed. Wrong password" });
 				}
 			});
 		}
