@@ -69,32 +69,6 @@ router.get('/cameras/:cameraSlug', function(req, res, next) {
 });
 
 
-router.get('/cameras/:cameraSlug/ios', function(req, res, next) {
-  var cameraSlug = req.params.cameraSlug;
-  var camera = req.camera;
-
-  if (!camera) {
-      res.status(404).send('Camera "' + cameraSlug + '" not found');
-      return;
-  }
-  res.render('camera-ios',  { title: camera.title, camera: camera});
-
-});
-
-
-router.get('/cameras/:cameraSlug/bare', function(req, res, next) {
-  var cameraSlug = req.params.cameraSlug;
-  var camera = req.camera;
-
-  if (!camera) {
-      res.status(404).send('Camera "' + cameraSlug + '" not found');
-      return;
-  }
-  res.render('camera-bare',  { title: camera.title, camera: camera});
-
-});
-
-
 router.get('/profile', function(req, res, next) {
     res.render('profile', { title: req.user.name});
 });
