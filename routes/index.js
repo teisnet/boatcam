@@ -2,34 +2,12 @@
 
 var express = require('express');
 var router = express.Router();
-var passport = require("passport");
 
 var fs = require('fs');
 var path = require("path");
 
 var Camera = require("../models/Camera");
 var Berth = require("../models/Berth");
-
-
-router.route('/login')
-.get(function(req, res){
-   res.render('login', { title: req.app.locals.title, message: req.flash('message') });
-})
-.post(
-    passport.authenticate('local' , { failureFlash: true, failureRedirect: '/login'/*, successRedirect: '/'*/}),
-    function(req, res) {
-        res.redirect(req.session.returnTo || '/');
-        delete req.session.returnTo;
-    }
-);
-
-router.get('/logout', function(req, res) {
-    req.logout();
-    req.session.destroy();
-    //delete req.session;
-    //res.clearCookie('cookiename');
-    res.redirect('/login');
-});
 
 
 var utils = require("./utils")(router);
@@ -66,11 +44,6 @@ router.get('/cameras/:cameraSlug', function(req, res, next) {
         return;
   }
   res.render('camera', { title: camera.title, camera: camera});
-});
-
-
-router.get('/profile', function(req, res, next) {
-    res.render('profile', { title: req.user.name});
 });
 
 

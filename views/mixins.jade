@@ -9,11 +9,6 @@ mixin breadcrumb(...route)
             | &nbsp;>&nbsp;
             li
                 a(href=path)= levelNames[level]
-    ul.pull-right
-        li
-            a(href="/profile")= authenticatedUser && authenticatedUser.username
-        li
-            a(href="/logout") Log out
 
 mixin tracker()
     script.
