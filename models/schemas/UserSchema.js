@@ -7,11 +7,16 @@ var UserSchema = new mongoose.Schema({
 	firstname: String,
 	lastname: String,
 	username: String,
-	password: String,
+	password: String, //{ type: String, select: false },
 	role: {type: String, enum: ["Administrator", "Editor", "User"], default: "User"},
 }, {
 	// toObject: { virtuals: true },
-	toJSON: { virtuals: true }
+	toJSON: {
+		virtuals: true,
+		transform: function(doc, user) {
+			delete user.password;
+		}
+	}
 });
 
 

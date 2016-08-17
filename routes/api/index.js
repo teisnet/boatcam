@@ -31,6 +31,7 @@ router.post("/authenticate", function(req, res) {
 		} else {
 			user.validPassword(req.body.password, function(err, isValid) {
 				if (isValid && !err) {
+					// TODO: Do only encode username, id and role
 					var token = jwt.encode(user, "rodgrodmedflode"/*config.secret*/); // Teis: shouldn't token be arbitary, not generated from user
 					res.json({ success: true, token: "JWT " + token });
 				}  else {

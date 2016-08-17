@@ -60,6 +60,7 @@ module.exports = function (router) {
 			{ $set:  changes}, // TODO: Set only schema fields
 			{ new: true, runValidators: true }
 		)
+		//.select("+password")
 		.exec()
 		.then(function(user) {
 			if (pw && user) {
