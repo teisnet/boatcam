@@ -6,11 +6,6 @@ var router = express.Router();
 var fs = require('fs');
 var path = require("path");
 
-var Camera = require("../models/Camera");
-var Berth = require("../models/Berth");
-
-
-var utils = require("./utils")(router);
 
 router.get('/', function(req, res, next) {
     res.render('index');
@@ -26,24 +21,6 @@ router.get('/snapshots/:filename', function(req, res, next) {
         res.writeHead(200, {'Content-Type': 'image/jpeg'});
         res.end(data);
     });
-});
-
-router.get('/cameras', function(req, res, next) {
-    Camera.find({}, function(err, cameras){
-        res.render('cameras', { title: req.app.locals.title, cameras: cameras});
-    });
-});
-
-
-router.get('/cameras/:cameraSlug', function(req, res, next) {
-  let cameraSlug = req.params.cameraSlug;
-  let camera = req.camera;
-
-  if (!camera) {
-        res.status(404).send('Camera "' + cameraSlug + '" not found');
-        return;
-  }
-  res.render('camera', { title: camera.title, camera: camera});
 });
 
 
