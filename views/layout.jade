@@ -1,21 +1,8 @@
-include mixins
-
 doctype html
 html
   head
     meta(charset='utf-8')
-    meta(name="apple-mobile-web-app-capable" content="yes")
     title= title
-    script(type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js")
-    block stylesheets
-    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css")
     link(rel='stylesheet', href='/stylesheets/style.css')
-    block scripts
   body
-    .navigation
-        block navigation
-    .container
-        .content
-            block content
-
-    +tracker()
+    block content
