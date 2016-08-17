@@ -53,6 +53,11 @@ router.use(function (req, res, next) {
 });
 
 
+router.get("/user", function(req, res){
+	res.json(req.user);
+});
+
+
 require('./berthUsers')(router);
 require('./users')(router);
 require('./cameras')(router);
