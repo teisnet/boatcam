@@ -34,7 +34,13 @@ module.exports = function(io){
             socket.on("moveto", (pos) => camera.moveTo(pos) );
 
             socket.on("snapshot", (data, cb) => {
-                camera.snapshot( (err, result) => {
+                camera.snapshot(true, (err, result) => {
+                    cb(result);
+                } );
+            } );
+
+            socket.on("snapshot-latest", (data, cb) => {
+                camera.snapshot(false, (err, result) => {
                     cb(result);
                 } );
             } );

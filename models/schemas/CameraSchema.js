@@ -81,8 +81,8 @@ CameraSchema.methods.moveTo = function (pos) {
     this.camera.moveTo(pos);
 };
 
-CameraSchema.methods.snapshot = function (err, cb) {
-    this.camera.snapshot(err, cb);
+CameraSchema.methods.snapshot = function (timestampPostfix, cb) {
+    this.camera.snapshot(timestampPostfix, cb);
 };
 
 CameraSchema.methods.onMove = function (handler) {

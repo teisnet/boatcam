@@ -285,8 +285,14 @@ Camera.prototype.move = function(command) {
 
 }
 
-Camera.prototype.snapshot = function(cb) {
+Camera.prototype.snapshot = function(timestampPostfix, cb) {
     var self = this;
+
+    if (typeof timestampPostfix === "function" && !cb) {
+        cb = timestampPostfix;
+        timestampPostfix = undefined;
+    }
+
     if (!this._onvifCamera) return;
     this._onvifCamera.getSnapshotUri(function(err, result){
         if (err) {
@@ -300,8 +306,12 @@ Camera.prototype.snapshot = function(cb) {
 
         console.log("Camera[" + self.name + "].snapshot: " +  snapshotUri);
 
-        let timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '');
-        let snapshotFilename = "snapshot_" + self.name /*+ "-" + timestamp*/ + ".jpg";
+        let snapshotFilename = "snapshot_" + self.name;
+        if (timestampPostfix) {
+            let timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '');
+            snapshotFilename += "-" + timestamp;
+        }
+        snapshotFilename += ".jpg";
 
         download(snapshotUri, snapshotFilename, function(err){ cb(err, snapshotFilename); });
     });
