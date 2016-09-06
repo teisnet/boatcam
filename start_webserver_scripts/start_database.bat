@@ -7,7 +7,7 @@ echo.
 echo ----------------------------------------------------------------
 echo.
 
-SET MONGODB_PATH=C:\Program Files\MongoDB\Server\3.2\bin
+rem SET MONGODB_PATH=C:\Program Files\MongoDB\Server\3.2\bin
 SET DB_PATH=..\database\data\db
 SET CONFIG_PATH=..\database\mongod.cfg
 SET LOG_PATH=..\database\log\mongod.log
