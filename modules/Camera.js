@@ -301,7 +301,7 @@ Camera.prototype.snapshot = function(cb) {
         console.log("Camera[" + self.name + "].snapshot: " +  snapshotUri);
 
         let timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '');
-        let snapshotFilename = "snapshot_" + self.name + "-" + timestamp + ".jpg";
+        let snapshotFilename = "snapshot_" + self.name /*+ "-" + timestamp*/ + ".jpg";
 
         download(snapshotUri, snapshotFilename, function(err){ cb(err, snapshotFilename); });
     });
