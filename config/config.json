@@ -1,0 +1,8 @@
+{
+	"development": {
+		"database": "boatcam_test",
+		"username": "postgres",
+		"password": "Olufsvej"
+
+	}
+}
