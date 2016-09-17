@@ -1,23 +1,23 @@
 [{
-	"__v": 0,
 	"_id": {
 		"$oid": "56b380e1f4bf13d500bb5f9a"
 	},
+	"__v": 0,
 	"enabled": true,
-	"hostname": "85.27.160.243",
+	"hostname": "85.27.165.106",
 	"http": 8002,
 	"onvif": 8082,
 	"password": "admin",
 	"slug": "fjellebroen-ost",
-	"title": "Fjellebroen Øst",
-	"uri": "rtmp://85.27.160.128:1935/boatcam/fjellebroen-ost.stream",
+	"title": "Fjellebroen ØstX",
+	"uri": "rtmp://streaming.boatcam.net:1935/fjellebroen/fjellebroen-ost.stream",
 	"username": "admin"
 },
 {
-	"__v": 0,
 	"_id": {
 		"$oid": "56b380e6f4bf13d500bb5f9b"
 	},
+	"__v": 0,
 	"api": "12345:12345@85.27.160.128:84/form/PTZSet",
 	"enabled": false,
 	"hostname": "",
@@ -30,27 +30,27 @@
 	"username": ""
 },
 {
-	"__v": 0,
 	"_id": {
 		"$oid": "56b380eaf4bf13d500bb5f9c"
 	},
+	"__v": 0,
 	"api": "12345:12345@85.27.160.128:85/form/PTZSet",
-	"enabled": false,
-	"hostname": "",
-	"http": 85,
-	"onvif": null,
-	"password": "",
-	"slug": "minkalv2",
-	"title": "Min Kalv Tårn",
-	"uri": "rtmp://85.27.160.128:5119/Minkalv2",
-	"username": ""
+	"enabled": true,
+	"hostname": "192.168.1.20",
+	"http": 80,
+	"onvif": 8080,
+	"password": "admin",
+	"slug": "lindegaarden-taarn",
+	"title": "Lindegaarden Tårn",
+	"uri": "rtmp://streaming.boatcam.net:1935/lindegaarden/lindegaarden-taarn.stream",
+	"username": "admin"
 },
 {
 	"_id": {
 		"$oid": "56b89faae3ebd4b720a32316"
 	},
 	"api": "12345:12345@85.27.160.128:83/form/PTZSet",
-	"enabled": false,
+	"enabled": true,
 	"hostname": "192.168.1.36",
 	"http": 83,
 	"onvif": 8000.0,
@@ -61,33 +61,48 @@
 	"username": "admin"
 },
 {
-	"__v": 0,
 	"_id": {
 		"$oid": "57053eb30b027d801688a98e"
 	},
+	"__v": 0,
 	"enabled": true,
-	"hostname": "85.27.160.243",
+	"hostname": "85.27.165.106",
 	"http": 8001,
 	"onvif": 8001,
 	"password": "admin",
 	"slug": "fjellebroen-vest",
 	"title": "Fjellebroen Vest",
-	"uri": "rtmp://85.27.160.128:1935/boatcam/fjellebroen-vest.stream",
+	"uri": "rtmp://streaming.boatcam.net:1935/fjellebroen/fjellebroen-vest.stream",
 	"username": "admin"
 },
 {
-	"__v": 0,
 	"_id": {
-		"$oid": "571993c646d4c50c5025fbe1"
+		"$oid": "578299a091766a4c3f0ad452"
 	},
-	"enabled": true,
-	"hostname": "85.27.160.128",
-	"http": 86,
-	"onvif": 8086,
-	"password": "admin",
-	"slug": "nyt-kamera",
-	"title": "Nyt Kamera",
-	"uri": "rtmp://85.27.160.128:1935/boatcam/nyt-kamera.stream",
-	"username": "admin"
+	"title": "Test 3",
+	"slug": "test3",
+	"hostname": "",
+	"username": "",
+	"password": "",
+	"uri": "",
+	"onvif": null,
+	"http": null,
+	"enabled": false,
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "57829a7391766a4c3f0ad453"
+	},
+	"title": "sdfsdf",
+	"slug": "sdfsdf",
+	"hostname": "",
+	"username": "",
+	"password": "",
+	"uri": "",
+	"onvif": null,
+	"http": null,
+	"enabled": false,
+	"__v": 0
 }]
 
