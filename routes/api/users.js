@@ -71,14 +71,12 @@ module.exports = function (router) {
 		// Outside if statement 'as password = ""'' will not pass the statement
 		delete changes.password;
 
-		User.findByIdAndUpdate(
-			userId,
-			{ $set:  changes}, // TODO: Set only schema fields
-			{ new: true, runValidators: true }
-		)
-		//.select("+password")
-		.exec()
-		.then(function(user) {
+		// TODO: Omit password
+		// TODO: Set only schema fields
+		// TODO: Make sure validators are executed
+		User.update( changes, { where: { id: userId }, returning: true })
+		.then((result) => {
+			let user = result[1][0];
 			if (pw && user) {
 				user.password = pw;
 				return user.save();

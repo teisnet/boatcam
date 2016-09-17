@@ -64,16 +64,15 @@ module.exports = function (router) {
 		var berthId = req.params.berthId;
 		var changes = req.body;
 		// find by document id and update
-		Berth.findByIdAndUpdate(
-			berthId,
-			{ $set:  changes}, // TODO: Set only schema fields
-			{ new: true, runValidators: true },
-			function(err, berth) {
-				if (err) return errorHandlers.error(res, err, "Could not update berth " + berthId);
-				if(!berth) return errorHandlers.notFound(res, "Berth " + berthId + " not found");
-				res.json(berth);
-			}
-		);
+		Berth.update(changes, { where: { id: berthId }, returning: true })
+		.then((result) => {
+			let berth = result[1][0];
+			if(!berth) return errorHandlers.notFound(res, "Berth " + berthId + " not found");
+			res.json(berth);
+		})
+		.catch((err) => {
+			errorHandlers.error(res, err, "Could not update berth " + berthId);
+		});
 	})
 	// Delete
 	.delete(function(req, res, next) {

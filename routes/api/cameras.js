@@ -59,17 +59,16 @@ module.exports = function (router) {
 		var cameraId = req.params.cameraId;
 		var changes = req.body;
 		// find by document id and update
-		Camera.findByIdAndUpdate(
-			cameraId,
-			{ $set:  changes},
-			{ new: true, runValidators: true },
-			function(err, camera) {
-				if (err) return errorHandlers.error(res, err, "Could not update camera " + cameraId);
-				if(!camera) return errorHandlers.notFound(res, "Camera " + cameraId + " not found");
-				// TODO: Update camera instance accordingly
-				res.json(camera);
-			}
-		);
+		Camera.update(changes, { where: { id: cameraId }, returning: true })
+		.then((result) => {
+			let camera = result[1][0];
+			if(!camera) return errorHandlers.notFound(res, "Camera " + cameraId + " not found");
+			// TODO: Update camera instance accordingly
+			res.json(camera);
+		})
+		.catch((err) => {
+			errorHandlers.error(res, err, "Could not update camera " + cameraId);
+		});
 	})
 	// Delete
 	.delete(function(req, res, next) {
