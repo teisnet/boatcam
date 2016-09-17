@@ -98,12 +98,12 @@ module.exports = function (router) {
 	// Delete
 	.delete(function(req, res, next) {
 		var userId = req.params.userId;
-		User.findByIdAndRemove(
-			userId,
-			function(err) {
-				if (err) return errorHandlers.error(res, err, "Could not delete user " + userId);
-				res.sendStatus(200);
-			}
-		);
+		User.destroy({ where: { id: userId } })
+		.then(() => {
+			res.sendStatus(200);
+		})
+		.catch((err) => {
+			errorHandlers.error(res, err, "Could not delete user " + userId);
+		});
 	});
 }

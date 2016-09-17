@@ -77,12 +77,12 @@ module.exports = function (router) {
 	// Delete
 	.delete(function(req, res, next) {
 		var berthId = req.params.berthId;
-		Berth.findByIdAndRemove(
-			berthId,
-			function(err) {
-				if (err) return errorHandlers.error(res, err, "Could not delete berth " + berthId);
-				res.sendStatus(200);
-			}
-		);
+		Berth.destroy({ where: { id: berthId } })
+		.then(() => {
+			res.sendStatus(200);
+		})
+		.catch((err) => {
+			errorHandlers.error(res, err, "Could not delete berth " + berthId);
+		});
 	});
 }

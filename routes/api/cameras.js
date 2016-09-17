@@ -73,12 +73,12 @@ module.exports = function (router) {
 	// Delete
 	.delete(function(req, res, next) {
 		var cameraId = req.params.cameraId;
-		Camera.findByIdAndRemove(
-			cameraId,
-			function(err) {
-				if (err) return errorHandlers.error(res, err, "Could not delete camera " + cameraId);
-				res.sendStatus(200);
-			}
-		);
+		Camera.destroy({ where: { id: cameraId } })
+		.then(() => {
+			res.sendStatus(200);
+		})
+		.catch((err) => {
+			errorHandlers.error(res, err, "Could not delete camera " + cameraId);
+		});
 	});
 }
