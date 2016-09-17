@@ -1,7 +1,8 @@
 "use strict";
 
-const BerthUser = require("../../models/BerthUser");
-const User = require("../../models/User");
+const models  = require('../../models');
+const Berth = models.Berth;
+const BerthUser = models.BerthUser;
 
 module.exports = function (router) {
 
@@ -57,7 +58,7 @@ module.exports = function (router) {
 		var berthUserId = req.params.berthUserId;
 		BerthUser.findById(berthUserId, function(err, doc){
 			doc.remove(function(err, doc){
-				res.json({_id: berthUserId}); // OK
+				res.json({id: berthUserId}); // OK
 			});
 		});
 	});
@@ -65,14 +66,9 @@ module.exports = function (router) {
 
 	router.route('/users/berths')
 	.get(function(req, res, next) {
-		User.find({})
-		.exec()
+		User.findAll({ include: [models.Berth] })
 		.then( users => {
-			let promises = users.map( user => user.populateBerths() );
-			return Promise.all(promises);
-		})
-		.then( (result) => {
-			res.json(result);
+			res.json(users);
 		})
 		.catch( error => {
 			console.error(error);
