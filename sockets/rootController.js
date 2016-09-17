@@ -1,6 +1,7 @@
 "use strict";
 
-const Camera = require("../models/Camera");
+const models  = require('../models');
+const Camera = models.Camera;
 
 module.exports = function(io){
 	// TEST

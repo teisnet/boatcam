@@ -1,10 +1,12 @@
 "use strict";
 
-const Camera = require("../models/Camera");
+const models  = require('../models');
+const Camera = models.Camera;
 
 module.exports = function(io){
 
-	Camera.find({}, function(err, cameras){
+	Camera.findAll()
+	.then(function(cameras){
 		cameras.forEach(newCameraHandler);
 		Camera.on("new", newCameraHandler);
 	});

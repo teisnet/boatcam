@@ -1,6 +1,7 @@
 "use strict";
 
-const Camera = require("../models/Camera");
+const models  = require('../models');
+const Camera = models.Camera;
 
 module.exports = function(io){
 
@@ -10,13 +11,14 @@ module.exports = function(io){
 	// TODO: Make global "status" event on Camera class
 	// TODO: Consider including id in camera status.
 	Camera.on("new", cameraStatusHandler);
-	Camera.find({}, function(err, cameras){
+	Camera.findAll()
+	.then(function(cameras){
 		cameras.forEach(cameraStatusHandler);
 	});
 
 	function cameraStatusHandler(camera) {
 		camera.onStatus( (status) => {
-			status._id = camera._id;
+			status.id = camera.id;
 			camerasNamespace.emit("status", status);
 		} );
 	}
@@ -24,11 +26,12 @@ module.exports = function(io){
 	camerasNamespace.on("connection", function(socket){
 
 		// Each time a client connects send an array of all the camera statuses.
-		Camera.find({}, function(err, cameras){
+		Camera.findAll()
+		.then(function(cameras){
 			// Add the id to each camera status
 			let status = cameras.map(function(camera){
 					let cameraStatus = camera.status;
-					cameraStatus._id = camera._id;
+					cameraStatus.id = camera.id;
 					return cameraStatus;
 				});
 
