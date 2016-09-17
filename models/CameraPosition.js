@@ -1,7 +1,18 @@
-"use strict";
+'use strict';
 
-var db = require('./db');
-var mongoose = require('mongoose');
-var CameraPositionSchema = require('./schemas/CameraPositionSchema');
+module.exports = function(sequelize, DataTypes) {
+	const ProjectUser = sequelize.define('CameraPosition', {
+		x: DataTypes.REAL,
+		y: DataTypes.REAL,
+		zoom: DataTypes.REAL
+	}, {
+		//tableName: 'project_users',
+		timestamps: false,
+		// underscored: true,
+		underscoredAll: true,
+		// comment: 'I'm a table comment!'
 
-module.exports = mongoose.model('CameraPosition', CameraPositionSchema, 'camera_positions');
+	});
+
+	return ProjectUser;
+};
