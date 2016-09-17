@@ -35,24 +35,23 @@ module.exports = function (router) {
 	})
 
 
-	var objectIdRegex = new RegExp("^[0-9a-fA-F]{24}$");
+	var objectIdRegex = new RegExp("^[0-9]+$");
 
 	router.route('/cameras/:cameraId')
 	// Get one
 	.get(function(req, res, next) {
 		var cameraId = req.params.cameraId;
 
-		// Check if cameraId refer to the '_id' field or the 'slug' field
-		var query = objectIdRegex.test(cameraId) ? {_id: cameraId} : {slug: cameraId};
+		// Check if cameraId refer to the 'id' field or the 'slug' field
+		var query = objectIdRegex.test(cameraId) ? { id: cameraId } : { slug: cameraId };
 
-		Camera.findOne(query, function(err, camera){
-			if (err) return errorHandlers.error(res, err, "Could not get camera " + cameraId);
+		Camera.findOne({ where: query, include: [{ model: models.Berth, as: 'berths' }] })
+		.then((camera) => {
 			if(!camera) return errorHandlers.notFound(res, "Camera " + cameraId + " not found");
-
-			camera.populatePositions()
-			.then(() => {
-				res.json(camera);
-			});
+			res.json(camera);
+		})
+		.catch((err) => {
+			errorHandlers.error(res, err, "Could not get camera " + cameraId);
 		});
 	})
 	// Update

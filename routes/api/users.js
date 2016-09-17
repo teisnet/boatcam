@@ -4,7 +4,7 @@ const models  = require('../../models');
 const User = models.User;
 var errorHandlers = require("./errorHandlers");
 
-var objectIdRegex = new RegExp("^[0-9a-fA-F]{24}$");
+var objectIdRegex = new RegExp("^[0-9]+$");
 
 // BERTHS
 
@@ -43,13 +43,19 @@ module.exports = function (router) {
 	.get(function(req, res, next) {
 		var userId = req.params.userId;
 
-		// Check if userId refer to the '_id' field or the 'number' field
-		var query = objectIdRegex.test(userId) ? {_id: userId} : {slug: userId};
+		// Check if userId refer to the 'id' field or the 'number' field
+		var query = objectIdRegex.test(userId) ? { id: userId } : { slug: userId };
 
-		User.findOne(query, function(err, user){
-			if (err) return errorHandlers.error(res, err, "Could not get user " + userId);
+		User.findOne({
+			where: query,
+			include: [{ model: models.Berth, as: 'berths' }]
+		})
+		.then((user) => {
 			if(!user) return errorHandlers.notFound(res, "User " + userId + " not found");
 			res.json(user);
+		})
+		.catch((err) => {
+			errorHandlers.error(res, err, "Could not get user " + userId);
 		});
 	})
 	// Update

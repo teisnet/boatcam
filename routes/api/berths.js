@@ -36,24 +36,27 @@ module.exports = function (router) {
 	});
 
 
-	var objectIdRegex = new RegExp("^[0-9a-fA-F]{24}$");
+	var objectIdRegex = new RegExp("^[0-9]+$");
 
 	router.route('/berths/:berthId')
 	// Get one
 	.get(function(req, res, next) {
 		var berthId = req.params.berthId;
 
-		// Check if berthId refer to the '_id' field or the 'number' field
-		var query = objectIdRegex.test(berthId) ? {_id: berthId} : {number: berthId};
+		// Check if berthId refer to the 'id' field or the 'number' field
+		// var query = objectIdRegex.test(berthId) ? {id: berthId} : {number: berthId};
+		var query = { number: berthId };
 
-		Berth.findOne(query, function(err, berth){
-			if (err) return errorHandlers.error(res, err, "Could not get berth " + berthId);
+		Berth.findOne({
+			where: query,
+			include: [{ model: models.Camera, as: 'cameras' }, { model: models.User, as: 'users' }]
+		})
+		.then((berth) => {
 			if(!berth) return errorHandlers.notFound(res, "Berth " + berthId + " not found");
-
-			Promise.all([berth.populateCameraPositions(), berth.populateUsers()])
-			.then(function(){
-				res.json(berth);
-			});
+			res.json(berth);
+		})
+		.catch((err) => {
+			errorHandlers.error(res, err, "Could not get berth " + berthId);
 		});
 	})
 	// Update
