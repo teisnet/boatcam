@@ -1,7 +1,13 @@
-"use strict";
+'use strict';
 
-var db = require('./db');
-var mongoose = require('mongoose');
-var BerthUserSchema = require('./schemas/BerthUserSchema');
+module.exports = function(sequelize, DataTypes) {
+	const BerthUser = sequelize.define('BerthUser', {
 
-module.exports = mongoose.model('BerthUser', BerthUserSchema, 'berth_users');
+	}, {
+		timestamps: false,
+		// underscored: true,
+		underscoredAll: true,
+	});
+
+	return BerthUser;
+};
