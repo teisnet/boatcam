@@ -14,7 +14,7 @@ var reconnectTime = 7000;
 
 /*
 settings = {
-	_id,
+	id,
 	name,
 	enabled,
 
@@ -36,7 +36,7 @@ function Camera(config) {
 	EventEmitter.call(this);
 
 	// TODO: Handle missing id. Consider using name.
-	this.id = config._id;
+	this.id = config.id;
 	this.name = config.name;
 
 	cameras[this.id] = this;
