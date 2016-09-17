@@ -25,7 +25,7 @@ router.post("/authenticate", function(req, res) {
 	User.findOne({ where: { username: req.body.username } })
 	.then(function(user) {
 		if(!user) {
-			res.send({ success: false, message: "Authentication failed. User not found"});
+			res.json({ success: false, message: "Authentication failed. User not found"});
 		} else {
 			user.validPassword(req.body.password, function(err, isValid) {
 				if (isValid && !err) {
