@@ -23,11 +23,15 @@ module.exports = function (router) {
 	.post(function(req, res, next) {
 		var changes = req.body;
 		// find by document id and update
-		var newBerth = new Berth(changes);
-		newBerth.save(function(err, berth){
-			if (err || !berth) return errorHandlers.error(res, err, "Could not create berth");
+		Berth.build(changes)
+		.save()
+		.then((berth) => {
+			if (!berth) return errorHandlers.error(res, null, "Could not create berth");
 			// 201 (Created)
 			res.status(201).json(berth);
+		})
+		.catch((err) => {
+			errorHandlers.error(res, err, "Could not create berth");
 		});
 	});
 

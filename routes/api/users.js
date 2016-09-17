@@ -25,11 +25,15 @@ module.exports = function (router) {
 	.post(function(req, res, next) {
 		var changes = req.body;
 		// find by document id and update
-		var newUser = new User(changes);
-		newUser.save(function(err, user){
-			if (err || !user) return errorHandlers.error(res, err, "Could not create user");
+		User.build(changes)
+		.save()
+		.then((user) => {
+			if (!user) return errorHandlers.error(res, null, "Could not create user");
 			// 201 (Created)
 			res.status(201).json(user);
+		})
+		.catch((err) => {
+			errorHandlers.error(res, err, "Could not create user");
 		});
 	});
 

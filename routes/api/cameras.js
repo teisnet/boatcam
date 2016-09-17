@@ -22,11 +22,15 @@ module.exports = function (router) {
 	.post(function(req, res, next) {
 		var newCameraParams = req.body;
 		// find by document id and update
-		var newCamera = new Camera(newCameraParams);
-		newCamera.save(function(err, camera){
-			if (err || !camera) return errorHandlers.error(res, err, "Could not create camera");
+		Camera.build(newCameraParams)
+		.save()
+		.then((camera) => {
+			if (!camera) return errorHandlers.error(res, err, "Could not create camera");
 			// 201 (Created)
 			res.status(201).json(camera);
+		})
+		.catch((err) => {
+			errorHandlers.error(res, err, "Could not create camera");
 		});
 	})
 
