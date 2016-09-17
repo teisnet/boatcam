@@ -2,7 +2,8 @@
 
 var express = require('express');
 var router = express.Router();
-var User = require("../../models/User");
+const models  = require('../../models');
+const User = models.User;
 var passport = require("passport");
 var jwt = require("jwt-simple");
 
@@ -21,11 +22,8 @@ router.use(function(req, res, next) {
 
 
 router.post("/authenticate", function(req, res) {
-	User.findOne({
-		username: req.body.username
-	}, function(err, user) {
-		if(err) throw error;
-
+	User.findOne({ where: { username: req.body.username } })
+	.then(function(user) {
 		if(!user) {
 			res.send({ success: false, message: "Authentication failed. User not found"});
 		} else {
@@ -39,6 +37,9 @@ router.post("/authenticate", function(req, res) {
 				}
 			});
 		}
+	})
+	.catch((err) => {
+		throw err;
 	});
 });
 
