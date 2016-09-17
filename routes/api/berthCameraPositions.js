@@ -1,6 +1,7 @@
 "use strict";
 
-var CameraPosition = require("../../models/CameraPosition");
+const models  = require('../../models');
+const CameraPosition = models.CameraPosition;
 
 module.exports = function (router) {
 
@@ -10,22 +11,24 @@ module.exports = function (router) {
 	.get(function(req, res, next){
 		var berthId = req.params.berthId;
 		var cameraId = req.params.cameraId;
-		CameraPosition.find({berth: berthId, camera: cameraId})
-		.exec()
+		CameraPosition.find({ where: {berth_id: berthId, camera_id: cameraId}})
 		.then((berthCameraPositions) => {
 			// TODO: consider returning empty array in subobject
+			// TODO: Handle arrays when multiple values found
+			// TODO: Fix handleNotFound not defined
 			if(!berthCameraPositions) return handleNotFound(res, 'Berth id ' + berthId + " containing position with camera id " + cameraId + " not found");
-			res.json(berthCameraPositions[0]);
+			res.json(berthCameraPositions);
 		})
 		/*.catch((err) => {
 			handleError(res, err, "Could not get position for berth " + berthId + " and camera " + cameraId);
 		});*/
 	})
 
+	// Not tested
 	.post(function(req, res, next) {
 		var berthId = req.params.berthId;
 		var cameraId = req.params.cameraId;
-		var berthCameraPosition = new CameraPosition({camera: cameraId, berth: berthId, x: req.body.x, y: req.body.y, zoom: req.body.zoom });
+		var berthCameraPosition = CameraPosition.build({camera: cameraId, berth: berthId, x: req.body.x, y: req.body.y, zoom: req.body.zoom });
 
 		berthCameraPosition.save()
 		.then((berth) => {
@@ -40,17 +43,17 @@ module.exports = function (router) {
 		var berthId = req.params.berthId;
 		var cameraId = req.params.cameraId;
 
-		CameraPosition.findOneAndUpdate(
-			{ camera: cameraId, berth: berthId },
-			{ $set: { x: req.body.x, y: req.body.y, zoom: req.body.zoom } },
-			{ upsert: true },
-			function(err, doc){
-				if (err) return res.send(500, { error: err });
-				return res.json({ message: 'Created Berth position, berthId = ' + berthId});
-			});
-		/*.catch((err) => {
-			handleError(res, err, "Could not save position for berth " + berthId + " and camera " + cameraId);
-		});*/
+		CameraPosition.upsert(
+			{ camera_id: cameraId, berth_id: berthId, x: req.body.x, y: req.body.y, zoom: req.body.zoom },
+			{ }
+		)
+		.then(function(result, more){
+			return res.json({ message: 'Created Berth position, berthId = ' + berthId});
+		})
+		.catch((err) => {
+			res.send(500, { error: err });
+			// handleError(res, err, "Could not save position for berth " + berthId + " and camera " + cameraId);
+		});
 	});
 
 	router.route(['/berths/positions/:cameraPositionId', '/cameras/positions/:cameraPositionId'])
@@ -58,7 +61,7 @@ module.exports = function (router) {
 		var cameraPositionId = req.params.cameraPositionId;
 		CameraPosition.findById(cameraPositionId, function(err, doc){
 			doc.remove(function(err, doc){
-				res.json({_id: cameraPositionId}); // OK
+				res.json({id: cameraPositionId}); // OK
 			});
 		});
 	});
