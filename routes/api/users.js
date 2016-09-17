@@ -1,7 +1,8 @@
 "use strict";
 
+const models  = require('../../models');
+const User = models.User;
 var errorHandlers = require("./errorHandlers");
-var User = require("../../models/User");
 
 var objectIdRegex = new RegExp("^[0-9a-fA-F]{24}$");
 
@@ -12,9 +13,12 @@ module.exports = function (router) {
 	router.route('/users')
 	// Get all
 	.get(function(req, res, next) {
-		User.find({}, function(err, users){
-			if (err) return errorHandlers.error(res, err, "Could not get users");
+		User.findAll()
+		.then((users) => {
 			res.json(users);
+		})
+		.catch((err) => {
+			errorHandlers.error(res, err, "Could not get users");
 		});
 	})
 	// Create

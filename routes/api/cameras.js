@@ -1,6 +1,7 @@
 "use strict";
 
-var Camera = require("../../models/Camera");
+const models  = require('../../models');
+const Camera = models.Camera;
 var errorHandlers = require("./errorHandlers");
 
 module.exports = function (router) {
@@ -9,9 +10,12 @@ module.exports = function (router) {
 	router.route('/cameras')
 	// Get all
 	.get(function(req, res, next) {
-		Camera.find({}, function(err, cameras) {
-			if (err) return errorHandlers.error(res, err, "Could not get cameras");
+		Camera.findAll()
+		.then((cameras) => {
 			res.json(cameras);
+		})
+		.catch((err) => {
+			errorHandlers.error(res, err, "Could not get cameras");
 		});
 	})
 	// Create

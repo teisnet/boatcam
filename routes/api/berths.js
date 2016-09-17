@@ -1,7 +1,8 @@
 "use strict";
 
+const models  = require('../../models');
+const Berth = models.Berth;
 var errorHandlers = require("./errorHandlers");
-var Berth = require("../../models/Berth");
 
 module.exports = function (router) {
 
@@ -10,9 +11,12 @@ module.exports = function (router) {
 	router.route('/berths')
 	// Get all
 	.get(function(req, res, next) {
-		Berth.find({}, function(err, berths){
-			if (err) return errorHandlers.error(res, err, "Could not get berths");
+		Berth.findAll()
+		.then((berths) => {
 			res.json(berths);
+		})
+		.catch((err) => {
+			errorHandlers.error(res, err, "Could not get berths");
 		});
 	})
 	// Create
