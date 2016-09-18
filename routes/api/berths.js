@@ -21,10 +21,8 @@ module.exports = function (router) {
 	})
 	// Create
 	.post(function(req, res, next) {
-		var changes = req.body;
-		// find by document id and update
-		Berth.build(changes)
-		.save()
+		var newBerthData = req.body;
+		Berth.create(newBerthData)
 		.then((berth) => {
 			if (!berth) return errorHandlers.error(res, null, "Could not create berth");
 			// 201 (Created)

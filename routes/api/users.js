@@ -23,10 +23,8 @@ module.exports = function (router) {
 	})
 	// Create
 	.post(function(req, res, next) {
-		var changes = req.body;
-		// find by document id and update
-		User.build(changes)
-		.save()
+		var newUserData = req.body;
+		User.create(newUserData)
 		.then((user) => {
 			if (!user) return errorHandlers.error(res, null, "Could not create user");
 			// 201 (Created)

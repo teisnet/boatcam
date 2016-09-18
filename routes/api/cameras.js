@@ -20,10 +20,8 @@ module.exports = function (router) {
 	})
 	// Create
 	.post(function(req, res, next) {
-		var newCameraParams = req.body;
-		// find by document id and update
-		Camera.build(newCameraParams)
-		.save()
+		var newCameraData = req.body;
+		Camera.create(newCameraData)
 		.then((camera) => {
 			if (!camera) return errorHandlers.error(res, err, "Could not create camera");
 			// 201 (Created)
