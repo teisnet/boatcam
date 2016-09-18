@@ -84,6 +84,19 @@ module.exports = function(sequelize, DataTypes) {
 		},
 
 		hooks: {
+			// Avaliable hooks (http://docs.sequelizejs.com/en/latest/docs/hooks/):
+			// 1) beforeBulk: Create, Destroy, Update
+			// 2) beforeVaidate, afterValidate, validationFailed
+			// 3) before:     Create, Destroy, Update, Save, Upsert
+			// 4) after:      Create, Destroy, Update, Save, Upsert
+			// 5) afterBulk:  Create, Destroy, Update
+			//
+			// More:
+			// beforeBulk:    Restore, Sync
+			// before:        Restore, Sync, Define, Init, Find, FindAfterExpandIncludeAll, FindAfterOptions
+			// after:         Restore, Sync, Define, Init, Find
+			// afterBulk:     Restore, Sync
+
 			// Create
 			beforeBulkCreate(cameras, options) {
 				options.individualHooks = true;
