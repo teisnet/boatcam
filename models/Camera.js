@@ -97,7 +97,7 @@ module.exports = function(sequelize, DataTypes) {
 			// after:         Restore, Sync, Define, Init, Find
 			// afterBulk:     Restore, Sync
 
-			// Create
+			// Create (and Build)
 			beforeBulkCreate(cameras, options) {
 				options.individualHooks = true;
 			},
