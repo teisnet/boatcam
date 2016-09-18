@@ -2,9 +2,6 @@
 
 const IpCamera = require('../modules/Camera');
 
-const EventEmitter = require('events');
-const cameraEmitter = new EventEmitter();
-
 module.exports = function(sequelize, DataTypes) {
 	const Camera = sequelize.define('Camera', {
 		enabled: DataTypes.BOOLEAN,
