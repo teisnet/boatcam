@@ -1,66 +1,71 @@
 "use strict";
 
-var CameraPosition = require("../../models/CameraPosition");
+const models  = require('../../models');
+const CameraPosition = models.CameraPosition;
 
 module.exports = function (router) {
 
 	// BERTH CAMERA POSITIONS
 	router.route('/berths/:berthId/positions/:cameraId')
 
-	.get(function(req, res, next){
+	.get(function(req, res){
 		var berthId = req.params.berthId;
 		var cameraId = req.params.cameraId;
-		CameraPosition.find({berth: berthId, camera: cameraId})
-		.exec()
-		.then((berthCameraPositions) => {
-			// TODO: consider returning empty array in subobject
-			if(!berthCameraPositions) return handleNotFound(res, 'Berth id ' + berthId + " containing position with camera id " + cameraId + " not found");
-			res.json(berthCameraPositions[0]);
+		CameraPosition.findOne({ where: {berth_id: berthId, camera_id: cameraId } })
+		.then((berthCameraPosition) => {
+			if(!berthCameraPosition) return handleNotFound(res, 'Berth id ' + berthId + " containing position with camera id " + cameraId + " not found");
+			res.json(berthCameraPosition);
 		})
-		/*.catch((err) => {
-			handleError(res, err, "Could not get position for berth " + berthId + " and camera " + cameraId);
-		});*/
-	})
-
-	.post(function(req, res, next) {
-		var berthId = req.params.berthId;
-		var cameraId = req.params.cameraId;
-		var berthCameraPosition = new CameraPosition({camera: cameraId, berth: berthId, x: req.body.x, y: req.body.y, zoom: req.body.zoom });
-
-		berthCameraPosition.save()
-		.then((berth) => {
-			res.json({ message: 'Created Berth position, berthId = ' + berthId});
-		})
-		/*.catch((err) => {
-			handleError(res, err, "Could not save position for berth " + berthId + " and camera " + cameraId);
-		});*/
-	})
-
-	.put(function(req, res, next) {
-		var berthId = req.params.berthId;
-		var cameraId = req.params.cameraId;
-
-		CameraPosition.findOneAndUpdate(
-			{ camera: cameraId, berth: berthId },
-			{ $set: { x: req.body.x, y: req.body.y, zoom: req.body.zoom } },
-			{ upsert: true },
-			function(err, doc){
-				if (err) return res.send(500, { error: err });
-				return res.json({ message: 'Created Berth position, berthId = ' + berthId});
-			});
-		/*.catch((err) => {
-			handleError(res, err, "Could not save position for berth " + berthId + " and camera " + cameraId);
-		});*/
-	});
-
-	router.route(['/berths/positions/:cameraPositionId', '/cameras/positions/:cameraPositionId'])
-	.delete(function() {
-		var cameraPositionId = req.params.cameraPositionId;
-		CameraPosition.findById(cameraPositionId, function(err, doc){
-			doc.remove(function(err, doc){
-				res.json({_id: cameraPositionId}); // OK
-			});
+		.catch((err) => {
+			// handleError(res, err, "Could not get camera position for berth " + berthId + " and camera " + cameraId);
+			res.status(400).send(err.message);
 		});
+	})
+
+	/*
+	.post(function(req, res) {
+		var berthId = req.params.berthId;
+		var cameraId = req.params.cameraId;
+		let newCameraPositionData = {camera: cameraId, berth: berthId, x: req.body.x, y: req.body.y, zoom: req.body.zoom };
+
+		CameraPosition.create(newCameraPositiobData)
+		.then((cameraPosition) => {
+			res.json({ message: 'Created camera position, berthId = ' + berthId + ", cameraId = " + cameraId });
+		})
+		.catch((err) => {
+			// handleError(res, err, "Could not create camera position for berth " + berthId + " and camera " + cameraId);
+		});
+	})
+	*/
+
+	.put(function(req, res) {
+		var berthId = req.params.berthId;
+		var cameraId = req.params.cameraId;
+
+		CameraPosition.upsert(
+			{ camera_id: cameraId, berth_id: berthId, x: req.body.x, y: req.body.y, zoom: req.body.zoom },
+			{ }
+		)
+		.then(function(result){
+			return res.json({ message: 'Created or edited camera position, berthId = ' + berthId + ", cameraId = " + cameraId });
+		})
+		.catch((err) => {
+			// handleError(res, err, "Could not save position for berth " + berthId + " and camera " + cameraId);
+			res.status(400).send(err.message);
+		});
+	})
+
+	.delete(function(req, res) {
+		var berthId = req.params.berthId;
+		var cameraId = req.params.cameraId;
+
+		CameraPosition.destroy({ where: { camera_id: cameraId, berth_id: berthId } })
+		.then((result) => {
+			res.json({ count: result, cameraId: cameraId, berthId: berthId });
+		})
+		.catch((err) => {
+			res.status(400).send(err.message);
+		})
 	});
 
 }
