@@ -1,81 +1,72 @@
 "use strict";
 
-const BerthUser = require("../../models/BerthUser");
-const User = require("../../models/User");
+const models  = require('../../models');
+const BerthUser = models.BerthUser;
 
 module.exports = function (router) {
 
-	router.route('/users/:userId/berths')
-	.get(function(req, res, next){
-		var userId = req.params.userId;
-		BerthUser.find({ user: userId })
-		.exec()
-		.then((berthUsers) => {
-			// TODO: consider returning empty array in subobject
-			if(!berthUsers) return handleNotFound(res, 'Berth id ' + berthId + " with user id " + userId + " not found");
-			res.json(berthUsers);
-		})
-		/*.catch((err) => {
-			handleError(res, err, "Could not get position for berth " + berthId + " and camera " + cameraId);
-		});*/
-	});
-
-	router.route('/berths/:berthId/users')
-	.get(function(req, res, next){
-		var berthId = req.params.berthId;
-		BerthUser.find({ berth: berthId })
-		.exec()
-		.then((berthUsers) => {
-			// TODO: consider returning empty array in subobject
-			if(!berthUsers) return handleNotFound(res, 'Berth id ' + berthId + " with user id " + userId + " not found");
-			res.json(berthUsers);
-		})
-		/*.catch((err) => {
-			handleError(res, err, "Could not get position for berth " + berthId + " and camera " + cameraId);
-		});*/
-	});
-
-	// BERTH CAMERA POSITIONS
+	// BERTH <-> USERS
 	router.route(['/berths/:berthId/users/:userId', '/users/:userId/berths/:berthId'] )
-	.post(function(req, res, next) {
+
+	.get(function(req, res){
 		var berthId = req.params.berthId;
 		var userId = req.params.userId;
-		var berthUser = new BerthUser({ berth: berthId, user: userId });
+		BerthUser.findOne({ where: {berth_id: berthId, user_id: userId } })
+		.then((berthUser) => {
+			if(!berthUser) return handleNotFound(res, 'User id ' + userId + " with berth id " + berthId + " not found");
+			res.json(berthUser);
+		})
+		.catch((err) => {
+			// handleError(res, err, "Could not get camera position for berth " + berthId + " and camera " + cameraId);
+			res.status(400).send(err.message);
+		});
+	})
 
-		BerthUser.save()
+	.post(function(req, res) {
+		var berthId = req.params.berthId;
+		var userId = req.params.userId;
+		let newBerthUserData = { berth: berthId, user: userId };
+
+		BerthUser.create(newBerthUserData)
 		.then((berthUser) => {
 			res.json({ message: 'Created Berth user, berthId = ' + berthId + ", userId = " + userId });
 		})
-		/*.catch((err) => {
-			handleError(res, err, "Could not save position for berth " + berthId + " and camera " + cameraId);
-		});*/
-	});
-
-
-	router.route(['/berths/users/:berthUserId', '/users/berths/:berthUserId'] )
-	.delete(function() {
-		var berthUserId = req.params.berthUserId;
-		BerthUser.findById(berthUserId, function(err, doc){
-			doc.remove(function(err, doc){
-				res.json({_id: berthUserId}); // OK
-			});
+		.catch((err) => {
+			// handleError(res, err, "Could not save position for berth " + berthId + " and camera " + cameraId);
+			res.status(400).send(err.message);
 		});
-	});
+	})
 
+	/* PUT is not relevant since the joint table has no associated fields
+	.put(function(req, res) {
+		var berthId = req.params.berthId;
+		var userId = req.params.userId;
 
-	router.route('/users/berths')
-	.get(function(req, res, next) {
-		User.find({})
-		.exec()
-		.then( users => {
-			let promises = users.map( user => user.populateBerths() );
-			return Promise.all(promises);
+		BerthUser.upsert(
+			{ user_id: userId, berth_id: berthId },
+			{ }
+		)
+		.then(function(result){
+			return res.json({ message: 'Created or edited berth user, berthId = ' + berthId + ", userId = " + userId });
 		})
-		.then( (result) => {
-			res.json(result);
+		.catch((err) => {
+			// res.send(500, { error: err });
+			// handleError(res, err, "Could not save berth user " + berthId + " and user " + userId);
+			res.status(400).send(err.message);
+		});
+	})
+	*/
+
+	.delete(function(req, res) {
+		var berthId = req.params.berthId;
+		var userId = req.params.userId;
+
+		BerthUser.destroy({ where: { user_id: userId, berth_id: berthId } })
+		.then((result) => {
+			res.json({ count: result, user_id: userId, berthId: berthId });
 		})
-		.catch( error => {
-			console.error(error);
+		.catch((err) => {
+			res.status(400).send(err.message);
 		})
 	});
 
