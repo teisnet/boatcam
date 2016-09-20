@@ -3,6 +3,7 @@
 const models  = require('../../models');
 const BerthUser = models.BerthUser;
 const Berth = models.Berth;
+const User = models.User;
 
 module.exports = function (router) {
 
@@ -22,6 +23,28 @@ module.exports = function (router) {
 		promise
 		.then((berths) => {
 			res.json(berths);
+		})
+		.catch((err) => {
+			res.status(400).send(err.message);
+		});
+	});
+
+	// Get all users and flag those related to the berth
+	router.get('/berths/:berthId/users', (req, res) => {
+		var berthId = req.params.berthId;
+		let promise;
+
+		if (req.query.required === "false") {
+			promise = User.getAllFlagBerth(berthId)
+		} else {
+			promise = User.findAll({
+				include: [{ model: models.Berth, as: 'berths', where: { id: berthId } }]
+			});
+		};
+
+		promise
+		.then((users) => {
+			res.json(users);
 		})
 		.catch((err) => {
 			res.status(400).send(err.message);

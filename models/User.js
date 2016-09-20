@@ -19,6 +19,14 @@ module.exports = function(sequelize, DataTypes) {
 		classMethods: {
 			associate: function(models) {
 				User.belongsToMany(models.Berth, { through: models.BerthUser, as: 'berths', foreignKey: 'user_id' });
+			},
+
+			getAllFlagBerth: function(berthId) {
+				return sequelize.query(queries.getAllFlagBerth, {
+					bind: { berthid: berthId },
+					type: sequelize.QueryTypes.SELECT
+					// model: User
+				});
 			}
 		},
 
@@ -71,3 +79,17 @@ module.exports = function(sequelize, DataTypes) {
 
 	return User;
 };
+
+const userFields = ['users.id', 'users.firstname', 'users.lastname', 'users.username', 'users.role'];
+
+const queries = {};
+queries.getAllFlagBerth = `
+SELECT ${userFields.join(', ')}, COALESCE(berth_users.related, false) AS related
+FROM users
+LEFT JOIN
+(
+	SELECT berth_users.user_id, berth_users.berth_id, true AS related FROM berth_users
+	WHERE berth_users.berth_id = $berthid::integer
+) AS berth_users
+ON users.id = berth_users.user_id
+`.replace(/\s+/g, ' ');
