@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const models  = require('../../models');
 const BerthUser = models.BerthUser;
@@ -11,10 +11,10 @@ module.exports = function (router) {
 
 	// Get all berths and flag those related to the user
 	router.get('/users/:userId/berths', (req, res) => {
-		var userId = req.params.userId;
+		let userId = req.params.userId;
 		let promise;
 
-		if (req.query.required === "false") {
+		if (req.query.required === 'false') {
 			promise = Berth.getAllFlagUser(userId)
 		} else {
 			promise = Berth.findAll({
@@ -33,10 +33,10 @@ module.exports = function (router) {
 
 	// Get all users and flag those related to the berth
 	router.get('/berths/:berthId/users', (req, res) => {
-		var berthId = req.params.berthId;
+		let berthId = req.params.berthId;
 		let promise;
 
-		if (req.query.required === "false") {
+		if (req.query.required === 'false') {
 			promise = User.getAllFlagBerth(berthId)
 		} else {
 			promise = User.findAll({
@@ -49,29 +49,28 @@ module.exports = function (router) {
 			res.json(users);
 		})
 		.catch((err) => {
-			res.status(400).send(err.message);
+			res.status(400).send(err.message); // 400 Bad request
 		});
 	});
 
 	router.route(['/berths/:berthId/users/:userId', '/users/:userId/berths/:berthId'] )
 
-	.get(function(req, res){
-		var berthId = req.params.berthId;
-		var userId = req.params.userId;
+	.get((req, res) => {
+		let berthId = req.params.berthId;
+		let userId = req.params.userId;
 		BerthUser.findOne({ where: {berth_id: berthId, user_id: userId } })
 		.then((berthUser) => {
-			if(!berthUser) return handleNotFound(res, 'User id ' + userId + " with berth id " + berthId + " not found");
+			if(!berthUser) return res.sendStatus(404); // 404 Not Found
 			res.json(berthUser);
 		})
 		.catch((err) => {
-			// handleError(res, err, "Could not get camera position for berth " + berthId + " and camera " + cameraId);
-			res.status(400).send(err.message);
+			res.status(400).send(err.message); // 400 Bad request
 		});
 	})
 
-	.post(function(req, res) {
-		var berthId = req.params.berthId;
-		var userId = req.params.userId;
+	.post((req, res) => {
+		let berthId = req.params.berthId;
+		let userId = req.params.userId;
 		let newBerthUserData = { berth_id: berthId, user_id: userId };
 
 		BerthUser.create(newBerthUserData)
@@ -79,41 +78,38 @@ module.exports = function (router) {
 			res.json({ message: 'Created Berth user, berthId = ' + berthId + ", userId = " + userId });
 		})
 		.catch((err) => {
-			// handleError(res, err, "Could not save position for berth " + berthId + " and camera " + cameraId);
-			res.status(400).send(err.message);
+			res.status(400).send(err.message); // 400 Bad request
 		});
 	})
 
 	/* PUT is not relevant since the joint table has no associated fields
-	.put(function(req, res) {
-		var berthId = req.params.berthId;
-		var userId = req.params.userId;
+	.put((req, res) => {
+		let berthId = req.params.berthId;
+		let userId = req.params.userId;
 
 		BerthUser.upsert(
 			{ user_id: userId, berth_id: berthId },
 			{ }
 		)
-		.then(function(result){
+		.then((result) => {
 			return res.json({ message: 'Created or edited berth user, berthId = ' + berthId + ", userId = " + userId });
 		})
 		.catch((err) => {
-			// res.send(500, { error: err });
-			// handleError(res, err, "Could not save berth user " + berthId + " and user " + userId);
-			res.status(400).send(err.message);
+			res.status(400).send(err.message); // 400 Bad request
 		});
 	})
 	*/
 
-	.delete(function(req, res) {
-		var berthId = req.params.berthId;
-		var userId = req.params.userId;
+	.delete((req, res) => {
+		let berthId = req.params.berthId;
+		let userId = req.params.userId;
 
 		BerthUser.destroy({ where: { user_id: userId, berth_id: berthId } })
 		.then((result) => {
 			res.json({ count: result, user_id: userId, berthId: berthId });
 		})
 		.catch((err) => {
-			res.status(400).send(err.message);
+			res.status(400).send(err.message); // 400 Bad request
 		})
 	});
 
