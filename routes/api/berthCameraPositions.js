@@ -34,6 +34,7 @@ module.exports = function (router) {
 		})
 		.catch((err) => {
 			// handleError(res, err, "Could not create camera position for berth " + berthId + " and camera " + cameraId);
+			res.status(400).send(err.message);
 		});
 	})
 	*/
