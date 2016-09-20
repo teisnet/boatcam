@@ -45,11 +45,10 @@ const queries = {};
 queries.getAllFlagUser = `
 SELECT berths.id, berths.number, COALESCE(berth_users.related, false) AS related
 FROM berths
-	LEFT JOIN
-	(
-		SELECT berth_users.berth_id, berth_users.user_id, true AS related FROM berth_users
-		WHERE berth_users.user_id = $userid::integer
-
-	) AS berth_users
-	ON berths.id = berth_users.berth_id
+LEFT JOIN
+(
+	SELECT berth_users.berth_id, berth_users.user_id, true AS related FROM berth_users
+	WHERE berth_users.user_id = $userid::integer
+) AS berth_users
+ON berths.id = berth_users.berth_id
 `.replace(/\s+/g, ' ');

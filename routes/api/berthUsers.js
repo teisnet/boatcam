@@ -8,6 +8,8 @@ const User = models.User;
 module.exports = function (router) {
 
 	// BERTH <-> USERS
+
+	// Get all berths and flag those related to the user
 	router.get('/users/:userId/berths', (req, res) => {
 		var userId = req.params.userId;
 		let promise;
