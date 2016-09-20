@@ -2,10 +2,32 @@
 
 const models  = require('../../models');
 const BerthUser = models.BerthUser;
+const Berth = models.Berth;
 
 module.exports = function (router) {
 
 	// BERTH <-> USERS
+	router.get('/users/:userId/berths', (req, res) => {
+		var userId = req.params.userId;
+		let promise;
+
+		if (req.query.required === "false") {
+			promise = Berth.getAllFlagUser(userId)
+		} else {
+			promise = Berth.findAll({
+				include: [{ model: models.User, as: 'users', where: { id: userId } }]
+			});
+		};
+
+		promise
+		.then((berths) => {
+			res.json(berths);
+		})
+		.catch((err) => {
+			res.status(400).send(err.message);
+		});
+	});
+
 	router.route(['/berths/:berthId/users/:userId', '/users/:userId/berths/:berthId'] )
 
 	.get(function(req, res){
