@@ -72,7 +72,7 @@ module.exports = function (router) {
 	.post(function(req, res) {
 		var berthId = req.params.berthId;
 		var userId = req.params.userId;
-		let newBerthUserData = { berth: berthId, user: userId };
+		let newBerthUserData = { berth_id: berthId, user_id: userId };
 
 		BerthUser.create(newBerthUserData)
 		.then((berthUser) => {
