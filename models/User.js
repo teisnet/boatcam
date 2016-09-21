@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
 		role: {
 			type: DataTypes.ENUM('Administrator', 'Editor', 'User'),
 			defaultValue: 'User'
-		},
+		}
 	}, {
 		// TODO: Don't serialize password'
 		// underscored: true,
