@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
 		underscoredAll: true,
 		classMethods: {
 			associate: function(models) {
-				Berth.belongsToMany(models.Camera, { through: models.CameraPosition, as: 'cameras', foreignKey: 'berth_id' });
+				Berth.belongsToMany(models.Position, { through: models.BerthPosition, as: 'positions', foreignKey: 'berth_id' });
 				Berth.belongsToMany(models.User, { through: models.BerthUser, as: 'users', foreignKey: 'berth_id' });
 			},
 

@@ -15,8 +15,9 @@ let models = [
 	'User',
 	'Camera',
 	'Berth',
+	'Position',
 	'BerthUser',
-	'CameraPosition'    // Camera <-> Berth
+	'BerthPosition'
 ];
 
 let db = {};
