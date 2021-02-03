@@ -37,6 +37,7 @@ module.exports = function(sequelize, DataTypes) {
 		underscoredAll: true,
 		classMethods: {
 			associate: function(models) {
+				//Camera.belongsToMany(models.Berth, { through: models.CameraPosition, as: 'berths', foreignKey: 'camera_id' });
 				Camera.hasMany(models.Position, {as: 'positions', foreignKey: 'camera_id', onDelete: 'cascade' });
 			},
 

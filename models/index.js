@@ -8,7 +8,7 @@ const config    = require(path.join(__dirname, '..', 'config', 'config.json'))[e
 const sequelize = new Sequelize(config.database, config.username, config.password, {
 	host: 'localhost',
 	dialect: 'postgres',
-	logging: console.log
+	logging: false // console.log
 });
 
 let models = [

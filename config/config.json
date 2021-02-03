@@ -1,6 +1,6 @@
 {
 	"development": {
-		"database": "boatcam_test",
+		"database": "boatcam_test_3",
 		"username": "postgres",
 		"password": "Olufsvej"
 

@@ -1,0 +1,4 @@
+(Berth)<-[POS]->(Camera)
+
+	  
+(Cameras)<-(Positions)<->(Berths)

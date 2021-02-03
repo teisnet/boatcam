@@ -1,7 +1,7 @@
 @echo off
 setlocal
 echo.
-echo  BOATCAM DEBUG MODE
+echo  BOATCAM API DEBUG MODE
 echo.
 echo ----------------------------------------------------------------
 echo.
@@ -12,7 +12,7 @@ set DEBUG=boatcam:*
 set PORT=3000
 rem set CONFIG=./config/config.json
 
-title BOATCAM port: %PORT%, debug mode
+title BOATCAM API port: %PORT%, debug mode
 
 pushd ..
 node --debug=5858 ./bin/www

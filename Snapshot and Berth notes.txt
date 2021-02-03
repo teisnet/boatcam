@@ -1,0 +1,34 @@
+A Berth is related to multiple camera positions. There can be several positions for each camera.
+
+- Which berth is related to a camera's current position. A camera's 'active' berth.
+- Giv besked når et kamera flytter sig til en position der tilhører en bådblads.
+- Alert when a camera moves away from a berths position.
+- Gem automatisk et snapshot hvis et kamera bevæger sig væk  fra en bådplads' position.
+- Get all the latest snapshot that belongs to a berth, for all related cameras, or just for single related camera.
+- save snapshots for a berth, for all related cameras.
+- Registrer hvis et kamera flyttes eksternt (gennem kameraets web-interface), eller slukkes.
+
+
+- Relay all of above to the users related to the berths.
+
+
+
+---------------------------
+
+En bådplads er associeret med flere kamera-positioner. Der kan endda være flere positioner for hvert enkelt kamera.
+En bådplads kan have flere ejere og en ejer kan have flere bådpladser.
+
+- Hvilken bådplads-position er associeret med et kameras aktuelle position. Kameraets 'aktive' bådplads.
+- Giv besked når et kamera flytter sig hen til en position der tilhører en given bådblads.
+- Giv besked når et kamera bevæger sig væk fra en given bådplads' position.
+- Gem automatisk et snapshot hvis et kamera bevæger sig væk fra en bådplads' position.
+- Hent alle seneste snapshots som tilhører en bådplads, for alle associerede kameraer eller bare for et enkelt associeret kamera.
+- Gem snapshots for en bådplads for alle associerede kameraer, eller bare for et enkelt associeret kamera.
+- Registrer hvis et kamera flyttes eksternt (gennem kameraets web-interface) eller slukkes, så seneste snapshot kan vises istedet.
+
+- Gå til en position defineret ved dets position-id (kun admin bør have adgang til kamera-koordinater).
+
+- Gør alle overnævnte funktioner tilgængelige for alle ejere af bådpladserne.
+
+- Snapshots kan hentes i den opløsning man ønsker.
+

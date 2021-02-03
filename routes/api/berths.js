@@ -47,7 +47,10 @@ module.exports = function (router) {
 
 		Berth.findOne({
 			where: query,
-			include: [{ model: models.Camera, as: 'cameras' }, { model: models.User, as: 'users' }]
+			include: [
+				{ model: models.Position, as: 'positions', include: [{ model: models.Camera, as: 'camera' }] },
+				{ model: models.User, as: 'users' }
+			]
 		})
 		.then((berth) => {
 			if(!berth) return errorHandlers.notFound(res, "Berth " + berthId + " not found");

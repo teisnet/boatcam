@@ -189,7 +189,7 @@ Camera.prototype._updateStatus = function(message) {
 			self._setOnline(false);
 			return;
 		}
-		console.log("Camera[" + self.name + "].updateStatus: recieved " + JSON.stringify(status.position) );
+		// console.log("Camera[" + self.name + "].updateStatus: recieved " + JSON.stringify(status.position) );
 		self._previousPosition = self._position;
 		var pos = self._position = cameraToDegrees(status.position);
 

@@ -1,0 +1,11 @@
+
+
+GENERAL SAVE
+Server error (database connection lost)
+
+
+AT CAMERA CREATION
+A camera with the same name or slug already exists
+
+AT CAMERA ENABLE
+Cannot enable camera. Missing or invalid hostname 

@@ -43,7 +43,10 @@ module.exports = function (router) {
 		// Check if cameraId refer to the 'id' field or the 'slug' field
 		var query = objectIdRegex.test(cameraId) ? { id: cameraId } : { slug: cameraId };
 
-		Camera.findOne({ where: query, include: [{ model: models.Berth, as: 'berths' }] })
+		Camera.findOne({
+			where: query,
+			include: [{ model: models.Position, as: 'positions', include: { model: models.Berth, as: 'berths' } }]
+		})
 		.then((camera) => {
 			if(!camera) return errorHandlers.notFound(res, "Camera " + cameraId + " not found");
 			res.json(camera);

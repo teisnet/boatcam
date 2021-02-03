@@ -65,5 +65,6 @@ require('./users')(router);
 require('./cameras')(router);
 require('./berths')(router);
 require('./berthCameraPositions')(router);
+require('./cameraBerths')(router);
 
 module.exports = router;
