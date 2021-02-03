@@ -327,12 +327,12 @@ Camera.prototype.remove = function() {
 
 
 function isEqual(a, b, m) {
-    var margin = m || 0.04;
+    var margin = m || 0.10;
     return a > (b - margin) && a < (b + margin) ? true : false;
 }
 
 function posIsEqual(a, b) {
-    return isEqual(a.x, b.x) && isEqual(a.y, b.y) && isEqual(a.zoom, b.zoom, 0.004);
+    return isEqual(a.x, b.x) && isEqual(a.y, b.y) && isEqual(a.zoom, b.zoom, 0.010);
 }
 
 module.exports = Camera;

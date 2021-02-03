@@ -106,7 +106,7 @@ $(document).ready(function(){
             'url': config.stream,
             'scaling':'fit',
             'live': true,
-            'bufferLength': 2.0, //0, 0.1, 0.3 or 2 sec,
+            'bufferLength': 0.3, //0, 0.1, 0.3 or 2 sec,
             'provider':'rtmp',
 			'accelerated': true, // Hardware accelleration,
             'autoplay': true // No effect
