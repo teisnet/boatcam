@@ -1,23 +1,8 @@
 [{
-	"__v": 0,
-	"_id": {
-		"$oid": "56b380e1f4bf13d500bb5f9a"
-	},
-	"enabled": true,
-	"hostname": "85.27.160.243",
-	"http": 8002,
-	"onvif": 8082,
-	"password": "admin",
-	"slug": "fjellebroen-ost",
-	"title": "Fjellebroen Øst",
-	"uri": "rtmp://85.27.160.128:1935/boatcam/fjellebroen-ost.stream",
-	"username": "admin"
-},
-{
-	"__v": 0,
 	"_id": {
 		"$oid": "56b380e6f4bf13d500bb5f9b"
 	},
+	"__v": 0,
 	"api": "12345:12345@85.27.160.128:84/form/PTZSet",
 	"enabled": false,
 	"hostname": "",
@@ -27,22 +12,6 @@
 	"slug": "minkalv1",
 	"title": "Min Kalv Mark",
 	"uri": "rtmp://85.27.160.128:5119/Minkalv1",
-	"username": ""
-},
-{
-	"__v": 0,
-	"_id": {
-		"$oid": "56b380eaf4bf13d500bb5f9c"
-	},
-	"api": "12345:12345@85.27.160.128:85/form/PTZSet",
-	"enabled": false,
-	"hostname": "",
-	"http": 85,
-	"onvif": null,
-	"password": "",
-	"slug": "minkalv2",
-	"title": "Min Kalv Tårn",
-	"uri": "rtmp://85.27.160.128:5119/Minkalv2",
 	"username": ""
 },
 {
@@ -61,33 +30,94 @@
 	"username": "admin"
 },
 {
+	"_id": {
+		"$oid": "56b380eaf4bf13d500bb5f9c"
+	},
 	"__v": 0,
+	"api": "12345:12345@85.27.160.128:85/form/PTZSet",
+	"enabled": false,
+	"hostname": "",
+	"http": 85,
+	"onvif": null,
+	"password": "",
+	"slug": "minkalv2",
+	"title": "Min Kalv Tårn",
+	"uri": "rtmp://85.27.160.128:5119/Minkalv2",
+	"username": ""
+},
+{
 	"_id": {
 		"$oid": "57053eb30b027d801688a98e"
 	},
+	"__v": 0,
 	"enabled": true,
-	"hostname": "85.27.160.243",
+	"hostname": "85.27.160.179",
 	"http": 8001,
-	"onvif": 8001,
+	"onvif": 8081,
 	"password": "admin",
 	"slug": "fjellebroen-vest",
 	"title": "Fjellebroen Vest",
-	"uri": "rtmp://85.27.160.128:1935/boatcam/fjellebroen-vest.stream",
+	"uri": "rtmp://streaming.boatcam.dk:1935/fjellebroen/fjellebroen-vest.stream",
 	"username": "admin"
 },
 {
-	"__v": 0,
 	"_id": {
-		"$oid": "571993c646d4c50c5025fbe1"
+		"$oid": "571fd9b9e9e3857415a8e58d"
 	},
 	"enabled": true,
-	"hostname": "85.27.160.128",
-	"http": 86,
-	"onvif": 8086,
+	"title": "Fjellebroen Nyt Øst",
+	"slug": "fjellebroen-nyt-ost",
+	"hostname": "85.27.160.179",
+	"username": "admin",
+	"password": "Bi1ba0",
+	"uri": "rtmp://streaming.boatcam.dk:8080/fjellebroen/fjellebroen-nyt-ost.stream",
+	"onvif": 8083,
+	"http": 8003,
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5a9ed7bd72db19741a1fb6a8"
+	},
+	"enabled": false,
+	"title": "Riso kamera 2",
+	"slug": "riso-camera2",
+	"hostname": "192.168.1.20",
+	"username": "admin",
+	"password": "1q2w3e4r",
+	"uri": "rtmp://streaming.boatcam.net:1935/fjellebroen/riso-kamera2.stream",
+	"onvif": 8080,
+	"http": 80,
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5bab5588ca246880319de7b9"
+	},
+	"enabled": false,
+	"title": "Risø",
+	"slug": "riso",
+	"hostname": "130.226.56.109",
+	"username": "admin",
+	"password": "dq93!!RI",
+	"uri": "rtmp://streaming.boatcam.net:1935/fjellebroen/riso-kamera.stream",
+	"onvif": 6082,
+	"http": 6082,
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5c9fcc7c9af6e598161f7a8c"
+	},
+	"enabled": true,
+	"title": "Fjellebroen Øst",
+	"slug": "fjellebroen-ost",
+	"hostname": "85.27.160.179",
+	"username": "admin",
 	"password": "admin",
-	"slug": "nyt-kamera",
-	"title": "Nyt Kamera",
-	"uri": "rtmp://85.27.160.128:1935/boatcam/nyt-kamera.stream",
-	"username": "admin"
+	"uri": "rtmp://streaming.boatcam.net:1935/fjellebroen/fjellebroen-ost.stream",
+	"onvif": 8082,
+	"http": 8002,
+	"__v": 0
 }]
 

@@ -1,107 +1,22 @@
 [{
 	"_id": {
-		"$oid": "5719fedadc7a81d03df23ad3"
+		"$oid": "571ccdef3e3aac08847ce8c6"
 	},
-	"firstname": "Poul",
-	"lastname": "Norman",
-	"password": "norman",
-	"role": "User",
-	"username": "poul"
-},
-{
-	"_id": {
-		"$oid": "5719fedadc7a81d03df23ad4"
-	},
-	"firstname": "Jens"
-},
-{
-	"_id": {
-		"$oid": "5719fedadc7a81d03df23ad5"
-	},
-	"firstname": "Ove",
-	"lastname": "Heldarskard"
-},
-{
-	"_id": {
-		"$oid": "5719fedadc7a81d03df23ad6"
-	},
-	"firstname": "Claus formand"
-},
-{
-	"_id": {
-		"$oid": "5719fedadc7a81d03df23ad7"
-	},
-	"firstname": "Hans Havnefoged"
-},
-{
-	"_id": {
-		"$oid": "5719fedadc7a81d03df23ad8"
-	},
-	"firstname": "Svend",
-	"lastname": "Lund"
-},
-{
-	"_id": {
-		"$oid": "5719fedadc7a81d03df23ad9"
-	},
-	"firstname": "havn"
-},
-{
-	"_id": {
-		"$oid": "5719fedadc7a81d03df23ada"
-	},
-	"firstname": "Indsejling",
+	"username": "admin",
+	"password": "$2a$10$lWOiXgTozeQFK8rkLDEwQOWtkn4ft.8bZHntA4DZ9C0oVazSZB0I6",
+	"role": "Administrator",
+	"firstname": "Administrator",
 	"lastname": ""
 },
 {
 	"_id": {
-		"$oid": "5719fedadc7a81d03df23adb"
+		"$oid": "571ccf0dad00559825b872a4"
 	},
-	"firstname": "Henrik",
-	"lastname": "Vitrup"
-},
-{
-	"__v": 0,
-	"_id": {
-		"$oid": "571a0943c58ea8646251d808"
-	},
-	"firstname": "Teis",
-	"lastname": "Draiby",
-	"password": "teis",
+	"firstname": "Hans",
+	"lastname": "",
+	"username": "Hans",
+	"password": "$2a$10$QvkVJr/C3urGd1iyS/jz6u2fu36FJHNv/vjribzwYGMW6PKnuEhGK",
 	"role": "Editor",
-	"username": "teis"
-},
-{
-	"__v": 0,
-	"_id": {
-		"$oid": "571cbd5cd29214501ddee4f5"
-	},
-	"firstname": "Lars",
-	"lastname": "Granhøj",
-	"password": "granhoj",
-	"role": "Administrator",
-	"username": "lars"
-},
-{
-	"__v": 0,
-	"_id": {
-		"$oid": "571cc96bd48919a02e8feaa8"
-	},
-	"firstname": "Administrator",
-	"lastname": "Hest",
-	"password": "admin",
-	"role": "Administrator",
-	"username": "admin"
-},
-{
-	"__v": 0,
-	"_id": {
-		"$oid": "572214f39b18a7143c9b19a6"
-	},
-	"firstname": "Test",
-	"lastname": "Fæst",
-	"password": "f",
-	"role": "User",
-	"username": "t"
+	"__v": 0
 }]
 

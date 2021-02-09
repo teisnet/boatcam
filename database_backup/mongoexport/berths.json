@@ -1,49 +1,121 @@
 [{
-	"__v": 0,
 	"_id": {
-		"$oid": "56b382cf03379e60d1473308"
+		"$oid": "571615c765d6b1a417ef84c3"
 	},
-	"number": "6-02",
-	"owner": "Teis Draiby"
+	"number": "19",
+	"owner": "Ove Heldarskard",
+	"__v": 0
 },
 {
-	"__v": 0,
 	"_id": {
-		"$oid": "56b382cf03379e60d1473309"
+		"$oid": "571615db65d6b1a417ef84c4"
 	},
-	"number": "604",
-	"owner": "Lars Granhøj"
+	"number": "52",
+	"owner": "Poul Norman",
+	"__v": 0
 },
 {
-	"__v": 0,
 	"_id": {
-		"$oid": "56b382cf03379e60d147330a"
+		"$oid": "571615f065d6b1a417ef84c5"
 	},
-	"number": "603",
-	"owner": "Hjalte Granhøj"
+	"number": "75",
+	"owner": "Jens",
+	"__v": 0
 },
 {
-	"__v": 0,
 	"_id": {
-		"$oid": "56d4b8dcdbd581f8283ab5f0"
+		"$oid": "5716161165d6b1a417ef84c6"
 	},
-	"number": "6-12",
-	"owner": "Magnus Granhøj"
+	"number": "85",
+	"owner": "Henrik Vitrup",
+	"__v": 0
 },
 {
-	"__v": 0,
 	"_id": {
-		"$oid": "5705579a0b027d801688a98f"
+		"$oid": "5716162d65d6b1a417ef84c7"
 	},
-	"number": "12",
-	"owner": "Helene Larsen"
+	"number": "102",
+	"owner": "Claus formand",
+	"__v": 0
 },
 {
-	"__v": 0,
 	"_id": {
-		"$oid": "57159979395569d041ad34e6"
+		"$oid": "571616ca65d6b1a417ef84c9"
 	},
-	"number": "101",
-	"owner": "Galina"
+	"number": "115",
+	"owner": "Hans Havnefode",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "571616f165d6b1a417ef84ca"
+	},
+	"number": "141",
+	"owner": "Svend Lund",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "57161ebe65d6b1a417ef84cb"
+	},
+	"number": "0",
+	"owner": "havn",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5716626365d6b1a417ef84cc"
+	},
+	"number": "-1",
+	"owner": "Indsejling",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "571f0a508f4896401b7a2ccc"
+	},
+	"number": "-10",
+	"owner": "test10",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "573459438a95f9582238a5b9"
+	},
+	"number": "-8",
+	"owner": "Henrik Vitrup 2",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "573459658a95f9582238a5ba"
+	},
+	"number": "-9",
+	"owner": "Henrik Vitrup 3",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "573459888a95f9582238a5bb"
+	},
+	"number": "-7",
+	"owner": "Billed eksempel",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "573459998a95f9582238a5bc"
+	},
+	"number": "-6",
+	"owner": "Perfekt båd",
+	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "573459b38a95f9582238a5bd"
+	},
+	"number": "-5",
+	"owner": "Havet",
+	"__v": 0
 }]
 
